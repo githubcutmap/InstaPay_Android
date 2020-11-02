@@ -57,6 +57,7 @@ import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -235,10 +236,13 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         latitude = preferences.getString("Latitude", "No name defined");
         longitude = preferences.getString("Longitude", "No name defined");
-        androidId = preferences.getString("AndroidId", "No name defined");
-        //  latitude="21.22";
+        agentId=preferences.getString("AgentId","No name defined");
+        androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        // androidId = preferences.getString("AndroidId", "No name defined");
+        // latitude="21.22";
         //  longitude="112.2";
-        //  androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        // androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         //bankNames are getting from SQL database for validation purpose
         SQLQueries getbanknames = new SQLQueries();
         SQLQueries bankvalidation = new SQLQueries();
@@ -281,8 +285,9 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                         try {
                             //   new  ().execute();
                             capture(pidOptions);
+                            //fingerprintDataConvertingToJson();
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
+                            // Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
                         }
                     }
                     if (!isValidAadhar) {
@@ -347,6 +352,12 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                 });
             }
             if (pidDataXML != null) {
+
+                try {
+                    this.sendDatatoServer(pidDataXML);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 //XML data parsing starts from here
 
@@ -505,7 +516,27 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             jsonObject.put("PidDatatype", PidDatatype);
             jsonObject.put("Piddata", Piddata);
 
-
+        /*   jsonObject.put("errcode", "errcode1");
+            jsonObject.put("errInfo", "errInfo1");
+            jsonObject.put("fCount", "fCount1");
+            jsonObject.put("fType", "fType1");
+            jsonObject.put("iCount", "iCount1");
+            jsonObject.put("iType", "iType1");
+            jsonObject.put("pCount", "pCount1");
+            jsonObject.put("pType", "pType1");
+            jsonObject.put("nmPoints", "nmPoints1");
+            jsonObject.put("qScore", "qScor1e");
+            jsonObject.put("dpID", "dpI1d");
+            jsonObject.put("rdsID", "rds1ID");
+            jsonObject.put("rdsVer", "rdsVer");
+            jsonObject.put("dc", "dc1");
+            jsonObject.put("mi", "mi1");
+            jsonObject.put("mc", "mc");
+            jsonObject.put("ci", "c1i");
+            jsonObject.put("sessionKey", "SessionK1ey");
+            jsonObject.put("hmac", "hma1c");
+            jsonObject.put("PidDatatype", "PidDatat1ype");
+            jsonObject.put("Piddata", "Pidda1ta");*/
             pidData_json = jsonObject.toString();
             new apiCall_BalanceEnquiry().execute();
         } catch (JSONException e) {
@@ -606,7 +637,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
                 public void onFailure(Call call, IOException e) {
                     //loadingDialog.dismissDialog();
-                    Toast.makeText(activity_Aeps_BalanceEnquiry.this, "Server not Connected.", Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(activity_Aeps_BalanceEnquiry.this, "Server not Connected.", Toast.LENGTH_SHORT).show();
                 }
 
                 //if API call got success then it will go for this onResponse also where we are collection
@@ -624,9 +655,10 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                         JSONObject jsonResponse = null;
                         try {
                             jsonResponse = new JSONObject(response_String);
-                            message = jsonResponse.getString("message");
+                            // message = jsonResponse.getString("message");
                             status = jsonResponse.getString("status");
-                            status_code = jsonResponse.getString("statusCode");
+                            status_code = jsonResponse.getString("statuscode");
+                            bank_RRN = jsonResponse.getString("ipay_uuid");
                             data = jsonResponse.getString("data");
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -635,45 +667,58 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                             // the data we are getting from api in json format so
                             // we are parsing that data from here
                             JSONObject jsonData = new JSONObject(data);
-
-                            transaction_status = jsonData.getString("transactionStatus");
-                            balance = jsonData.getString("balanceAmount");
-                            bank_RRN = jsonData.getString("bankRRN");
-                            transaction_type = jsonData.getString("transactionType");
-                            fpTransId = jsonData.getString("fpTransactionId");
-                            merchant_transid = jsonData.getString("merchantTxnId");
-                            timestamp = jsonData.getString("requestTransactionTime");
+                            transaction_status = jsonData.getString("status");
+                            balance = jsonData.getString("balance");
+                            //
+                            //  transaction_type = jsonData.getString("sp_key");
+                            fpTransId = jsonData.getString("opr_id");
+                            merchant_transid = jsonData.getString("ipay_id");
+                            timestamp = jsonData.getString("timestamp");
                         } catch (JSONException e) {
 
                         } catch (NullPointerException e) {
                         }
                         //moving to the next screen after getting the response also
                         // we are sending the require data through intent
-                        Intent intent = new Intent(activity_Aeps_BalanceEnquiry.this, activity_Aeps_BalanceEnq_Receipt.class);
-                        intent.putExtra("balance", balance);
-                        intent.putExtra("merchant_transid", merchant_transid);
-                        intent.putExtra("timestamp", timestamp);
-                        intent.putExtra("aadhaar", en_aadhaar);
-                        intent.putExtra("bank_name", selected_bank_name);
-                        intent.putExtra("agent_id", agentId);
-                        intent.putExtra("rrn_no", bank_RRN);
-                        intent.putExtra("custName", en_name);
-                        intent.putExtra("message", message);
-                        intent.putExtra("fpTransId", fpTransId);
-                        intent.putExtra("message", message);
-                        intent.putExtra("status", status);
-                        intent.putExtra("status_code", status_code);
-                        intent.putExtra("transaction_type", transaction_type);
-                        intent.putExtra("ci", ci);
-                        startActivity(intent);
+
 
                     } else {
                         Toast.makeText(activity_Aeps_BalanceEnquiry.this, "You are not getting any Response From Bank !! ", Toast.LENGTH_SHORT).show();
                     }
+                    Intent intent = new Intent(activity_Aeps_BalanceEnquiry.this, activity_Aeps_BalanceEnq_Receipt.class);
+                    intent.putExtra("balance", balance);
+                    intent.putExtra("merchant_transid", merchant_transid);
+                    intent.putExtra("timestamp", timestamp);
+                    intent.putExtra("aadhaar", en_aadhaar);
+                    intent.putExtra("bank_name", selected_bank_name);
+                    intent.putExtra("agent_id", agentId);
+                    intent.putExtra("rrn_no", bank_RRN);
+                    intent.putExtra("custName", en_name);
+                    intent.putExtra("message", message);
+                    intent.putExtra("fpTransId", fpTransId);
+                    intent.putExtra("message", message);
+                    intent.putExtra("status", status);
+                    intent.putExtra("status_code", status_code);
+                    intent.putExtra("transaction_type", transaction_type);
+                    startActivity(intent);
                 }
             });
             return null;
         }
+    }
+    public void sendDatatoServer(String op1) throws IOException {
+
+        HttpUrl.Builder httpBuilder = HttpUrl.parse("http://mintserver.gramtarang.org:8080/mint/aeps/printPXML").newBuilder();
+        httpBuilder.addQueryParameter("pxml",op1);
+        Request request = new Request.Builder().url(httpBuilder.build()).build();
+        Response response = client.newCall(request).execute();
+
+    }
+    public void responseCallback()
+
+    {
+
+
     }
 }
 

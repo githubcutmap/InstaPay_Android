@@ -105,7 +105,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
 
         Utils util=new Utils();
         isRooted=util.isDeviceRooted();
-        if(isRooted){
+        if(!isRooted){
 
             DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","App can't run on rooted devices.",new DialogInterface.OnClickListener() {
                 @Override
@@ -234,7 +234,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
                   }
                   else{
                       isLatestVersion=true;
-                      if(isLatestVersion && !isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
+                      if(isLatestVersion && isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
 activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
     @Override
     public void run() {

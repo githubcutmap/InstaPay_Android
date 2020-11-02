@@ -28,8 +28,8 @@ import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.utils.LogOutTimer;
 
 /*activity_Aeps_Ministatement activity contains the data we need to show to the user after
-* the transaction.
-* the require data coming from the previous activity at the time of api calling*/
+ * the transaction.
+ * the require data coming from the previous activity at the time of api calling*/
 public class activity_Aeps_Ministatement_Report extends AppCompatActivity implements LogOutTimer.LogOutListener {
     @Override
     protected void onStart() {
@@ -75,7 +75,7 @@ public class activity_Aeps_Ministatement_Report extends AppCompatActivity implem
     ListView listView ;
     TextView tv_aadhaar,tv_timestamp,tv_availablebalance,tv_custname,tv_bankname;
     Button btn_back;
-   boolean doubleBackToExitPressedOnce = false;
+    boolean doubleBackToExitPressedOnce = false;
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -164,17 +164,17 @@ public class activity_Aeps_Ministatement_Report extends AppCompatActivity implem
             tv_custname.setText(custName);
             tv_bankname.setText(bankName);
             tv_availablebalance.setText(avlBalance);
-             date = new String[myList.size()];
-             type = new String[myList.size()];
-           amount = new String[myList.size()];
+            date = new String[myList.size()];
+            type = new String[myList.size()];
+            amount = new String[myList.size()];
 
-        for (int i = 0; i<myList.size();i++){
-            date[i] = myList.get(i).get("date");
-            type[i] = myList.get(i).get("tranType");
-            amount[i] = myList.get(i).get("transAmount");
-        }
-        Adapter_Ministatement adapter_ministatement = new Adapter_Ministatement(this,date,type,amount);
-        listView.setAdapter(adapter_ministatement);
+            for (int i = 0; i<myList.size();i++){
+                date[i] = myList.get(i).get("date");
+                type[i] = myList.get(i).get("txnType");
+                amount[i] = myList.get(i).get("amount");
+            }
+            Adapter_Ministatement adapter_ministatement = new Adapter_Ministatement(this,date,type,amount);
+            listView.setAdapter(adapter_ministatement);
         }catch (NullPointerException e){
             listView.setAdapter(null);
             e.printStackTrace();

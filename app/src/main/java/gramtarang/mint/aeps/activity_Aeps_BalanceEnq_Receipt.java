@@ -29,8 +29,8 @@ import gramtarang.mint.utils.SQLQueries;
 
 
 /*activity_Aeps_BalanceEnq_recept activity
-* this activity contains the data coming / required after BalanceEnquiry transaction , like if customer need
-* to print the receipts he can take the print of this screen*/
+ * this activity contains the data coming / required after BalanceEnquiry transaction , like if customer need
+ * to print the receipts he can take the print of this screen*/
 public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implements LogOutTimer.LogOutListener {
     private String TAG="AEPS Balenq";
     @Override
@@ -135,7 +135,7 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         tv_bankname=findViewById(R.id.bank_name);
         tv_timestamp=findViewById(R.id.timestamp);
         tv_transid=findViewById(R.id.merchant_transid);
-        tv_agentid=findViewById(R.id.agent_id);
+        // tv_agentid=findViewById(R.id.agent_id);
         tv_rrnno=findViewById(R.id.rrn_no);
         tv_descriptionMessage =findViewById(R.id.tex_message);
 
@@ -149,7 +149,7 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         androidId=preferences.getString("AndroidId","No name defined");
         agent_phone_number=preferences.getString("AgentPhn","No name defined");
         agent_name=preferences.getString("AgentName","No name defined");
-
+        // agentid=preferences.getString("AgentId","No name defined");
         Intent intent = getIntent();
 
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -161,7 +161,7 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         trans_id = intent.getStringExtra("merchant_transid");
         rrn_no=intent.getStringExtra("rrn_no");
         custName=intent.getStringExtra("custName");
-        message=intent.getStringExtra("message");
+        // message=intent.getStringExtra("message");
         fpTransId=intent.getStringExtra("fpTransId");
         status=intent.getStringExtra("status");
         status_code=intent.getStringExtra("status_code");
@@ -191,24 +191,26 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         }
         else{
             tv_bal.setText(available_balance);
-
         }
 
-        tv_agentid.setText(agentid);
-        tv_descriptionMessage.setText(message);
-        tv_CustomerName.setText(custName);
-        tv_transid.setText(fpTransId);
-        tv_aadhaarnumber.setText("XXXX" + " " + "XXXX" + " " + aadhaar_number.charAt(8) + aadhaar_number.charAt(9) + aadhaar_number.charAt(10) + aadhaar_number.charAt(11));
-        tv_timestamp.setText(timestamp);
 
-    btn_back.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            Intent intent = new Intent(activity_Aeps_BalanceEnq_Receipt.this, activity_Aeps_HomeScreen.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+        try {
+            tv_descriptionMessage.setText(status);
+            tv_CustomerName.setText(custName);
+            tv_transid.setText(trans_id);
+            tv_aadhaarnumber.setText("XXXX" + " " + "XXXX" + " " + aadhaar_number.charAt(8) + aadhaar_number.charAt(9) + aadhaar_number.charAt(10) + aadhaar_number.charAt(11));
+            tv_timestamp.setText(timestamp);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-    });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(activity_Aeps_BalanceEnq_Receipt.this, activity_Aeps_HomeScreen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
     }
 }

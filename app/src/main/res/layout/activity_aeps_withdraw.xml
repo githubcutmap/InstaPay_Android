@@ -142,6 +142,7 @@
             android:textColor="@color/grayblack"
             android:textCursorDrawable="@null"
             android:layout_column="3"/>
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--<TextView
@@ -287,9 +288,13 @@
             android:paddingLeft="10dp"
             android:background="@drawable/editbox"
             android:layout_column="3"/>
+
+
+
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
+
 
     <Button
         android:id="@+id/submitbtn"

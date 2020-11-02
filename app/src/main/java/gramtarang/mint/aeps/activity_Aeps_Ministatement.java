@@ -208,6 +208,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     public static String Piddata;
     public static String pCount;
     public static String pType;
+    String bank_RRN;
     ///////////////////////////////////////////////////////
     public static String pidData_json;
     OkHttpClient client;
@@ -281,13 +282,14 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
         latitude=preferences.getString("Latitude","No name defined");
         longitude=preferences.getString("Longitude","No name defined");
         //latitude="22.1111";
-        //longitude="121.99";
+        //  longitude="121.99";
         //  androidId=preferences.getString("AndroidId","No name defined");
         androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        agentId=preferences.getString("AgentId","No name defined");
         // agent_phone_number=preferences.getString("AgentPhn","No name defined");
         //agent_phone_number="9963022226";
-        //agent_name="test";
-        agent_name=preferences.getString("AgentName","No name defined");
+        // agent_name="test";
+        // agent_name=preferences.getString("AgentName","No name defined");
         //AutoFIll the bank name
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
@@ -326,7 +328,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
                         try {
                             //Rd service api calling method called
                             Matra_capture(pidOptions);
-                            //fingerPrintDataConvertingJSON();
+                            // fingerPrintDataConvertingJSON();
                         }
                         catch (Exception  e) {
                             Toast.makeText(activity_Aeps_Ministatement.this, "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
@@ -521,7 +523,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
             jsonObject.put("PidDatatype", PidDatatype);
             jsonObject.put("Piddata", Piddata);
 
-   /*      jsonObject.put("errcode", "errcode1");
+        /*jsonObject.put("errcode", "errcode1");
             jsonObject.put("errInfo", "errInfo1");
             jsonObject.put("fCount", "fCount1");
             jsonObject.put("fType", "fType1");
@@ -604,10 +606,11 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
                         JSONObject jsonResponse = null;
                         try {
                             jsonResponse = new JSONObject(responseString);
-                            message = jsonResponse.getString("message");
+                            //   message = jsonResponse.getString("message");
                             status = jsonResponse.getString("status");
-                            status_code = jsonResponse.getString("statusCode");
+                            status_code = jsonResponse.getString("statuscode");
                             data = jsonResponse.getString("data");
+                            bank_RRN = jsonResponse.getString("ipay_uuid");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -615,9 +618,9 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
                         try {
 
                             JSONObject jsonData = new JSONObject(data);
-                            timeStamp2 = jsonData.getString("requestTransactionTime");
-                            avlBalance = jsonData.getString("balanceAmount");
-                            JSONArray ministatement_structure=jsonData.getJSONArray("miniStatementStructureModel");
+                            // timeStamp2 = jsonData.getString("timestamp");
+                            avlBalance = jsonData.getString("balance");
+                            JSONArray ministatement_structure=jsonData.getJSONArray("mini_statement");
                             for(int i=0;i<ministatement_structure.length();i++)
                             {
                                 JSONObject curr = ministatement_structure.getJSONObject(i);
@@ -628,13 +631,15 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
                                 transaction_amount="0.00";
                                 HashMap<String,String> hashMap_transaction=new HashMap<>();
                                 hashMap_transaction.put("date",mdate);
-                                hashMap_transaction.put("transAmount",mamount);
-                                hashMap_transaction.put("tranType",mtxnType);
+                                hashMap_transaction.put("amount",mamount);
+                                hashMap_transaction.put("txnType",mtxnType);
                                 hashMap_transaction.put("narration",mnarration);
                                 list.add(hashMap_transaction);
                             }
                             // insertlog();
+
                         } catch (JSONException  e) {
+
 //                            insertlog();
 
 /*activity_Aeps_Ministatement.this.runOnUiThread(new Runnable() {
@@ -645,7 +650,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     }
 });
    */                         Log.d(TAG, "Transaction failed"+message+"\n"+"TimeStamp:"+timeStamp2);
-                            Toast.makeText(activity_Aeps_Ministatement.this,"Transaction failed"+message,Toast.LENGTH_SHORT).show();
+                            //          Toast.makeText(activity_Aeps_Ministatement.this,"Transaction failed"+message,Toast.LENGTH_SHORT).show();
 
 
                             e.printStackTrace();
@@ -657,6 +662,17 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
 
                             e.printStackTrace();
                         }
+                        Intent intent = new Intent(activity_Aeps_Ministatement.this, activity_Aeps_Ministatement_Report.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("data", (Serializable) list);
+                        intent.putExtras(bundle);
+                        intent.putExtra("Adaar", en_aadhaar);
+                        intent.putExtra("timeStamp", timestamp);
+                        intent.putExtra("avlBalance", avlBalance);
+                        intent.putExtra("custname",en_name);
+                        intent.putExtra("bankname",selected_bank_name);
+
+                        startActivity(intent);
                     }else {
                         //Toast.makeText(activity_Aeps_Ministatement.this,"You are not getting any Response From Bank !! ",Toast.LENGTH_SHORT).show();
 
@@ -679,35 +695,5 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
         //   MobileSMSAPI sendmsg=new MobileSMSAPI();
         // sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
 
-
-        if(Integer.parseInt(status_code) == 10000) {
-            Intent intent = new Intent(activity_Aeps_Ministatement.this, activity_Aeps_Ministatement_Report.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("data", (Serializable) list);
-            intent.putExtras(bundle);
-            intent.putExtra("Adaar", en_aadhaar);
-            intent.putExtra("timeStamp", timestamp);
-            intent.putExtra("avlBalance", avlBalance);
-            intent.putExtra("custname",en_name);
-            intent.putExtra("bankname",selected_bank_name);
-
-            startActivity(intent);
-
-        }
-        else{
-            DialogActivity.DialogCaller.showDialog(activity_Aeps_Ministatement.this,"Alert","Transaction Failed"+message,new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
-
-
-        }
-
     }
 }
-
-
-
-

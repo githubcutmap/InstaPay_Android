@@ -218,11 +218,11 @@ client=new OkHttpClient();
       //  eodreport=findViewById(R.id.eod);
         ministatement=findViewById(R.id.image_ministatement);
         aadhaarPay=findViewById(R.id.aadhaar_pay);
-        loan=findViewById(R.id.loan);
+      //  loan=findViewById(R.id.loan);
        // transName = findViewById(R.id.trans_name);
         rrnStatus = findViewById(R.id.rrnstatus);
-        billPayments = findViewById(R.id.billPayments);
-        card = findViewById(R.id.card);
+        //billPayments = findViewById(R.id.billPayments);
+       // card = findViewById(R.id.card);
         logout=findViewById(R.id.logout);
 
 
@@ -230,7 +230,7 @@ client=new OkHttpClient();
         aepsWithdraw.setEnabled(true);
         aepsBalance.setEnabled(true);
         aadhaarPay.setEnabled(true);
-        loan.setEnabled(true);
+//        loan.setEnabled(true);
 new apiCall_getlastlogin().execute();
         //APICalling apiCalling = new APICalling();
         //ArrayList arrayList = apiCalling.getagentdetails("2323","b912df01ef572d57");
@@ -256,14 +256,7 @@ logout.setOnClickListener(new View.OnClickListener() {
 /*String time;
 time=getlAgentName.getLastLogin(androidId);
 menu_timeaststamp.setText(time);*/
-loan.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        loan.setEnabled(false);
-        Intent intent = new Intent(getApplicationContext(), LoanActivity_MainScreen.class);
-        startActivity(intent);
-    }
-});
+
 
 
         //this is the toogle button between card and AEPs transaction
@@ -383,23 +376,6 @@ loan.setOnClickListener(new View.OnClickListener() {
             }
         });
 
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                title = "Card";
-                message = "This function is not available in your login please try after some time or contact your admin";
-                utils.dialog(activity_Aeps_HomeScreen.this,title,message);
-            }
-        });
-
-        billPayments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                title = "Bill Payment";
-                message = "This function is not available in your login please try after some time or contact your admin";
-                utils.dialog(activity_Aeps_HomeScreen.this,title,message);
-            }
-        });
 
 
         Utils gethour=new Utils();

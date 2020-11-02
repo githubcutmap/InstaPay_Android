@@ -52,7 +52,10 @@
         <activity android:name=".loans.LoanActivity_PrimaryScreen" />
         <activity android:name=".loans.areamgr.loan_viewapp" />
         <activity android:name=".aeps.activity_Aeps_HomeScreen"
-            android:parentActivityName=".agent_login.Dashboard"/>
+            android:parentActivityName=".agent_login.Dashboard"
+
+
+            />
         <activity android:name=".pan.PanCard"
             android:parentActivityName=".agent_login.Dashboard"/>
         <activity

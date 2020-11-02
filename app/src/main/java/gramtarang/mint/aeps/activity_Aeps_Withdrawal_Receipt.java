@@ -101,7 +101,7 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
 
     }
 
-   boolean doubleBackToExitPressedOnce = false;
+    boolean doubleBackToExitPressedOnce = false;
     //double click backpress to exit/logout
     @Override
     public void onBackPressed() {
@@ -137,7 +137,7 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
         tv_bankname=findViewById(R.id.bank_name);
         tv_timestamp=findViewById(R.id.timestamp);
         tv_transid=findViewById(R.id.merchant_transid);
-        tv_agentid=findViewById(R.id.agent_id);
+        //tv_agentid=findViewById(R.id.agent_id);
         tv_rrnno=findViewById(R.id.rrn_no);
         tv_transamount=findViewById(R.id.trans_amount);
         tex_message=findViewById(R.id.tex_message);
@@ -150,6 +150,7 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
         androidId=preferences.getString("AndroidId","No name defined");
         agent_phone_number=preferences.getString("AgentPhn","No name defined");
         agent_name=preferences.getString("AgentName","No name defined");
+        //   agentid=preferences.getString("AgentId","No name defined");
         Intent intent = getIntent();
 
 
@@ -162,12 +163,12 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
         trans_id = intent.getStringExtra("merchant_transid");
         rrn_no=intent.getStringExtra("rrn_no");
         custName=intent.getStringExtra("custName");
-        message=intent.getStringExtra("message");
+        // message=intent.getStringExtra("message");
         trans_amount=intent.getStringExtra("trans_amount");
-        fpTransId=intent.getStringExtra("fpTransId");
+        // fpTransId=intent.getStringExtra("fpTransId");
         status=intent.getStringExtra("status");
         status_code=intent.getStringExtra("status_code");
-        transaction_type=intent.getStringExtra("transaction_type");
+        // transaction_type=intent.getStringExtra("transaction_type");
         //getting data from database
         SQLQueries getAgentId=new SQLQueries();
         //agentid=getAgentId.getAgentID(androidId);
@@ -197,14 +198,16 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
             tv_bal.setText(available_balance);
 
         }
+        try{
 
-        tv_agentid.setText(agentid);
-        tex_message.setText(message);
-        customer_name.setText(custName);
+            tex_message.setText(status);
+            customer_name.setText(custName);
 
-        tv_aadhaarnumber.setText("XXXX" + " " + "XXXX" + " " + aadhaar_number.charAt(8) + aadhaar_number.charAt(9) + aadhaar_number.charAt(10) + aadhaar_number.charAt(11));
-        tv_timestamp.setText(timestamp);
-        tv_transamount.setText(trans_amount);
+            tv_aadhaarnumber.setText("XXXX" + " " + "XXXX" + " " + aadhaar_number.charAt(8) + aadhaar_number.charAt(9) + aadhaar_number.charAt(10) + aadhaar_number.charAt(11));
+            tv_timestamp.setText(timestamp);
+            tv_transamount.setText(trans_amount);}catch (Exception e){
+            e.printStackTrace();
+        }
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
