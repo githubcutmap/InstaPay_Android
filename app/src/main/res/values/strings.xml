@@ -10,5 +10,6 @@
     <string name="tab_text_2">Completed</string>
     <string name="tab_text_3">Search By ID</string>
     <string name="title_activity_main">MainActivity</string>
-
+    <string name="app_version">Version:Beta V 0.4</string>
+    <string name="dateofrelease">02/11/2020</string>
 </resources>

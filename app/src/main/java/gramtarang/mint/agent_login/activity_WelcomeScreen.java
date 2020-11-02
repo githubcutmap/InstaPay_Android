@@ -99,12 +99,13 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         else {
             locationTrack.showSettingsAlert();
         }
+        new apiCall_getversion().execute();
         //   androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
         Utils util=new Utils();
         isRooted=util.isDeviceRooted();
-        if(!isRooted){
+        if(isRooted){
 
             DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","App can't run on rooted devices.",new DialogInterface.OnClickListener() {
                 @Override
@@ -140,16 +141,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
                 this.startActivity(intent);
                 this.finishAffinity();
             }
-            if(isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent i = new Intent(activity_WelcomeScreen.this, activity_Login.class);
-                        startActivity(i);
-                        finish();
-                    }
-                }, 2000);
-            }
+
         }
         catch (NullPointerException e){
             e.printStackTrace();
@@ -192,6 +184,89 @@ public class activity_WelcomeScreen extends AppCompatActivity {
     }
 
 
+    class apiCall_getversion extends AsyncTask<Request, Void, String> {
+        @Override
+        protected String doInBackground(Request... requests) {
+            okhttp3.Request request = new Request.Builder()
+                    .url("http://mintserver.gramtarang.org:8080/mint/im/version")
+                    .addHeader("Accept", "*/*")
+                    .get()
+                    .build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    assert response.body() != null;
+                    //the response we are getting from api
+                    response_String = response.body().string();
+                    if (response_String != null) {
+                        Log.d("TAG","Response is+"+response_String.toString());
+                        JSONObject jsonResponse = null;
+                        try {
+                            jsonResponse = new JSONObject(response_String);
+                            latest_app_version= jsonResponse.getString("version_number");
+                            dateofrelease = jsonResponse.getString("date_of_release");
+                            Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease);
+                         //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
 
+                            //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        catch (NullPointerException e) {
+                        }
+                  if(!getString(R.string.app_version).equals(latest_app_version)){
+                      Log.d("TAG","Errorrrrr"+getString(R.string.app_version)+latest_app_version);
+                      activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","Outdated Version.\nPlease Contact Administrator.",new DialogInterface.OnClickListener() {
+                                  @Override
+                                  public void onClick(DialogInterface dialog, int which) {
+                                      finish();
+                                  }
+                              });
+                          }
+                      });
+                   /*   */
+                  }
+                  else{
+                      isLatestVersion=true;
+                      if(isLatestVersion && !isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
+activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
+    @Override
+    public void run() {
+        move();
+    }
+});
+
+                      }
+                  }
+
+
+
+                    } else {
+                        //Toast.makeText(activity_Aeps_BalanceEnquiry.this, "You are not getting any Response From Bank !! ", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            return null;
+        }
+
+    }
+    public void move(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(activity_WelcomeScreen.this, activity_Login.class);
+                startActivity(i);
+                finish();
+            }
+        }, 2000);
+    }
 }
 

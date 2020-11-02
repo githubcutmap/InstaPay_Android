@@ -200,10 +200,10 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         tv_dateofrelease = findViewById(R.id.dateofr);
         tv_androidId = findViewById(R.id.andid);
         et_loginOptions = findViewById(R.id.select);
-        tv_version.setText(appversion);
-        tv_dateofrelease.setText(dateofrelease);
+        tv_version.setText(R.string.app_version);
+        tv_dateofrelease.setText(R.string.dateofrelease);
         client = new OkHttpClient();
-        new apiCall_getversion().execute();
+
         Utils util = new Utils();
         btn_loginOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,60 +303,6 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
     OkHttpClient httpClient = createAuthenticatedClient("apiadminuser", "CuTm@_GtiDs+3#2020@!");*/
 
-    class apiCall_getversion extends AsyncTask<Request, Void, String> {
-        @Override
-        protected String doInBackground(Request... requests) {
-            okhttp3.Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/im/version")
-                    .addHeader("Accept", "*/*")
-                    .get()
-                    .build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                }
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    assert response.body() != null;
-                    //the response we are getting from api
-                    response_String = response.body().string();
-                    if (response_String != null) {
-                        Log.d("TAG","Response is+"+response_String.toString());
-                        JSONObject jsonResponse = null;
-                        try {
-                            jsonResponse = new JSONObject(response_String);
-                            latest_app_version= jsonResponse.getString("version_number");
-                            dateofrelease = jsonResponse.getString("date_of_release");
-                            Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease);
-                            setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
-
-                            //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        catch (NullPointerException e) {
-                        }
-                    } else {
-                        //Toast.makeText(activity_Aeps_BalanceEnquiry.this, "You are not getting any Response From Bank !! ", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            return null;
-        }
-
-    }
-
-    private void setText(final TextView text,final String value,final TextView text2,final String value2){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                text.setText(value);
-                text2.setText(value2);
-            }
-        });
-    }
-
 
     class apiCall_getagentdetails extends AsyncTask<Request, Void, String> {
 
@@ -366,6 +312,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             try {
                 jsonObject.put("id", username);
                 jsonObject.put("androidid", androidId);
+                jsonObject.put("password",agentPassword);
                 jsonString = jsonObject.toString();
 
             } catch (Exception e) {

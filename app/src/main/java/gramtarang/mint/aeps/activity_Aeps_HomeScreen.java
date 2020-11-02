@@ -169,7 +169,7 @@ public class activity_Aeps_HomeScreen extends AppCompatActivity implements LogOu
         }
     }
 
-   boolean doubleBackToExitPressedOnce = false;
+ /*  boolean doubleBackToExitPressedOnce = false;
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -190,7 +190,7 @@ public class activity_Aeps_HomeScreen extends AppCompatActivity implements LogOu
                 startActivity(intent);
             }
         }, 2000);
-    }
+    }*/
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
