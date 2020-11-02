@@ -122,7 +122,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
     int role;
     CoordinatorLayout coordinatorLayout;
 
-    String agentname,bankmitraid;
+    String agentname,bankmitraid,agentPassword;
     String generated_pin;
     String agentphn;
     String agentemail;
@@ -138,7 +138,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
     String response_String;
     String jsonString;
     String timestamp,areamanager_id;
-    EditText et_userName, et_loginOptions;
+    EditText et_userName, et_loginOptions,et_pass;
     ConnectionClass connectionClass;
     int selected_option = 1, i;
     boolean isValidUsername,isphnregistered,isemailregistered;
@@ -192,6 +192,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         Log.d("TAG", "Login:" + latitude + longitude + androidId + appversion + dateofrelease);
         // Initialization of all the UI component
         et_userName = findViewById(R.id.username);
+        et_pass = findViewById(R.id.password);
         btn_loginOptions = findViewById(R.id.right_arrow);
         btn_login = findViewById(R.id.login_button);
         btn_login.setEnabled(true);
@@ -236,6 +237,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
                 try {
                     username = et_userName.getText().toString();
+                    agentPassword = et_pass.getText().toString();
                     isValidUsername = util.isValidName(username);
 
                     if (!isValidUsername) {
