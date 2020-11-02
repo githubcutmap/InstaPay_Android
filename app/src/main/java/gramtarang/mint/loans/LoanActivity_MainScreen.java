@@ -114,14 +114,14 @@ public class LoanActivity_MainScreen extends AppCompatActivity implements LogOut
         applyLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//  || role==1
                 if(role==0){
                     Intent intent = new Intent(LoanActivity_MainScreen.this,LoanActivity_PrimaryScreen.class);
                     startActivity(intent);
                 }
                 else{
 
-                    title = "Apply Loan Application"+role;
+                    title = "Apply Loan Application";
                     message = "  This function is not available in your login please try after some time or contact your admin";
                     utils.dialog(LoanActivity_MainScreen.this,title,message);
                 }

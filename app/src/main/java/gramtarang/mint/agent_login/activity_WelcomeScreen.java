@@ -105,7 +105,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
 
         Utils util=new Utils();
         isRooted=util.isDeviceRooted();
-        if(!isRooted){
+        if(isRooted){
 
             DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","App can't run on rooted devices.",new DialogInterface.OnClickListener() {
                 @Override
@@ -189,7 +189,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         protected String doInBackground(Request... requests) {
             okhttp3.Request request = new Request.Builder()
                     .url("http://mintserver.gramtarang.org:8080/mint/im/version")
-                    .addHeader("Accept", "*/*")
+                    .addHeader("Accept", "/")
                     .get()
                     .build();
             client.newCall(request).enqueue(new Callback() {
@@ -209,7 +209,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
                             latest_app_version= jsonResponse.getString("version_number");
                             dateofrelease = jsonResponse.getString("date_of_release");
                             Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease);
-                         //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+                            //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
 
                             //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
                         } catch (JSONException e) {
@@ -217,33 +217,33 @@ public class activity_WelcomeScreen extends AppCompatActivity {
                         }
                         catch (NullPointerException e) {
                         }
-                  if(!getString(R.string.app_version).equals(latest_app_version)){
-                      Log.d("TAG","Errorrrrr"+getString(R.string.app_version)+latest_app_version);
-                      activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-                              DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","Outdated Version.\nPlease Contact Administrator.",new DialogInterface.OnClickListener() {
-                                  @Override
-                                  public void onClick(DialogInterface dialog, int which) {
-                                      finish();
-                                  }
-                              });
-                          }
-                      });
-                   /*   */
-                  }
-                  else{
-                      isLatestVersion=true;
-                      if(isLatestVersion && isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
-activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
-    @Override
-    public void run() {
-        move();
-    }
-});
+                        if(!getString(R.string.app_version).equals(latest_app_version)){
+                            Log.d("TAG","Errorrrrr"+getString(R.string.app_version)+latest_app_version);
+                            activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","Outdated Version.\nPlease Contact Administrator.",new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    });
+                                }
+                            });
+                            /*   */
+                        }
+                        else{
+                            isLatestVersion=true;
+                            if(isLatestVersion && !isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
+                                activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        move();
+                                    }
+                                });
 
-                      }
-                  }
+                            }
+                        }
 
 
 
@@ -262,6 +262,11 @@ activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("Latitude",latitude);
+                editor.putString("Longitude",longitude);
+                editor.commit();
                 Intent i = new Intent(activity_WelcomeScreen.this, activity_Login.class);
                 startActivity(i);
                 finish();
@@ -269,4 +274,3 @@ activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
         }, 2000);
     }
 }
-

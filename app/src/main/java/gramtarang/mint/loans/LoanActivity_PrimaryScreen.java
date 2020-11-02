@@ -151,14 +151,15 @@ public class LoanActivity_PrimaryScreen extends AppCompatActivity implements Log
         Intent intent=new Intent(getApplicationContext(), activity_Login.class);
         startActivity(intent);
     }
-EditText et_dob,et_proname,et_beneficiaryname,et_aadhaar,et_pan,et_phn,et_enteredotp,et_accountno,et_unitname,et_unitaddress,et_resaddress,et_resvpo,et_resdist,et_respin,et_lineactivity;
+EditText et_dob,et_proname,et_beneficiaryname,et_aadhaar,et_pan,et_phn,et_enteredotp,et_accountno,et_unitaddress,et_resaddress,et_resvpo,et_resdist,et_respin;
 Button verify_otp;
 ImageView backbtn;
 TextView send_otp;int i;
 int isSelectSendOTP = 0;
     OkHttpClient client;
 boolean isValidAadhaar,isValidEmail,isValidPhone,isValidOTP;
-Spinner sp_gender;boolean isValidDOB;
+Spinner sp_gender,sp_unitname,sp_lineactivity;
+boolean isValidDOB;
     AutoCompleteTextView bank_autofill;
 String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_name,accountno,unitname,unitaddress,resaddress,vpo,distt,pin,lineactivity,loan_id_generation1,load_id_generation2,selected_bank_id,
         businessexistance,selected_apgvb_branch,selected_bank_name,generated_otp,beneficiary_name,beneficiary_aadhaar,beneficiary_pan,beneficiary_phone,
@@ -207,28 +208,25 @@ SQLQueries query=new SQLQueries();
         bank_autofill=findViewById(R.id.near_bank_auto);
         backbtn = findViewById(R.id.backimg);
         et_accountno=findViewById(R.id.accno);
-        et_unitname=findViewById(R.id.unitname);
+        sp_unitname=findViewById(R.id.unitname);
         et_unitaddress=findViewById(R.id.unitaddress);
         et_resaddress=findViewById(R.id.resaddress);
         et_resvpo = findViewById(R.id.et_add_villagepo);
         et_resdist = findViewById(R.id.et_add_district);
         et_respin = findViewById(R.id.et_add_pincode);
-        et_lineactivity=findViewById(R.id.occupation);
+        sp_lineactivity=findViewById(R.id.occupation);
         et_proname=findViewById(R.id.pro_name);
         et_beneficiaryname.addTextChangedListener(LoanPrimaryTextWatcher);
         et_phn.addTextChangedListener(LoanPrimaryTextWatcher);
         et_pan.addTextChangedListener(LoanPrimaryTextWatcher);
       //  et_email.addTextChangedListener(LoanPrimaryTextWatcher);
         et_enteredotp.addTextChangedListener(LoanPrimaryTextWatcher);
-        et_unitname.addTextChangedListener(LoanPrimaryTextWatcher);
         et_accountno.addTextChangedListener(LoanPrimaryTextWatcher);
         et_unitaddress.addTextChangedListener(LoanPrimaryTextWatcher);
         et_resaddress.addTextChangedListener(LoanPrimaryTextWatcher);
         et_resvpo.addTextChangedListener(LoanPrimaryTextWatcher);
         et_resdist.addTextChangedListener(LoanPrimaryTextWatcher);
         et_respin.addTextChangedListener(LoanPrimaryTextWatcher);
-
-        et_lineactivity.addTextChangedListener(LoanPrimaryTextWatcher);
 
         et_dob.addTextChangedListener(LoanPrimaryTextWatcher);
 
@@ -258,14 +256,14 @@ SQLQueries query=new SQLQueries();
                 pro_name=et_proname.getText().toString().trim();
                 beneficiary_phone=et_phn.getText().toString().trim();
                 gender=sp_gender.getSelectedItem().toString().trim();
-                unitname=et_unitname.getText().toString().trim();
+                unitname=sp_unitname.getSelectedItem().toString().trim();
                 unitaddress=et_unitaddress.getText().toString().trim();
                 vpo = et_resvpo.getText().toString().trim();
                 distt = et_resdist.getText().toString().trim();
                 pin = et_respin.getText().toString().trim();
                 resaddress=et_resaddress.getText().toString().trim();
+                lineactivity=sp_lineactivity.getSelectedItem().toString().trim();
 
-                lineactivity=et_lineactivity.getText().toString().trim();
                 selected_index = utils.AutoCompleteTV_ApgvbBranch(LoanActivity_PrimaryScreen.this,bank_autofill,apgvbBranch_arr,"LoanActivity_Primary");
                 Log.d("TAG", "Selected Index:" + selected_index);
                 selected_apgvb_branch = apgvbBranch_arr.get(selected_index);
@@ -301,7 +299,7 @@ SQLQueries query=new SQLQueries();
                 beneficiaryId2="APGVB"+"/"+branchcode+"/"+flagid;
                 Log.d("TAG","ID is"+beneficiary_uniqueId);
                 if(!gender.equals("Gender") &&isValidDOB &&pro_name!=null && beneficiary_name!=null && selected_apgvb_branch!=null && beneficiary_phone.length()==10 &&isValidPhone && isValidAadhaar && accountno.length()==11 &&
-                        unitname!=null && unitaddress!=null && resaddress!=null && vpo!=null && distt!=null && pin!=null && lineactivity!=null) {
+                        !unitname.equals("Unit Name") && unitaddress!=null && resaddress!=null && vpo!=null && distt!=null && pin!=null && !lineactivity.equals("Line of Activity")) {
                     SQLQueries BenfDetailsforOTP=new SQLQueries();
                     Log.d("OTP","generated otp"+generated_otp);
                     BenfDetailsforOTP.insertbeneficiaryforotp(i,beneficiary_name,beneficiary_phone,generated_otp);
@@ -315,6 +313,12 @@ SQLQueries query=new SQLQueries();
                 }
                 if(gender.equals("Gender")){
                     sp_gender.getPrompt();
+                }
+                if(unitname.equals("Unit Name")){
+                    sp_unitname.getPrompt();
+                }
+                if(lineactivity.equals("Line of Activity")){
+                    sp_lineactivity.getPrompt();
                 }
                 if (beneficiarydob == null){
                     et_dob.setError("Enter Date of Birth");
@@ -359,8 +363,11 @@ if(beneficiary_phone.length()!=0){
                 }}else {
     et_phn.setError("Enter Phone Number");
 }
-                if(unitname.length()==0){
-                    et_unitname.setError("Enter Unit Name");
+                if(unitname.equals("Unit Name")){
+                    Toast.makeText(LoanActivity_PrimaryScreen.this,"Select Unit",Toast.LENGTH_SHORT).show();
+                }
+                if(lineactivity.equals("Line of Activity")){
+                    Toast.makeText(LoanActivity_PrimaryScreen.this,"Select Line of Activity",Toast.LENGTH_SHORT).show();
                 }
                 if(unitaddress.length()==0){
                     et_unitaddress.setError("Enter Unit Address");
@@ -376,9 +383,6 @@ if(beneficiary_phone.length()!=0){
                 }
                 if(resaddress.length()==0){
                     et_resaddress.setError("Enter Residential Address");
-                }
-                if(lineactivity.length()==0){
-                    et_lineactivity.setError("Enter Line of Activity");
                 }
                 if(beneficiarydob.length()!=0){
                 if(!isValidDOB){
@@ -467,12 +471,12 @@ if(beneficiary_phone.length()!=0){
 
             entered_otp=et_enteredotp.getText().toString().trim();
             accountno=et_accountno.getText().toString().trim();
-            unitname=et_unitname.getText().toString().trim();
+
             unitaddress=et_unitaddress.getText().toString().trim();
             resaddress=et_resaddress.getText().toString().trim();
-            lineactivity=et_lineactivity.getText().toString().trim();
+
             if(beneficiary_name!=null &&beneficiarydob!=null &&pro_name!=null  &&beneficiary_name!=null  && beneficiary_phone.length() == 10 &&
-                    entered_otp.length() == 6 && accountno.length() == 11 && unitname != null && unitaddress != null && resaddress != null){
+                    entered_otp.length() == 6 && accountno.length() == 11 && unitaddress != null && resaddress != null){
 
                 verify_otp.setEnabled(true);
                 verify_otp.setBackground(getDrawable(R.drawable.button));

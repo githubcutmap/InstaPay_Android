@@ -237,7 +237,7 @@
                     android:background="@drawable/editbox"
                     android:ems="13"
                     android:fontFamily="sans-serif"
-                    android:hint="Aadhar Number"
+                    android:hint="Aadhaar Number"
                     android:inputType="numberPassword"
                     android:maxLength="12"
                     android:paddingLeft="10dp"

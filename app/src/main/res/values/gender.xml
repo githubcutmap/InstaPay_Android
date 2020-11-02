@@ -24,23 +24,51 @@
     </string-array>
 
     <string-array name="ro">
-    <item>Regional Office</item>
-    <item>Khammam</item>
-    <item>Srikakulam</item>
-    <item>Parvatipuram</item>
-    <item>Visakhapatnam</item>
-    <item>Nalgonda</item>
+        <item>Regional Office</item>
+        <item>Khammam</item>
+        <item>Srikakulam</item>
+        <item>Parvatipuram</item>
+        <item>Visakhapatnam</item>
+        <item>Nalgonda</item>
+    </string-array>
 
-
-</string-array>
 
     <string-array name="loansSearch">
-    <item>Select Category</item>
-    <item>Pending</item>
-    <item>Completed</item>
-    <item>Search By ID</item>
+        <item>Select Category</item>
+        <item>Pending</item>
+        <item>Completed</item>
+        <item>Search By ID</item>
+    </string-array>
+
+    <string-array name="lineofactivity">
+        <item>Line of Activity</item>
+        <item>Kirana Shop</item>
+        <item>Pan Shop</item>
+        <item>Tailor Shop</item>
+        <item>Chicken Shop</item>
+        <item>Auto</item>
+        <item>Fancy Shop</item>
+        <item>Tiffin Center</item>
+        <item>Business</item>
+        <item>Fruits &amp; Vegetables Shop</item>
+        <item>Milk Vendor</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="unit">
+        <item>Unit Name</item>
+        <item>Kirana Shop</item>
+        <item>Pan Shop</item>
+        <item>Tailor Shop</item>
+        <item>Chicken Shop</item>
+        <item>Auto</item>
+        <item>Fancy Shop</item>
+        <item>Tiffin Center</item>
+        <item>Business</item>
+        <item>Fruits &amp; Vegetables Shop</item>
+        <item>Milk Vendor</item>
+        <item>Others</item>
+    </string-array>
 
 
-
-</string-array>
 </resources>

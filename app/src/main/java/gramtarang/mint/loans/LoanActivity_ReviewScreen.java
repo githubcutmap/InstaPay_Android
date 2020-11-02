@@ -404,8 +404,10 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                 jsonObject.put("conductedby",  null);
                 jsonObject.put("observation",  null);
                 jsonObject.put("status",0);
-                jsonObject.put("postingDate", null);
-                jsonObject.put("nearest_apgvb_bank",  beneficiaryBank);
+                //posting Date and nearestbank
+                jsonObject.put("PostingDate", null);
+                jsonObject.put("nearestapgvbbank",  beneficiaryBank);
+
                 jsonObject.put("is_read",0);
                 jsonObject.put("ro",regionalOffice);
                 jsonObject.put("armgrlatitude","0");

@@ -293,9 +293,11 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                         try {
                             //Rd service api calling method called
                             Matra_capture(pidOptions);
-                        } catch (Exception e) {
+                            //fingerprintDataConvertedtoJSON();                       } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
                             btn_submit.setEnabled(true);
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
                     }
                     //If validation got failed, setting the error messages
@@ -449,6 +451,27 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         JSONObject jsonObject = new JSONObject();
 
         try {
+            /*jsonObject.put("errcode", "errcode1");
+            jsonObject.put("errInfo", "errInfo1");
+            jsonObject.put("fCount", "fCount1");
+            jsonObject.put("fType", "fType1");
+            jsonObject.put("iCount", "iCount1");
+            jsonObject.put("iType", "iType1");
+            jsonObject.put("pCount", "pCount1");
+            jsonObject.put("pType", "pType1");
+            jsonObject.put("nmPoints", "nmPoints1");
+            jsonObject.put("qScore", "qScor1e");
+            jsonObject.put("dpID", "dpI1d");
+            jsonObject.put("rdsID", "rds1ID");
+            jsonObject.put("rdsVer", "rdsVer");
+            jsonObject.put("dc", "dc1");
+            jsonObject.put("mi", "mi1");
+            jsonObject.put("mc", "mc");
+            jsonObject.put("ci", "c1i");
+            jsonObject.put("sessionKey", "SessionK1ey");
+            jsonObject.put("hmac", "hma1c");
+            jsonObject.put("PidDatatype", "PidDatat1ype");
+            jsonObject.put("Piddata", "Pidda1ta");*/
             jsonObject.put("errcode",errcode);
             jsonObject.put("errInfo",errInfo);
             jsonObject.put("fCount",fCount);
@@ -470,6 +493,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
             jsonObject.put("hmac",hmac);
             jsonObject.put("PidDatatype",PidDatatype);
             jsonObject.put("Piddata",Piddata);
+
             pidData_json = jsonObject.toString();
             new apicallOfWithdrawalActivity().execute();
 
@@ -497,6 +521,14 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                     .addHeader("imeiNumber",androidId)
                     .addHeader("latitude", latitude)
                     .addHeader("longitude", longitude)
+                    /*.addHeader("AdhaarNumber","7896541230")
+                    .addHeader("Bankid","1022")
+                    .addHeader("phnumber","7894652130")
+                    .addHeader("name","en_name")
+                    .addHeader("amount","1000")
+                    .addHeader("imeiNumber","androidId")
+                    .addHeader("latitude", "100.3")
+                    .addHeader("longitude", "13.4")*/
                     .post(body)
                     .build();
             client.newCall(request).enqueue(new Callback() {
@@ -510,16 +542,23 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                 public void onResponse(Call call, Response response) throws IOException {
                     assert response.body() != null;
                     responseString = response.body().string();
+//responseString=" {\"statuscode\":\"ERR\",\"status\":\"Invalid Aadhaar UID or VID\",\"data\":\"\",\"timestamp\":\"2020-11-02 19:29:25\",\"ipay_uuid\":\"BF08D9C6ED45A3B15CE9\",\"orderid\":\"\",\"environment\":\"PRODUCTION\"}\n";
                     if(responseString!= null)
                     {
-                        // loadingDialog.dismissDialog();
+                        JSONObject jsonResponse = null;
                         try {
-                            JSONObject jsonResponse=new JSONObject(responseString);
-                            message=jsonResponse.getString("message");
-                            status=jsonResponse.getString("status");
-                            status_code=jsonResponse.getString("statusCode");
+                            jsonResponse = new JSONObject(responseString);
+                            // message = jsonResponse.getString("message");
+                            status = jsonResponse.getString("status");
+                            status_code = jsonResponse.getString("statuscode");
+                            //bank_RRN = jsonResponse.getString("ipay_uuid");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
                             String data=jsonResponse.getString("data");
                             JSONObject jsonData=new JSONObject(data);
+                            //status=jsonData.getString("status");
                             amount=jsonData.getString("transactionAmount");
                             transaction_status=jsonData.getString("transactionStatus");
                             balance=jsonData.getString("balanceAmount");
@@ -529,6 +568,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             timestamp=jsonData.getString("requestTransactionTime");
                             message=jsonData.getString("message");
                             fpTransId=jsonData.getString("fpTransactionId");
+
                         } catch (JSONException | NullPointerException e) {
 /*                            DialogActivity.DialogCaller.showDialog(activity_Aeps_Withdraw.this,"Transaction Failed",message+"."+"This transaction cannot be completed.Please try after sometime\"",new DialogInterface.OnClickListener() {
                                 @Override

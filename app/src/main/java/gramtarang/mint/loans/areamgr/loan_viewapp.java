@@ -349,7 +349,9 @@ public class loan_viewapp extends AppCompatActivity {
                             String beneficiary_name = llist1.getJSONObject(i).getString("beneficiary_name");
                             String beneficiary_phn = llist1.getJSONObject(i).getString("beneficiary_phn");
                             String beneficiary_accno = llist1.getJSONObject(i).getString("beneficiary_accno");
+                            //nearestapgvb bank
                             String nearest_apgvb_bank = llist1.getJSONObject(i).getString("nearest_apgvb_bank");
+
                             String beneficiary_lineofactivity = llist1.getJSONObject(i).getString("beneficiary_lineofactivity");
                             String beneficiary_fatherhusband = llist1.getJSONObject(i).getString("beneficiary_fatherhusband");
                             String beneficiary_dob = llist1.getJSONObject(i).getString("beneficiary_dob");

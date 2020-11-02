@@ -158,7 +158,7 @@ public class LoanActivity_FinalScreen extends AppCompatActivity implements LogOu
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoanActivity_FinalScreen.this, activity_Aeps_HomeScreen.class);
+                Intent intent = new Intent(LoanActivity_FinalScreen.this, LoanActivity_MainScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
