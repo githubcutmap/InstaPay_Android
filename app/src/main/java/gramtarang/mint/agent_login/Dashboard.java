@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,12 +40,32 @@ public class Dashboard extends AppCompatActivity {
     public static final String mypreference = "mypref";
     String agentname,androidId,jsonString,response_String,lastlogin_time;
     int aeps,bbps,loan,pan,card;
-    ImageView imaeps,imbbps,impan,imcard,imloan;
+    ImageView imaeps,imbbps,impan,imcard,imloan,logout;
     LinearLayout llaeps,llbbps,llpan,llcard,llloan;
     OkHttpClient client;
     TextView tv_timestamp,tv_agentname,tv_textMessage;
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Click again to exit.", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+                Intent intent=new Intent(getApplicationContext(), activity_Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        }, 2000);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
@@ -61,6 +83,7 @@ public class Dashboard extends AppCompatActivity {
         imloan=findViewById(R.id.loan);
         imcard=findViewById(R.id.card);
         imbbps=findViewById(R.id.bbps);
+        logout=findViewById(R.id.logout);
 tv_timestamp=findViewById(R.id.menu_timestamp);
 tv_agentname=findViewById(R.id.agent_name);
 tv_agentname.setText(agentname);
@@ -73,6 +96,13 @@ tv_agentname.setText(agentname);
         Utils gethour=new Utils();
         String hour = gethour.gethour();
         tv_textMessage.setText(hour+"!");
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Dashboard.this,activity_Login.class);
+                startActivity(intent);
+            }
+        });
         new apiCall_getlastlogin().execute();
 
 /*        if(aeps == 1){
