@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Insta Money</string>
+
+    <string name="tyfbwu">Thank You for Banking With Us</string>
+
+    <string name="copyrights">2020 GTIDS. All Rights Reserved.</string>
+    <string name="title_activity_loan_view_application_tabbed">LoanActivity_viewApplication_tabbed
+    </string>
+    <string name="tab_text_1">Pending</string>
+    <string name="tab_text_2">Completed</string>
+    <string name="tab_text_3">Search By ID</string>
+    <string name="title_activity_main">MainActivity</string>
+
+</resources>
