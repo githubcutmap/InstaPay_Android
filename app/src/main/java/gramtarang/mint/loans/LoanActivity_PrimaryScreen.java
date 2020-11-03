@@ -240,7 +240,7 @@ SQLQueries query=new SQLQueries();
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), activity_Aeps_HomeScreen.class);
+                Intent intent = new Intent(getApplicationContext(), LoanActivity_MainScreen.class);
                 startActivity(intent);
             }
         });
@@ -500,7 +500,7 @@ if(beneficiary_phone.length()!=0){
         protected String doInBackground(Request... requests) {
             client=new OkHttpClient();
             Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/loans/getBanks")
+                    .url("http://bankmgr.gramtarang.org:8081/mint/loans/getBanks")
                     //.addHeader("Accept", "/")
                     .get()
                     .build();

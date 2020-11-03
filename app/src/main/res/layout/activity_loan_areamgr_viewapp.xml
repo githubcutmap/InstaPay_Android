@@ -1350,6 +1350,7 @@
             </Button>
 
 
+
             <LinearLayout
                 android:id="@+id/id_ll_buttons"
                 android:layout_width="match_parent"
@@ -1357,7 +1358,8 @@
                 android:layout_gravity="bottom"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="invisible">
+
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="50dp"
@@ -1389,6 +1391,14 @@
 
                 </Button>
             </LinearLayout>
+            <TextView
+                android:id="@+id/tv_amlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/grayblack"
+                android:textSize="14sp"/>
             <ImageView
                 android:id="@+id/backimg"
                 android:layout_width="40dp"

@@ -79,7 +79,7 @@ public class loan_viewapp extends AppCompatActivity {
             bEmail,
             bGender,
             bLoanType,
-            bRepaymentPeriod;
+            bRepaymentPeriod,am_loc;
     String userSearchID,
             applicationArr[],TAG="View Application";
     TableLayout tableView;
@@ -139,6 +139,7 @@ public class loan_viewapp extends AppCompatActivity {
         reject = findViewById(R.id.btn_reject);
         accept = findViewById(R.id.btn_confirm);
         getLocation = findViewById(R.id.btn_getloc);
+        am_loc = findViewById(R.id.tv_amlocation);
         backbtn = findViewById(R.id.backimg);
         proof1 = findViewById(R.id.thumb__1);
         proof2 = findViewById(R.id.thumb__2);
@@ -321,7 +322,7 @@ public class loan_viewapp extends AppCompatActivity {
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, jsonString);
         okhttp3.Request request = new Request.Builder()
-                .url("http://mintserver.gramtarang.org:8080/mint/loans/getLoansapp")
+                .url("http://bankmgr.gramtarang.org:8081/mint/loans/getLoansapp")
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
@@ -350,7 +351,7 @@ public class loan_viewapp extends AppCompatActivity {
                             String beneficiary_phn = llist1.getJSONObject(i).getString("beneficiary_phn");
                             String beneficiary_accno = llist1.getJSONObject(i).getString("beneficiary_accno");
                             //nearestapgvb bank
-                            String nearest_apgvb_bank = llist1.getJSONObject(i).getString("nearest_apgvb_bank");
+                            String nearestapgvbbank = llist1.getJSONObject(i).getString("nearestapgvbbank");
 
                             String beneficiary_lineofactivity = llist1.getJSONObject(i).getString("beneficiary_lineofactivity");
                             String beneficiary_fatherhusband = llist1.getJSONObject(i).getString("beneficiary_fatherhusband");
@@ -406,7 +407,7 @@ public class loan_viewapp extends AppCompatActivity {
                             appdetails.add(existing_otherbank_loans);
                             appdetails.add(own_property);
                             appdetails.add(status);
-                            appdetails.add(nearest_apgvb_bank);
+                            appdetails.add(nearestapgvbbank);
                             appdetails.add(armgrstatus);
                             appdetails.add(beneficiary_latitude);
                             appdetails.add(beneficiary_longitude);
@@ -546,7 +547,7 @@ Log.d("Setproof",bankname+"  if"+id);
             public void run() {
                 try  {
                     URL url = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
-                    Log.d("Setproof url","http://bankmgr.gramtarang.org:8081/mint/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof url","http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
                     bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     proof1.setImageBitmap(bmp);
 
@@ -566,7 +567,7 @@ Log.d("Setproof",bankname+"  if"+id);
                 try  {
 
                     URL url2 = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadbp?fname=BP_apgvb_mudra_"+code+".jpg");
-                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/downloadbp?fname=BP_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/doc/downloadbp?fname=BP_apgvb_mudra_"+code+".jpg");
                     bmp2 = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
                     proof2.setImageBitmap(bmp2);
 
@@ -586,7 +587,7 @@ Log.d("Setproof",bankname+"  if"+id);
             public void run() {
                 try  {
                     URL url3 = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadpd?fname=PD_apgvb_mudra_"+code+".jpg");
-                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/downloadpd?fname=PD_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/doc/downloadpd?fname=PD_apgvb_mudra_"+code+".jpg");
                     bmp3 = BitmapFactory.decodeStream(url3.openConnection().getInputStream());
                     proof3.setImageBitmap(bmp3);
 
@@ -633,6 +634,8 @@ Log.d("Setproof",bankname+"  if"+id);
                 else {
                     locationTrack.showSettingsAlert();
                 }
+
+                //am_loc.setText("Location: "+String.valueOf(am_longitude)+" "+String.valueOf(am_latitude));
                 getLocation.setVisibility(View.GONE);
                 ll_buttons.setVisibility(View.VISIBLE);
                 //double d_benlattitude=Double.parseDouble(ben_lattitude);
@@ -688,7 +691,7 @@ Log.d("Setproof",bankname+"  if"+id);
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, jsonString);
         okhttp3.Request request = new Request.Builder()
-                .url("http://mintserver.gramtarang.org:8080/mint/loans/updateareamgrstatus")
+                .url("http://bankmgr.gramtarang.org:8081/mint/loans/updateareamgrstatus")
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();

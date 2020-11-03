@@ -462,7 +462,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, data_json);
             okhttp3.Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/loans/registration")
+                    .url("http://bankmgr.gramtarang.org:8081/mint/loans/registration")
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();

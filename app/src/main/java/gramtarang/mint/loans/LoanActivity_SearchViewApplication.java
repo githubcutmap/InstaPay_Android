@@ -227,6 +227,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
                 if(userSearchID.length() == 17){
                     //SQLQueries applicationDetails = new SQLQueries();
                     //applicationArr = applicationDetails.getLoanApplicarionDetails(userSearchID);
+                    client=new OkHttpClient();
                     api_getAppdetails(userSearchID);
 
 
@@ -386,11 +387,11 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         });
     }
 
-    private void api_getAppdetails(String uniqueid){
+    private void api_getAppdetails(String id){
         ArrayList<String> appdetails = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("uniqueid", uniqueid);
+            jsonObject.put("uniqueid", id);
             jsonString = jsonObject.toString();
 
         } catch (Exception e) {
@@ -399,7 +400,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, jsonString);
         okhttp3.Request request = new Request.Builder()
-                .url("http://mintserver.gramtarang.org:8080/mint/loans/getLoansapp")
+                .url("http://bankmgr.gramtarang.org:8081/mint/loans/getLoansapp")
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
@@ -427,7 +428,9 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
                             String beneficiary_name = llist1.getJSONObject(i).getString("beneficiary_name");
                             String beneficiary_phn = llist1.getJSONObject(i).getString("beneficiary_phn");
                             String beneficiary_accno = llist1.getJSONObject(i).getString("beneficiary_accno");
-                            String nearest_apgvb_bank = llist1.getJSONObject(i).getString("nearest_apgvb_bank");
+                            //nearestapgvb bank
+                            String nearestapgvbbank = llist1.getJSONObject(i).getString("nearestapgvbbank");
+
                             String beneficiary_lineofactivity = llist1.getJSONObject(i).getString("beneficiary_lineofactivity");
                             String beneficiary_fatherhusband = llist1.getJSONObject(i).getString("beneficiary_fatherhusband");
                             String beneficiary_dob = llist1.getJSONObject(i).getString("beneficiary_dob");
@@ -454,7 +457,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
                             String beneficiary_longitude = llist1.getJSONObject(i).getString("longitude");
 
 
-                            appdetails.add(uniqueid);
+                            appdetails.add(id);
                             appdetails.add(bankmitra_name);
                             appdetails.add(bankmitra_id);
                             appdetails.add(bankmitra_contactno);
@@ -482,7 +485,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
                             appdetails.add(existing_otherbank_loans);
                             appdetails.add(own_property);
                             appdetails.add(status);
-                            appdetails.add(nearest_apgvb_bank);
+                            appdetails.add(nearestapgvbbank);
                             appdetails.add(armgrstatus);
                             appdetails.add(beneficiary_latitude);
                             appdetails.add(beneficiary_longitude);
@@ -508,51 +511,6 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
             }
         });
     }
-
-   /* {
-        "llist2": [
-        {
-            "id": 7,
-                "uniqueid": "APGVB/81102/512160",
-                "bankmitra_name": "Kenguva Satheesh",
-                "bankmitra_id": "1777",
-                "bankmitra_contactno": "9182831400",
-                "beneficiary_name": "Jaggupalli Laxmi",
-                "beneficiary_phn": "9502865546",
-                "beneficiary_accno": "73124234471",
-                "beneficiary_lineofactivity": "Tailar Shop",
-                "beneficiary_fatherhusband": "Srinivasa Rao",
-                "beneficiary_dob": "01/01/1990",
-                "beneficiary_aadhaarno": "843373467563",
-                "beneficiary_pancard": "",
-                "beneficiary_resaddress": "Saravakota Village & Post, Saravakota Mandal, Srikakulam Dist, A.P 532426",
-                "beneficiary_businessname": "Tailor Shop",
-                "beneficiary_businessaddress": " Saravakota Village & Post, Saravakota Mandal, Srikakulam Dist, A.P 532426",
-                "business_proname": " Jaggupalli Laxmi",
-                "beneficiary_businessexistence": " 2Years6Months",
-                "beneficiary_education": " 7th Class",
-                "beneficiary_category": " OBC",
-                "beneficiary_family_child": " 2",
-                "beneficiary_family_adult": "2",
-                "beneficiary_sustenance": "5000",
-                "beneficiary_purpose": " Working Capital",
-                "beneficiary_termloan": "10000",
-                "beneficiary_tenor": " 24",
-                "existing_apgvb_loan": " ",
-                "existing_otherbank_loans": " ",
-                "own_property": " Yes",
-                "remark": " null",
-                "id_details": null,
-                "conductedon": null,
-                "conductedby": null,
-                "observation": null,
-                "status": "1",
-                "postingDate": null,
-                "nearestAPGVBBank": "Saravakota",
-                "is_Read": "1"
-        }
-    ]
-    }*/
 
     private void fillDetails(ArrayList<String> appdetails) {
         tableView.setVisibility(View.VISIBLE);
@@ -621,18 +579,10 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
             @Override
             public void run() {
                 try  {
-                    URL url = new URL("https://bankmgr.gramtarang.org/webapp/uploads/ADH/ADH_apgvb_mudra_"+code+".jpg");
-                    Log.d("Setproof url","https://bankmgr.gramtarang.org/webapp/uploads/ADH/ADH_apgvb_mudra_"+code+".jpg");
+                    URL url = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof url","http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
                     bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     proof1.setImageBitmap(bmp);
-
-                    URL url2 = new URL("https://bankmgr.gramtarang.org/webapp/uploads/BP/BP_apgvb_mudra_"+code+".jpg");
-                    bmp2 = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
-                    proof2.setImageBitmap(bmp2);
-
-                    URL url3 = new URL("https://bankmgr.gramtarang.org/webapp/uploads/PD/PD_apgvb_mudra_"+code+".jpg");
-                    bmp3 = BitmapFactory.decodeStream(url3.openConnection().getInputStream());
-                    proof3.setImageBitmap(bmp3);
 
 
                 } catch (Exception e) {
@@ -642,6 +592,45 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         });
 
         thread.start();
+
+        Thread thread2 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+
+                    URL url2 = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadbp?fname=BP_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/doc/downloadbp?fname=BP_apgvb_mudra_"+code+".jpg");
+                    bmp2 = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
+                    proof2.setImageBitmap(bmp2);
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread2.start();
+
+        Thread thread3 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    URL url3 = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadpd?fname=PD_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/doc/downloadpd?fname=PD_apgvb_mudra_"+code+".jpg");
+                    bmp3 = BitmapFactory.decodeStream(url3.openConnection().getInputStream());
+                    proof3.setImageBitmap(bmp3);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread3.start();
 
         proof1.setOnClickListener(new View.OnClickListener() {
             @Override

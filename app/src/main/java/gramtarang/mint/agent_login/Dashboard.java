@@ -225,7 +225,7 @@ tv_agentname.setText(agentname);
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/im/getagentlastlogin")
+                    .url("http://bankmgr.gramtarang.org:8081/mint/im/getagentlastlogin")
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();

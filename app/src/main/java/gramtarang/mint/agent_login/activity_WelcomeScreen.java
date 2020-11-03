@@ -95,6 +95,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         if (locationTrack.canGetLocation()) {
             longitude = String.valueOf(locationTrack.getLongitude());
             latitude = String.valueOf(locationTrack.getLatitude());
+
         }
         else {
             locationTrack.showSettingsAlert();
@@ -188,8 +189,8 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         @Override
         protected String doInBackground(Request... requests) {
             okhttp3.Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/im/version")
-                    .addHeader("Accept", "/")
+                    .url("http://bankmgr.gramtarang.org:8081/mint/im/version")
+                    .addHeader("Accept", "*/*")
                     .get()
                     .build();
             client.newCall(request).enqueue(new Callback() {
@@ -274,3 +275,4 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         }, 2000);
     }
 }
+

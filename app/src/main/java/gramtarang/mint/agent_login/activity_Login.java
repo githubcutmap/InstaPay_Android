@@ -321,7 +321,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/im/getagentdetails")
+                    .url("http://bankmgr.gramtarang.org:8081/mint/loans/getagentdetails")
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
@@ -417,6 +417,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             verification_type = "OTP";
 //            btn_login.setEnabled(false);
             generated_pin = utils.getOTPString();
+            Log.d("TAG","pin: "+generated_pin);
             sms.sendSms1(generated_pin, phn, name);
             try {
                 username = et_userName.getText().toString();

@@ -80,7 +80,7 @@ public class CompletedFragment extends Fragment {
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, jsonString);
         okhttp3.Request request = new Request.Builder()
-                .url("http://mintserver.gramtarang.org:8080/mint/im/getagentidbyam")
+                .url("http://bankmgr.gramtarang.org:8081/mint/loans/getagentidbyam")
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
@@ -167,7 +167,7 @@ public class CompletedFragment extends Fragment {
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, jsonString);
         okhttp3.Request request = new Request.Builder()
-                .url("http://mintserver.gramtarang.org:8080/mint/im/getloansbyagentid")
+                .url("http://bankmgr.gramtarang.org:8081/mint/loans/getloansbyagentid")
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
