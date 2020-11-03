@@ -64,11 +64,7 @@
         <activity
             android:name=".loans.LoanActivity_MainScreen"
             android:parentActivityName=".agent_login.Dashboard">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -116,6 +112,12 @@
         </receiver>
 
         <activity android:name=".agent_login.activity_WelcomeScreen">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

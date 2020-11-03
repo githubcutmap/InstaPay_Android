@@ -545,18 +545,10 @@ Log.d("Setproof",bankname+"  if"+id);
             @Override
             public void run() {
                 try  {
-                    URL url = new URL("https://bankmgr.gramtarang.org/webapp/uploads/ADH/ADH_apgvb_mudra_"+code+".jpg");
-                    Log.d("Setproof url","https://bankmgr.gramtarang.org/webapp/uploads/ADH/ADH_apgvb_mudra_"+code+".jpg");
+                    URL url = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof url","http://bankmgr.gramtarang.org:8081/mint/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
                     bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     proof1.setImageBitmap(bmp);
-
-                    URL url2 = new URL("https://bankmgr.gramtarang.org/webapp/uploads/BP/BP_apgvb_mudra_"+code+".jpg");
-                    bmp2 = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
-                    proof2.setImageBitmap(bmp2);
-
-                    URL url3 = new URL("https://bankmgr.gramtarang.org/webapp/uploads/PD/PD_apgvb_mudra_"+code+".jpg");
-                    bmp3 = BitmapFactory.decodeStream(url3.openConnection().getInputStream());
-                    proof3.setImageBitmap(bmp3);
 
                     
                 } catch (Exception e) {
@@ -566,6 +558,45 @@ Log.d("Setproof",bankname+"  if"+id);
         });
 
         thread.start();
+
+        Thread thread2 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+
+                    URL url2 = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadbp?fname=BP_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/downloadbp?fname=BP_apgvb_mudra_"+code+".jpg");
+                    bmp2 = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
+                    proof2.setImageBitmap(bmp2);
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread2.start();
+
+        Thread thread3 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    URL url3 = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadpd?fname=PD_apgvb_mudra_"+code+".jpg");
+                    Log.d("Setproof bp url","http://bankmgr.gramtarang.org:8081/mint/downloadpd?fname=PD_apgvb_mudra_"+code+".jpg");
+                    bmp3 = BitmapFactory.decodeStream(url3.openConnection().getInputStream());
+                    proof3.setImageBitmap(bmp3);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread3.start();
 
         proof1.setOnClickListener(new View.OnClickListener() {
             @Override

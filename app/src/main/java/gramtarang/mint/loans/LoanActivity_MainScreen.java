@@ -115,7 +115,7 @@ public class LoanActivity_MainScreen extends AppCompatActivity implements LogOut
             @Override
             public void onClick(View view) {
 //  || role==1
-                if(role==0){
+                if(role==0 || role==1){
                     Intent intent = new Intent(LoanActivity_MainScreen.this,LoanActivity_PrimaryScreen.class);
                     startActivity(intent);
                 }
