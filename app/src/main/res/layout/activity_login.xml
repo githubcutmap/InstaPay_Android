@@ -159,7 +159,7 @@
         android:layout_gravity="center"
         app:cardBackgroundColor="@color/cream"
         app:cardCornerRadius="20dp">-->
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -200,7 +200,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical|right"
                 android:src="@drawable/rightarrow"></ImageView>
-        </LinearLayout><!--
+        </LinearLayout>--><!--
     </androidx.cardview.widget.CardView>-->
     <!--ImageView
         android:id="@+id/fp"

@@ -193,38 +193,19 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         // Initialization of all the UI component
         et_userName = findViewById(R.id.username);
         et_pass = findViewById(R.id.password);
-        btn_loginOptions = findViewById(R.id.right_arrow);
+      //  btn_loginOptions = findViewById(R.id.right_arrow);
         btn_login = findViewById(R.id.login_button);
         btn_login.setEnabled(true);
         tv_version = findViewById(R.id.version);
         tv_dateofrelease = findViewById(R.id.dateofr);
         tv_androidId = findViewById(R.id.andid);
-        et_loginOptions = findViewById(R.id.select);
+      //  et_loginOptions = findViewById(R.id.select);
         tv_version.setText(R.string.app_version);
         tv_dateofrelease.setText(R.string.dateofrelease);
         client = new OkHttpClient();
 
         Utils util = new Utils();
-        btn_loginOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selected_option++;
-                if(selected_option % 2 == 0){
-                    et_loginOptions.setText("Email");
-                    selected_method = "Email";
-                    btn_login.setEnabled(true);
-                }
-                else if (selected_option == 0 ) {
-                    Toast.makeText(activity_Login.this,"Please Select Login Option",Toast.LENGTH_SHORT).show();
-                    btn_login.setEnabled(false);
-                }
-                else {
-                    et_loginOptions.setText("OTP");
-                    selected_method = "OTP";
-                    btn_login.setEnabled(true);
-                }
-            }
-        });
+
 
         tv_androidId.setText(androidId);
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -236,26 +217,32 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             public void onClick(View view) {
 
                 try {
-                    username = et_userName.getText().toString();
-                    agentPassword = et_pass.getText().toString();
+                    username = et_userName.getText().toString(); } catch (NullPointerException e) {
+                    et_userName.setError("Enter Username");
+
+                }
+                try{
+                    agentPassword = et_pass.getText().toString();}catch (NullPointerException e){
+                    et_pass.setError("Enter Password");
+                }
                     isValidUsername = util.isValidName(username);
 
                     if (!isValidUsername) {
                         et_userName.setError("Enter Valid Username");
                     }
-                } catch (NullPointerException e) {
-                    et_userName.setError("Enter Username");
+                    else{
+                        new apiCall_getagentdetails().execute();
+                    }
 
-                }
 
-                if (selected_option != 1) {
-                    new apiCall_getagentdetails().execute();
+             /*   if (selected_option != 1) {
+
 
                 } else {
 
                     Toast.makeText(activity_Login.this, "Please Select Login Option ", Toast.LENGTH_LONG).show();
                     btn_login.setEnabled(true);
-                }
+                }*/
             }
         });
     }
@@ -332,7 +319,12 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                 public void onFailure(Call call, IOException e) {
                     Log.d("TAG", "response onfailure" );
                     //Snackbar.make(coordinatorLayout, "Agent not registered.\\nPlease Contact Administrator", Snackbar.LENGTH_LONG).setAction("action",null).show();
-
+                    DialogActivity.DialogCaller.showDialog(activity_Login.this,"Login Failed","Server Unreachable.\nPlease contact administrator.",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
                     // Toast.makeText(activity_Login.this,"Agent not registered.\nPlease Contact Administrator"+androidId,Toast.LENGTH_SHORT).show();
 
                 }
@@ -360,12 +352,6 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                             card=llist1.getJSONObject(0).getInt("card");
                             loan=llist1.getJSONObject(0).getInt("loan");
                             Log.d("TAG","AMID:"+areamanager_id+"Roles:"+aeps+pan+card+loan+bbps);
-                            if(agentphn!=null){
-                                isphnregistered=true;
-                            }
-                            if(agentemail!=null){
-                                isemailregistered=true;
-                            }
                             activity_Login.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -411,70 +397,40 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
     }
     public void method(String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
-
-        if (selected_method.equals("OTP")) {
-            // utils.getprogressDialog(activity_Login.this, "Logging in", "Please Wait");
-            verification_type = "OTP";
+        // utils.getprogressDialog(activity_Login.this, "Logging in", "Please Wait");
+        verification_type = "OTP";
 //            btn_login.setEnabled(false);
-            generated_pin = utils.getOTPString();
-            Log.d("TAG","pin: "+generated_pin);
-            sms.sendSms1(generated_pin, phn, name);
-            try {
-                username = et_userName.getText().toString();
-                Log.d("TAG","Entered"+username);
-            } catch (NullPointerException e) {
-                et_userName.setError("Enter Username");
+        generated_pin = utils.getOTPString();
+        Log.d("TAG","pin: "+generated_pin);
+        sms.sendSms1(generated_pin, phn, name);
+        try {
+            username = et_userName.getText().toString();
+            Log.d("TAG","Entered"+username);
+        } catch (NullPointerException e) {
+            et_userName.setError("Enter Username");
 
-            }
-            androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            Log.d("TAG","Sample"+agentphn);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("AndroidId",androidId);
-            editor.putString("AgentName", name);
-            editor.putString("AgentEmail", email);
-            editor.putString("AgentPhone", phn);
-            editor.putString("BankMitraId", bankmitraid);
-            editor.putString("VerificationMethod", verification_type);
-            editor.putString("LoginOTP", generated_pin);
-            editor.putString("AreaManagerId", areamanagerid);
-            editor.putInt("Role", role);
-            editor.putInt("aeps",aeps);
-            editor.putInt("pan",pan);
-            editor.putInt("loan",loan);
-            editor.putInt("bbps",bbps);
-            editor.putInt("card",card);
-            editor.commit();
+        }
+        androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.d("TAG","Sample"+agentphn);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("AndroidId",androidId);
+        editor.putString("AgentName", name);
+        editor.putString("AgentEmail", email);
+        editor.putString("AgentPhone", phn);
+        editor.putString("BankMitraId", bankmitraid);
+        editor.putString("VerificationMethod", verification_type);
+        editor.putString("LoginOTP", generated_pin);
+        editor.putString("AreaManagerId", areamanagerid);
+        editor.putInt("Role", role);
+        editor.putInt("aeps",aeps);
+        editor.putInt("pan",pan);
+        editor.putInt("loan",loan);
+        editor.putInt("bbps",bbps);
+        editor.putInt("card",card);
+        editor.commit();
 
-            Intent i = new Intent(activity_Login.this, LoginVerification.class);
-            startActivity(i);
-        }
-        if (selected_method.equals("Email")) {
-            // utils.getprogressDialog(activity_Login.this, "Logging in", "Please Wait");
-            btn_login.setEnabled(false);
-            verification_type = "Email";
-            generated_pin = utils.getOTPString();
-            Log.d(TAG, "Agent email is:" + agentemail);
-            utils.sendOTPMail(generated_pin, agentemail, agentname);
-            androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("AndroidId",androidId);
-            editor.putString("AgentName", name);
-            editor.putString("AgentEmail", email);
-            editor.putString("AgentPhone", phn);
-            editor.putString("BankMitraId", bankmitraid);
-            editor.putString("VerificationMethod", verification_type);
-            editor.putString("LoginOTP", generated_pin);
-            editor.putString("AreaManagerId", areamanagerid);
-            editor.putInt("Role", role);
-            editor.putInt("aeps",aeps);
-            editor.putInt("pan",pan);
-            editor.putInt("loan",loan);
-            editor.putInt("bbps",bbps);
-            editor.putInt("card",card);
-            editor.commit();
-            Intent i = new Intent(activity_Login.this, LoginVerification.class);
-            startActivity(i);
-        }
+        Intent i = new Intent(activity_Login.this, LoginVerification.class);
+        startActivity(i);
 
     }
 

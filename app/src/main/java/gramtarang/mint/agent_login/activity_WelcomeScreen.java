@@ -247,8 +247,6 @@ public class activity_WelcomeScreen extends AppCompatActivity {
 
 
 
-                    } else {
-                        //Toast.makeText(activity_Aeps_BalanceEnquiry.this, "You are not getting any Response From Bank !! ", Toast.LENGTH_SHORT).show();
                     }
 
                 }

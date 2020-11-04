@@ -100,14 +100,11 @@ public class LoginVerification extends AppCompatActivity {
         agentphn=preferences.getString("AgentPhone","No name defined");;
         agentemail=preferences.getString("AgentEmail","No name defined");
         agentname=preferences.getString("AgentName","No name defined");
-        verification_type=preferences.getString("VerificationMethod","No name defined");
+     //   verification_type=preferences.getString("VerificationMethod","No name defined");
         generated_pin=preferences.getString("LoginOTP","No name defined");
 Log.d("TAG","WQQQ"+verification_type+generated_pin+agentphn+agentemail);
-        if (verification_type.equals("OTP")) {
-            otp_type.setText(agentphn);
-        } else {
-            otp_type.setText(agentemail);
-        }
+        otp_type.setText(agentphn);
+
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         timestamp = s.format(new Date());
 
@@ -128,14 +125,7 @@ Log.d("TAG","WQQQ"+verification_type+generated_pin+agentphn+agentemail);
                   //  Log.d(TAG,"Agent email is:"+agentemail);
                     MobileSMSAPI sms=new MobileSMSAPI();
                     Log.d(TAG,"Agent Phn is:"+agentphn);
-                    if(verification_type.equals("OTP")){
-                        sms.sendSms1(generated_pin,agentphn,agentname);
-                    }
-                    else{
-                        utils.sendOTPMail(generated_pin,agentemail,agentname);
-                    }
-
-
+                    sms.sendSms1(generated_pin,agentphn,agentname);
                     timer();
                 }
                 else{
@@ -378,10 +368,9 @@ else{
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
                 public void onFailure(Call call, IOException e) {
+
                 }
 
-                //if API call got success then it will go for this onResponse also where we are collection
-                //the response as well
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     assert response.body() != null;
