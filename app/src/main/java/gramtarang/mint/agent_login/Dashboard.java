@@ -251,7 +251,11 @@ tv_agentname.setText(agentname);
                             Log.d("TAG","Last Login is:"+lastlogin_time);
                             tv_timestamp.setText(lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));
 
-
+                            preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("LastLogin",lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));
+                          //  editor.putString("Longitude",longitude);
+                            editor.commit();
 
                         } catch (Exception e) {
                             e.printStackTrace();

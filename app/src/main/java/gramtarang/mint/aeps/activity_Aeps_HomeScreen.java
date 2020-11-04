@@ -207,7 +207,9 @@ client=new OkHttpClient();
         androidId=preferences.getString("AndroidId","No name defined");
         bankmitra_id =preferences.getString("AgentId","No name defined");
         agentname=preferences.getString("AgentName","No name defined");
+        lastlogin_time=preferences.getString("LastLogin","No name defined");
         menu_timestamp=findViewById(R.id.menu_timestamp);
+        menu_timestamp.setText(lastlogin_time);
         textMessage = findViewById(R.id.textMessage);
         agent_name = findViewById(R.id.agent_name);
         agent_name.setText(agentname);
@@ -231,7 +233,7 @@ client=new OkHttpClient();
         aepsBalance.setEnabled(true);
         aadhaarPay.setEnabled(true);
 //        loan.setEnabled(true);
-new apiCall_getlastlogin().execute();
+
         //APICalling apiCalling = new APICalling();
         //ArrayList arrayList = apiCalling.getagentdetails("2323","b912df01ef572d57");
         //Log.d("TAG","agents"+arrayList);
@@ -381,67 +383,5 @@ menu_timeaststamp.setText(time);*/
         Utils gethour=new Utils();
         String hour = gethour.gethour();
         textMessage.setText(hour+"!");
-    }
-    class apiCall_getlastlogin extends AsyncTask<Request, Void, String> {
-        @Override
-        protected String doInBackground(Request... requests) {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                Log.d("TAG","ANDROID"+androidId);
-                jsonObject.put("androidid", androidId);
-                jsonObject.put("loginstatus", "Success");
-                jsonString = jsonObject.toString();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            MediaType JSON = MediaType.parse("application/json");
-            RequestBody body = RequestBody.create(JSON, jsonString);
-            Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/im/getagentlastlogin")
-                    .addHeader("Accept", "*/*")
-                    .post(body)
-                    .build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-
-                //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
-                public void onFailure(Call call, IOException e) {
-                }
-
-                //if API call got success then it will go for this onResponse also where we are collection
-                //the response as well
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    assert response.body() != null;
-                    response_String = response.body().string();
-                    if (response_String != null) {
-                        JSONObject jsonResponse = null;
-                        try {
-                            jsonResponse = new JSONObject(response_String);
-                            JSONArray llist1 = jsonResponse.getJSONArray("getagentlastlogin");
-                            lastlogin_time = llist1.getJSONObject(0).getString("timestamp");
-                            Log.d("TAG","Last Login is:"+lastlogin_time);
-                            menu_timestamp.setText(lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));
-
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-
-
-
-                    }
-                }
-
-            });
-
-
-            return null;
-        }
-
     }
 }
