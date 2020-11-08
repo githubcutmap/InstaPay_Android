@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,6 +29,12 @@ import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
 import gramtarang.mint.api.JavaMailAPI;
 import gramtarang.mint.loans.areamgr.MainActivity;
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Route;
 
 public class Utils extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -46,6 +53,19 @@ public class Utils extends AppCompatActivity {
     String pidDataXML,agentid;
     List<String> al = new ArrayList<String>();
     String[] arr=new String[100];
+    public static OkHttpClient createAuthenticatedClient(final String api_username,
+                                                         final String api_password) {
+        // build client with authentication information.
+        OkHttpClient httpClient = new OkHttpClient.Builder().authenticator(new Authenticator() {
+            public Request authenticate(Route route, Response response) throws IOException {
+                String credential = Credentials.basic(api_username, api_password);
+                return response.request().newBuilder().header("Authorization", credential).build();
+            }
+        }).build();
+        return httpClient;
+    }
+
+
     public void getprogressDialog(Context context, String title, String message){
         progressDialog=new ProgressDialog(context,R.style.Theme_RJProgressDialog);
         progressDialog.setMessage(message);

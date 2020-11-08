@@ -37,11 +37,7 @@
         <activity android:name=".bbps.bbps_billpayment"></activity>
         <activity android:name=".bbps.bbps_billfetch" />
         <activity android:name=".bbps.bbps_biller">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".agent_login.Dashboard">
 
@@ -119,7 +115,11 @@
         </receiver>
 
         <activity android:name=".agent_login.activity_WelcomeScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data
