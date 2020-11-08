@@ -181,7 +181,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     SharedPreferences preferences;
     public static final String mypreference = "mypref";
     private static final String TAG = "MINI STATEMENT";
-    String transtype="MINI STATEMENT",agent_phone_number,agent_name,selected_bank_name,selected_bank_id,agentid,latitude,longitude,banks,selected_bank,en_aadhaar, en_name, en_phn,BankId,timeStamp2,avlBalance, responseString,androidId,mdate,mtxnType,mnarration,mamount,pidDataXML, message, status, status_code,custName,ipAddress,lati,longi,transaction_amount, pidOptions,data, timestamp,fpTransId,agentId;
+    String username,password,transtype="MINI STATEMENT",agent_phone_number,agent_name,selected_bank_name,selected_bank_id,agentid,latitude,longitude,banks,selected_bank,en_aadhaar, en_name, en_phn,BankId,timeStamp2,avlBalance, responseString,androidId,mdate,mtxnType,mnarration,mamount,pidDataXML, message, status, status_code,custName,ipAddress,lati,longi,transaction_amount, pidOptions,data, timestamp,fpTransId,agentId;
     ConnectionClass connectionClass;
     int i;
     LoadingDialog loadingDialog = new LoadingDialog(activity_Aeps_Ministatement.this);
@@ -286,6 +286,8 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
         //  androidId=preferences.getString("AndroidId","No name defined");
         androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         agentId=preferences.getString("AgentId","No name defined");
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
         // agent_phone_number=preferences.getString("AgentPhn","No name defined");
         //agent_phone_number="9963022226";
         // agent_name="test";
@@ -567,6 +569,8 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     /*Ministatement_apicalling class basically feeding the required data to the bank api
      * it is running asyncnously in the background so that out main thread will not hampered
      * @return responseString*/
+
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
     class Ministatement_apiCalling extends AsyncTask<Request, Void, String> {
 
         @Override
@@ -586,7 +590,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
                     .post(body)
                     .build();
             Log.d(TAG,"Done Headerss");
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     //loadingDialog.dismissDialog();

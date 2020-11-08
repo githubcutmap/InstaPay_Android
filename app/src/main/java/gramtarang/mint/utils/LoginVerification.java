@@ -51,7 +51,7 @@ public class LoginVerification extends AppCompatActivity {
     EditText edit_otp;
     TextView timer,otp_type;
     Button submit,resend_btn;
-    String bankmitra_id,jsonString,entered_otp,androidId,login_status,latitude,longitude,username,agentId,timestamp,agentphn,agentemail,agentname,generated_pin;
+    String username,password,bankmitra_id,jsonString,entered_otp,androidId,login_status,latitude,longitude,agentId,timestamp,agentphn,agentemail,agentname,generated_pin;
     SharedPreferences preferences;boolean isValidOtp;String verification_type;
     public static final String mypreference = "mypref";
     String TAG = "LoginVerification";
@@ -95,6 +95,8 @@ public class LoginVerification extends AppCompatActivity {
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         latitude=preferences.getString("Latitude","No name defined");
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
         longitude=preferences.getString("Longitude","No name defined");
         bankmitra_id=preferences.getString("BankMitraId","No name defined");
         agentphn=preferences.getString("AgentPhone","No name defined");;
@@ -103,6 +105,7 @@ public class LoginVerification extends AppCompatActivity {
      //   verification_type=preferences.getString("VerificationMethod","No name defined");
         generated_pin=preferences.getString("LoginOTP","No name defined");
 Log.d("TAG","WQQQ"+verification_type+generated_pin+agentphn+agentemail);
+Log.d("TAG","Authentication Testing:"+username+password);
         otp_type.setText(agentphn);
 
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -324,6 +327,9 @@ else{
             }
         }.start();
     }
+
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
     class apiCall_insertloginlog extends AsyncTask<Request, Void, String> {
         @SuppressLint("HardwareIds")
         @Override
@@ -363,7 +369,7 @@ else{
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog

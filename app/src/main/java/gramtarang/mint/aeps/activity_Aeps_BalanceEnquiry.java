@@ -117,7 +117,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     String[] deviceList = new String[]{"Mantra", "StarTeck"};
     AutoCompleteTextView bank_autofill;
     boolean isValidName, isValidPhone;
-    String selected_bank_id, selected_bank_name, en_aadhaar, en_name, en_phn, latitude, longitude, response_String, androidId, banks, selected_bank, banks_no, pidDataXML, message, status, status_code, pidOptions, data, transaction_status, balance, bank_RRN, transaction_type, merchant_transid, timestamp, fpTransId, agentId;
+    String username,password,selected_bank_id, selected_bank_name, en_aadhaar, en_name, en_phn, latitude, longitude, response_String, androidId, banks, selected_bank, banks_no, pidDataXML, message, status, status_code, pidOptions, data, transaction_status, balance, bank_RRN, transaction_type, merchant_transid, timestamp, fpTransId, agentId;
     LoadingDialog loadingDialog = new LoadingDialog(activity_Aeps_BalanceEnquiry.this);
     //bellow parameters are coming from RD service of fingerPrint device
     public String ci;
@@ -237,6 +237,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         latitude = preferences.getString("Latitude", "No name defined");
         longitude = preferences.getString("Longitude", "No name defined");
         agentId=preferences.getString("AgentId","No name defined");
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
         androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         // androidId = preferences.getString("AndroidId", "No name defined");
@@ -284,8 +286,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     if (isValidAadhar && isValidPhone && isValidName) {
                         try {
                             //   new  ().execute();
-                            capture(pidOptions);
-                            //fingerprintDataConvertingToJson();
+                          //  capture(pidOptions);
+                            fingerprintDataConvertingToJson();
                         } catch (Exception e) {
                             // Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
                         }
@@ -494,7 +496,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("errcode", errcode);
+          /*  jsonObject.put("errcode", errcode);
             jsonObject.put("errInfo", errInfo);
             jsonObject.put("fCount", fCount);
             jsonObject.put("fType", fType);
@@ -514,9 +516,9 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             jsonObject.put("sessionKey", SessionKey);
             jsonObject.put("hmac", hmac);
             jsonObject.put("PidDatatype", PidDatatype);
-            jsonObject.put("Piddata", Piddata);
+            jsonObject.put("Piddata", Piddata);*/
 
-        /*   jsonObject.put("errcode", "errcode1");
+          jsonObject.put("errcode", "errcode1");
             jsonObject.put("errInfo", "errInfo1");
             jsonObject.put("fCount", "fCount1");
             jsonObject.put("fType", "fType1");
@@ -536,17 +538,19 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             jsonObject.put("sessionKey", "SessionK1ey");
             jsonObject.put("hmac", "hma1c");
             jsonObject.put("PidDatatype", "PidDatat1ype");
-            jsonObject.put("Piddata", "Pidda1ta");*/
+            jsonObject.put("Piddata", "Pidda1ta");
             pidData_json = jsonObject.toString();
             new apiCall_BalanceEnquiry().execute();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
+    Utils utils=new Utils();
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
     class apiCall_BalanceEnquiry extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
+            Log.d("TAG","IN API CALL");
             //Loading dialog in the time of api calling
 //            loadingDialog.startLoading();
 
@@ -631,11 +635,12 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
                 public void onFailure(Call call, IOException e) {
+                    Log.d("TAG","IN API CALL FAILURE"+e);
                     //loadingDialog.dismissDialog();
                     //  Toast.makeText(activity_Aeps_BalanceEnquiry.this, "Server not Connected.", Toast.LENGTH_SHORT).show();
                 }
@@ -680,27 +685,27 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                         }
                         //moving to the next screen after getting the response also
                         // we are sending the require data through intent
-
+                        Intent intent = new Intent(activity_Aeps_BalanceEnquiry.this, activity_Aeps_BalanceEnq_Receipt.class);
+                        intent.putExtra("balance", balance);
+                        intent.putExtra("merchant_transid", merchant_transid);
+                        intent.putExtra("timestamp", timestamp);
+                        intent.putExtra("aadhaar", en_aadhaar);
+                        intent.putExtra("bank_name", selected_bank_name);
+                        intent.putExtra("agent_id", agentId);
+                        intent.putExtra("rrn_no", bank_RRN);
+                        intent.putExtra("custName", en_name);
+                        intent.putExtra("message", message);
+                        intent.putExtra("fpTransId", fpTransId);
+                        intent.putExtra("message", message);
+                        intent.putExtra("status", status);
+                        intent.putExtra("status_code", status_code);
+                        intent.putExtra("transaction_type", transaction_type);
+                        startActivity(intent);
 
                     } else {
                         Toast.makeText(activity_Aeps_BalanceEnquiry.this, "You are not getting any Response From Bank !! ", Toast.LENGTH_SHORT).show();
                     }
-                    Intent intent = new Intent(activity_Aeps_BalanceEnquiry.this, activity_Aeps_BalanceEnq_Receipt.class);
-                    intent.putExtra("balance", balance);
-                    intent.putExtra("merchant_transid", merchant_transid);
-                    intent.putExtra("timestamp", timestamp);
-                    intent.putExtra("aadhaar", en_aadhaar);
-                    intent.putExtra("bank_name", selected_bank_name);
-                    intent.putExtra("agent_id", agentId);
-                    intent.putExtra("rrn_no", bank_RRN);
-                    intent.putExtra("custName", en_name);
-                    intent.putExtra("message", message);
-                    intent.putExtra("fpTransId", fpTransId);
-                    intent.putExtra("message", message);
-                    intent.putExtra("status", status);
-                    intent.putExtra("status_code", status_code);
-                    intent.putExtra("transaction_type", transaction_type);
-                    startActivity(intent);
+
                 }
             });
             return null;
@@ -711,7 +716,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         HttpUrl.Builder httpBuilder = HttpUrl.parse("http://mintserver.gramtarang.org:8080/mint/aeps/printPXML").newBuilder();
         httpBuilder.addQueryParameter("pxml",op1);
         Request request = new Request.Builder().url(httpBuilder.build()).build();
-        Response response = client.newCall(request).execute();
+        Response response = httpClient.newCall(request).execute();
 
     }
     public void responseCallback()

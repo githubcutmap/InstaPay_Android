@@ -38,7 +38,7 @@ import okhttp3.Response;
 public class Dashboard extends AppCompatActivity {
     SharedPreferences preferences;
     public static final String mypreference = "mypref";
-    String agentname,androidId,jsonString,response_String,lastlogin_time;
+    String agentname,androidId,jsonString,response_String,lastlogin_time,username,password;
     int aeps,bbps,loan,pan,card;
     ImageView imaeps,imbbps,impan,imcard,imloan,logout;
     LinearLayout llaeps,llbbps,llpan,llcard,llloan;
@@ -71,6 +71,8 @@ public class Dashboard extends AppCompatActivity {
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         androidId=preferences.getString("AndroidId","No name defined");
         agentname=preferences.getString("AgentName","No name defined");
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
         aeps=preferences.getInt("aeps",0);
         pan=preferences.getInt("pan",0);
         bbps=preferences.getInt("bbps",0);
@@ -209,6 +211,9 @@ tv_agentname.setText(agentname);
             }
         });
     }
+    Utils utils=new Utils();
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
     class apiCall_getlastlogin extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
@@ -229,7 +234,7 @@ tv_agentname.setText(agentname);
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog

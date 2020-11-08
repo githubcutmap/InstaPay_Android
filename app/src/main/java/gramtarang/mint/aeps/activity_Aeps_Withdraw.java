@@ -112,7 +112,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     String en_am;
     String message;
     String status;
-    String status_code;
+    String status_code,username,password;
     String pidDataXML;
     String pidOptions;
     String agentId;
@@ -246,6 +246,8 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         latitude=preferences.getString("Latitude","No name defined");
         longitude=preferences.getString("Longitude","No name defined");
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
         //androidId=preferences.getString("AndroidId","No name defined");
         //latitude="11.111";
         //longitude="121.11";
@@ -505,6 +507,8 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     /*apicallOfWithdrawalActivity class basically feeding the required data to the bank api
      * it is running asyncnously in the background so that out main thread will not hampered
      * @return responseString*/
+    Utils utils=new Utils();
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
     class apicallOfWithdrawalActivity extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
@@ -531,12 +535,12 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                     .addHeader("longitude", "13.4")*/
                     .post(body)
                     .build();
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     // loadingDialog.dismissDialog();
-                    Toast.makeText(activity_Aeps_Withdraw.this,"Your transaction Failed.Please Try Again", Toast.LENGTH_SHORT).show();
-                    btn_submit.setEnabled(true);
+                    //Toast.makeText(activity_Aeps_Withdraw.this,"Your transaction Failed.Please Try Again", Toast.LENGTH_SHORT).show();
+                    //btn_submit.setEnabled(true);
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {

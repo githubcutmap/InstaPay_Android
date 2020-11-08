@@ -290,6 +290,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
     OkHttpClient httpClient = createAuthenticatedClient("apiadminuser", "CuTm@_GtiDs+3#2020@!");*/
 
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, agentPassword);
 
     class apiCall_getagentdetails extends AsyncTask<Request, Void, String> {
 
@@ -312,7 +313,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
@@ -414,6 +415,8 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         Log.d("TAG","Sample"+agentphn);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("AndroidId",androidId);
+        editor.putString("Username",username);
+        editor.putString("Password",agentPassword);
         editor.putString("AgentName", name);
         editor.putString("AgentEmail", email);
         editor.putString("AgentPhone", phn);
