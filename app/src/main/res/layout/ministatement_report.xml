@@ -306,7 +306,7 @@
         <Button
             android:id="@+id/generate"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:background="@drawable/button"
              android:fontFamily="@font/bentham"
                         android:textStyle="bold"
@@ -318,7 +318,7 @@
         <Button
             android:id="@+id/back"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/button"
              android:fontFamily="@font/bentham"

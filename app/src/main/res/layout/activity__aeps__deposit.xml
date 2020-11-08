@@ -219,17 +219,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-        <!--<TextView
-            android:id="@+id/amnw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Amount"
-            android:textColor="#000000"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="16sp"
-            android:layout_column="1"/>-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_field3"
             android:layout_margin="5dp"

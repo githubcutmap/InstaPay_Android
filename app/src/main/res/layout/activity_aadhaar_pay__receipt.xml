@@ -393,7 +393,7 @@
         <Button
             android:id="@+id/generate"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:background="@drawable/button"
             android:gravity="center"
             android:textSize="18sp"
@@ -406,7 +406,7 @@
         <Button
             android:id="@+id/back"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/button"
             android:text="BACK"

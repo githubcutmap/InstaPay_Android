@@ -150,7 +150,7 @@
                         android:padding="18dp"
                         android:layout_margin="5dp"
                         android:background="@drawable/greencard"
-                        app:srcCompat="@drawable/bill" />
+                        app:srcCompat="@drawable/bbps_logo" />
 
                     <TextView
                         android:id="@+id/aadharpay"

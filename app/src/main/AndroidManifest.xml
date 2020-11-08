@@ -34,13 +34,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".agent_login.Dashboard"></activity>
-        <activity
-            android:name=".loans.areamgr.MainActivity"
-            android:label="@string/title_activity_main">
+        <activity android:name=".bbps.bbps_billpayment"></activity>
+        <activity android:name=".bbps.bbps_billfetch" />
+        <activity android:name=".bbps.bbps_biller">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".agent_login.Dashboard">
 
         </activity>
+        <activity
+            android:name=".loans.areamgr.MainActivity"
+            android:label="@string/title_activity_main" />
         <activity android:name=".utils.LoginVerification" />
         <activity android:name=".loans.LoanActivity_viewAppId" />
         <activity android:name=".loans.LoanActivity_ReviewScreen" />
@@ -51,28 +59,27 @@
         <activity android:name=".agent_login.activity_Login" />
         <activity android:name=".loans.LoanActivity_PrimaryScreen" />
         <activity android:name=".loans.areamgr.loan_viewapp" />
-        <activity android:name=".aeps.activity_Aeps_HomeScreen"
-            android:parentActivityName=".agent_login.Dashboard"
-
-
-            />
-        <activity android:name=".pan.PanCard"
-            android:parentActivityName=".agent_login.Dashboard"/>
+        <activity
+            android:name=".aeps.activity_Aeps_HomeScreen"
+            android:parentActivityName=".agent_login.Dashboard" />
+        <activity
+            android:name=".pan.PanCard"
+            android:parentActivityName=".agent_login.Dashboard" />
         <activity
             android:name=".loans.LoanActivity_FinalScreen"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
         <activity
             android:name=".loans.LoanActivity_MainScreen"
-            android:parentActivityName=".agent_login.Dashboard">
-
-
-        </activity>
+            android:parentActivityName=".agent_login.Dashboard" />
         <activity
             android:name=".loans.LoanActivity_SecondaryScreen"
             android:parentActivityName=".loans.LoanActivity_MainScreen" />
         <activity
             android:name=".loans.LoanActivity_SearchViewApplication"
-            android:parentActivityName=".loans.LoanActivity_MainScreen" />
+            android:parentActivityName=".loans.LoanActivity_MainScreen">
+
+
+        </activity>
         <activity
             android:name=".loans.LoanActuivity_ViewApplication"
             android:parentActivityName=".loans.LoanActivity_MainScreen" />
@@ -112,12 +119,6 @@
         </receiver>
 
         <activity android:name=".agent_login.activity_WelcomeScreen">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 

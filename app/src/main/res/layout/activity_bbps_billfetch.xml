@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@color/lightcream">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="BHARAT BILLPAY PAYMENT SYSTEM"
+            android:fontFamily="@font/helveticaneuemed"
+            android:textColor="@color/grayblack"
+            android:textSize="16dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bbps_logo"></ImageView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Bill Details"
+            android:fontFamily="@font/helveticaneubold"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@color/red"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/billpayments_editbox"
+            android:layout_marginTop="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biller Coverage"
+                android:fontFamily="@font/helveticaneubold"
+                android:textSize="16dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bill_coverage"
+                android:fontFamily="@font/helveticaneuemedium"
+                android:textSize="14dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/billpayments_editbox"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biller Caregory"
+                android:fontFamily="@font/helveticaneubold"
+                android:textSize="16dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bill_category"
+                android:fontFamily="@font/helveticaneuemedium"
+                android:textSize="14dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/billpayments_editbox"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biller Name"
+                android:fontFamily="@font/helveticaneubold"
+                android:textSize="16dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bill_name"
+                android:fontFamily="@font/helveticaneuemedium"
+                android:textSize="14dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/billpayments_editbox"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile Number for SMS"
+                android:fontFamily="@font/helveticaneubold"
+                android:textSize="16dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mobileno_sms"
+                android:fontFamily="@font/helveticaneuemedium"
+                android:textSize="14dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/billpayments_editbox"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consumer Number"
+                android:fontFamily="@font/helveticaneubold"
+                android:textSize="16dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/consumer_no"
+                android:fontFamily="@font/helveticaneuemedium"
+                android:textSize="14dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/billpayments_editbox"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BU"
+                android:fontFamily="@font/helveticaneubold"
+                android:textSize="16dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bu"
+                android:fontFamily="@font/helveticaneuemedium"
+                android:textSize="14dp"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="GET DETAILS"
+            android:layout_gravity="center"
+            android:background="@drawable/red_button"
+            android:layout_marginTop="30dp"></Button>
+    </LinearLayout>
+
+</LinearLayout>

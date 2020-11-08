@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/darkblue</item>
@@ -9,6 +9,19 @@
 
 
     </style>
+<!--
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        &lt;!&ndash; Primary brand color. &ndash;&gt;
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        &lt;!&ndash; Secondary brand color. &ndash;&gt;
+        <item name="colorOnSecondary">@color/black</item>
+        &lt;!&ndash; Status bar color. &ndash;&gt;&lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="popupMenuStyle">@style/Widget.MaterialComponents.PopupMenu</item>
+        <item name="popupMenuBackground">@style/Widget.MaterialComponents.PopupMenu.ContextMenu</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.MaterialComponents.PopupMenu.Overflow</item>
+    </style>-->
 
 
     <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">
@@ -33,6 +46,7 @@
     </style>
 
 
+
     <style name="Theme_RJDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/grayblack</item>
 
@@ -43,6 +57,12 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">"sans-serif"</item>
     </style>
+
+    <style name="biller">
+        <item name="android:fontFamily">@font/helveticaneuemedium</item>
+    </style>
+
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

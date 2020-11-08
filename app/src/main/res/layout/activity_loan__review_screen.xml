@@ -431,14 +431,15 @@
             </TableLayout>
 
             <CheckBox
+                android:id="@+id/id_cb_tandc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/id_cb_tandc"
                 android:layout_margin="5dp"
-                android:textColor="#6B6B6B"
+                android:checked="true"
                 android:fontFamily="@font/bentham"
                 android:onClick="onCheckboxClicked"
-                android:text="I agree the above information entered by me are correct and verified."/>
+                android:text="I agree the above information entered by me are correct and verified."
+                android:textColor="#6B6B6B" />
 
             <LinearLayout
                 android:layout_width="match_parent"

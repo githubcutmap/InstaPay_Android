@@ -2,8 +2,9 @@
 <resources>
     <color name="colorPrimary">#0072b5</color>
     <color name="colorPrimaryDark">#f29ea9</color>
-    <color name="colorAccent">#f1f1f1</color>
+    <color name="colorAccent">#C0C0C0</color>
     <color name="black">#000000 </color>
+    <color name="white">#ffffff</color>
     <color name="textColorPrimary">#ffffff</color>
     <color name="title_colour">#ffffff</color>
     <color name="gold_colour">#FFD700</color>
@@ -28,10 +29,13 @@
     <color name="brown">#4A0C0A</color>
     <color name="maroon">#6e001a </color>
     <color name="grayblack">#424949 </color>
-    <color name="orange">#fc5d74</color>
-    <color name="pink">#fb9548</color>
+    <color name="pink">#fc5d74</color>
+    <color name="orange">#fb9548</color>
     <color name="darkblue">#109ef0</color>
     <color name="lightblue">#05d8dc</color>
+    <color name="red">#9D0303</color>
+    <color name="lightcream">#ffe6e6</color>
+    <color name="lightcolor">#F0F0F0</color>
 
 
 
