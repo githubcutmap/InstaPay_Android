@@ -294,7 +294,9 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
 
 //String en_flag= BCrypt.hashpw("Test@123", BCrypt.gensalt(12));
-    OkHttpClient httpClient = utils.createAuthenticatedClient("1011", "Test@123");
+
+
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username,agentPassword);
 
     class apiCall_getagentdetails extends AsyncTask<Request, Void, String> {
 
@@ -303,9 +305,9 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             JSONObject jsonObject = new JSONObject();
           //  Log.d("TAG","EN_FLAG"+en_flag);
             try {
-                jsonObject.put("id","1011");
-                jsonObject.put("androidid", "d5dec216b210500d");
-                jsonObject.put("password","Test@123");
+                jsonObject.put("id",username);
+                jsonObject.put("androidid", androidId);
+                jsonObject.put("password",agentPassword);
                 jsonString = jsonObject.toString();
 
             } catch (Exception e) {
