@@ -546,7 +546,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         }
     }
     Utils utils=new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
     class apiCall_BalanceEnquiry extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {

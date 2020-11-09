@@ -59,6 +59,8 @@ public class Utils extends AppCompatActivity {
         OkHttpClient httpClient = new OkHttpClient.Builder().authenticator(new Authenticator() {
             public Request authenticate(Route route, Response response) throws IOException {
                 String credential = Credentials.basic(api_username, api_password);
+                Log.d("CREDENTIALS","USR"+api_username+"PASS:"+api_password);
+                Log.d("CREDENTIALS","PRINT"+credential);
                 return response.request().newBuilder().header("Authorization", credential).build();
             }
         }).build();

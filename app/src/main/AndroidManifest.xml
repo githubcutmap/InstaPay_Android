@@ -93,7 +93,7 @@
             android:name=".aeps.activity_Aeps_BalanceEnq_Receipt"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
         <activity
-            android:name=".agent_login.activity_WelcomeScreen"
+            android:name=".aeps.activity_Aeps_BalanceEnquiry"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
         <activity
             android:name=".aeps.activity_Aeps_Withdraw"
@@ -114,7 +114,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".aeps.activity_Aeps_BalanceEnquiry">
+        <activity android:name=".agent_login.activity_WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

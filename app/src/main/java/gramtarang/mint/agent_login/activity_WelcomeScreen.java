@@ -182,17 +182,17 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         }
         return connected;
     }
-Utils utils=new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
+/*Utils utils=new Utils();
+    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");*/
     class apiCall_getversion extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
             okhttp3.Request request = new Request.Builder()
-                    .url("http://bankmgr.gramtarang.org:8081/mint/im/version")
+                    .url("http://mintserver.gramtarang.org:8080/mint/im/version")
                     .addHeader("Accept", "*/*")
                     .get()
                     .build();
-            httpClient.newCall(request).enqueue(new Callback() {
+            client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }

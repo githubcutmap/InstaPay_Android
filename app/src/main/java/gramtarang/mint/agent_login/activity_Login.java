@@ -31,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -45,6 +46,7 @@ import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
 import gramtarang.mint.api.DBApi;
 import gramtarang.mint.api.MobileSMSAPI;
+
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.ConnectionClass;
 import gramtarang.mint.utils.DialogActivity;
@@ -290,17 +292,20 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
     OkHttpClient httpClient = createAuthenticatedClient("apiadminuser", "CuTm@_GtiDs+3#2020@!");*/
 
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, agentPassword);
+
+//String en_flag= BCrypt.hashpw("Test@123", BCrypt.gensalt(12));
+    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
 
     class apiCall_getagentdetails extends AsyncTask<Request, Void, String> {
 
         @Override
         protected String doInBackground(Request... requests) {
             JSONObject jsonObject = new JSONObject();
+          //  Log.d("TAG","EN_FLAG"+en_flag);
             try {
-                jsonObject.put("id", username);
-                jsonObject.put("androidid", androidId);
-                jsonObject.put("password",agentPassword);
+                jsonObject.put("id","1010");
+                jsonObject.put("androidid", "e80aee2fb6af6d00");
+                jsonObject.put("password","Test@123");
                 jsonString = jsonObject.toString();
 
             } catch (Exception e) {
@@ -311,6 +316,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             Request request = new Request.Builder()
                     .url("http://bankmgr.gramtarang.org:8081/mint/loans/getagentdetails")
                     .addHeader("Accept", "*/*")
+                  // .addHeader("Authorization","Basic MTAxMDpUZXN0QDEyMw==")
                     .post(body)
                     .build();
             httpClient.newCall(request).enqueue(new Callback() {
@@ -318,14 +324,14 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
                 public void onFailure(Call call, IOException e) {
-                    Log.d("TAG", "response onfailure" );
+                    Log.d("TAG", "response onfailure"+e );
                     //Snackbar.make(coordinatorLayout, "Agent not registered.\\nPlease Contact Administrator", Snackbar.LENGTH_LONG).setAction("action",null).show();
-                    DialogActivity.DialogCaller.showDialog(activity_Login.this,"Login Failed","Server Unreachable.\nPlease contact administrator.",new DialogInterface.OnClickListener() {
+                   /* DialogActivity.DialogCaller.showDialog(activity_Login.this,"Login Failed","Server Unreachable.\nPlease contact administrator.",new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
-                    });
+                    });*/
                     // Toast.makeText(activity_Login.this,"Agent not registered.\nPlease Contact Administrator"+androidId,Toast.LENGTH_SHORT).show();
 
                 }
