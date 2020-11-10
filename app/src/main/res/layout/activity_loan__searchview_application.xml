@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".loans.LoanActivity_ReviewScreen"
     android:orientation="vertical"
+    android:id="@+id/container"
     android:background="@drawable/bg1"
     tools:ignore="MissingDefaultResource">
 
@@ -312,7 +313,7 @@
                         android:id="@+id/beneficiary_phone_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone NO."
+                        android:text="Phone No."
                         android:textStyle="bold"
 
                         android:fontFamily="sans-serif"
@@ -1387,9 +1388,17 @@
 
     </ScrollView>
 
+    <ImageView
+        android:id="@+id/expanded_image1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:contentDescription="img 2"
+        android:background="@drawable/bg1"/>
+
 
     <include
         android:id="@+id/loan_viewApplication_footer"
         layout="@layout/footer_template"/>
 
-</LinearLayout>
+</FrameLayout>

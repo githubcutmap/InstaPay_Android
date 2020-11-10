@@ -34,14 +34,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".bbps.bbps_billpayment"></activity>
+        <activity android:name=".bbps.bbps_receipt"></activity>
+        <activity android:name=".bbps.bbps_billpayment" />
         <activity android:name=".bbps.bbps_billfetch" />
-        <activity android:name=".bbps.bbps_biller">
-
-        </activity>
-        <activity android:name=".agent_login.Dashboard">
-
-        </activity>
+        <activity android:name=".bbps.bbps_biller"></activity>
+        <activity android:name=".agent_login.Dashboard"></activity>
         <activity
             android:name=".loans.areamgr.MainActivity"
             android:label="@string/title_activity_main" />
@@ -66,16 +63,13 @@
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
         <activity
             android:name=".loans.LoanActivity_MainScreen"
-            android:parentActivityName=".agent_login.Dashboard" />
+            android:parentActivityName=".agent_login.Dashboard"></activity>
         <activity
             android:name=".loans.LoanActivity_SecondaryScreen"
             android:parentActivityName=".loans.LoanActivity_MainScreen" />
         <activity
             android:name=".loans.LoanActivity_SearchViewApplication"
-            android:parentActivityName=".loans.LoanActivity_MainScreen">
-
-
-        </activity>
+            android:parentActivityName=".loans.LoanActivity_MainScreen"></activity>
         <activity
             android:name=".loans.LoanActuivity_ViewApplication"
             android:parentActivityName=".loans.LoanActivity_MainScreen" />

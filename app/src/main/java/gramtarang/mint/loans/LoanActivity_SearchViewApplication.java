@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -38,11 +40,13 @@ import java.util.ArrayList;
 
 import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
+import gramtarang.mint.agent_login.Dashboard;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.loans.areamgr.loan_viewapp;
 import gramtarang.mint.utils.LocationTrack;
 import gramtarang.mint.utils.LogOutTimer;
 import gramtarang.mint.utils.SQLQueries;
+import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -95,7 +99,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
     Button search;
     boolean doubleBackToExitPressedOnce = false;
     TextView test;
-    String jsonString,response_String;
+    String jsonString,response_String,username,password;
     OkHttpClient client;
     LinearLayout ll_buttons;
     ImageView backbtn,proof1,proof2,proof3;
@@ -137,6 +141,8 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
     private int shortAnimationDuration;
     private Animator currentAnimator;
     Bitmap bmp,bmp2,bmp3;
+    SharedPreferences preferences;
+    public static final String mypreference = "Loanpreferences";
 
     @Override
     public void onBackPressed() {
@@ -204,6 +210,12 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         proof2 = findViewById(R.id.thumb__2);
         proof3 = findViewById(R.id.thumb__3);
 
+
+        preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+
+
         etUserEnteredSearchID.addTextChangedListener(LoanViewApplicationTextWatcher);
         search.addTextChangedListener(LoanViewApplicationTextWatcher);
 
@@ -211,7 +223,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), activity_Aeps_HomeScreen.class);
+                Intent intent = new Intent(getApplicationContext(), LoanActivity_MainScreen.class);
                 startActivity(intent);
             }
         });
@@ -249,7 +261,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
 
         // Load the high-resolution "zoomed-in" image.
         final ImageView expandedImageView = (ImageView) findViewById(
-                R.id.expanded_image);
+                R.id.expanded_image1);
         //
         // expandedImageView.setImageBitmap(imageResId);
         //expandedImageView.setImageBitmap(imgurl);
@@ -387,6 +399,10 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         });
     }
 
+
+    Utils utils = new Utils();
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
     private void api_getAppdetails(String id){
         ArrayList<String> appdetails = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
@@ -404,7 +420,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
-        client.newCall(request).enqueue(new Callback() {
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }

@@ -47,8 +47,8 @@
 
 
 
-    <style name="Theme_RJDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/grayblack</item>
+    <style name="Theme_RJDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorOnPrimary">@color/colorPrimary</item>
 
     </style>
 

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import gramtarang.mint.R;
 import gramtarang.mint.loans.LoanActivity_MainScreen;
+import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -40,12 +41,13 @@ import okhttp3.Response;
 public class PendingFragment extends Fragment {
 
     ListView lv_agents;
-    String jsonString,response_String;
+    String jsonString,response_String,username,password;
     //String managerId="9999";
     OkHttpClient client;
     Spinner sp_agents;
     SharedPreferences preferences;
     public final String mypreference = "mypref";
+    public static final String loanpreference = "Loanpreferences";
 
 
 
@@ -69,7 +71,18 @@ public class PendingFragment extends Fragment {
         return v;
     }
 
+
     private void api_getAgentsList(View v){
+
+        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+
+        Utils utils = new Utils();
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
+
+
         preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         String managerId=preferences.getString("AreaManagerId","Null");
         ArrayList<String> ManagerAgents = new ArrayList<String>();
@@ -89,7 +102,7 @@ public class PendingFragment extends Fragment {
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
-        client.newCall(request).enqueue(new Callback() {
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -159,6 +172,14 @@ public class PendingFragment extends Fragment {
 
 
     private void api_getApplist(View v,String agentid){
+
+        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+
+        Utils utils = new Utils();
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
         ArrayList<String> AppId = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
         try {
@@ -176,7 +197,7 @@ public class PendingFragment extends Fragment {
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
-        client.newCall(request).enqueue(new Callback() {
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }

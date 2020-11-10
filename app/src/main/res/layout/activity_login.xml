@@ -105,13 +105,14 @@
             <EditText
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:fontFamily="sans-serif"
                 android:textColor="#000000"
                 android:maxLength="4"
                 android:inputType="number"
                 android:textSize="20sp"
-                android:backgroundTint="@color/colorAccent"
+
+                android:background="@null"
                 android:layout_weight="3"/>
         </LinearLayout>
     <LinearLayout
@@ -140,13 +141,13 @@
         <EditText
             android:id="@+id/password"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:fontFamily="sans-serif"
             android:textColor="#000000"
             android:maxLength="10"
             android:inputType="textPassword"
             android:textSize="20sp"
-            android:backgroundTint="@color/colorAccent"
+            android:background="@null"
             android:layout_weight="3"/>
     </LinearLayout>
     <!--

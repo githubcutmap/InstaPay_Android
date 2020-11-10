@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -32,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import gramtarang.mint.R;
 import gramtarang.mint.utils.LocationTrack;
+import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -44,7 +47,7 @@ import okhttp3.Response;
 public class loan_viewapp extends AppCompatActivity {
 
     TextView test;
-    String jsonString,response_String;
+    String jsonString,response_String,username,password;
     OkHttpClient client;
     LinearLayout ll_buttons;
     Button accept,reject,getLocation,doc;
@@ -88,6 +91,8 @@ public class loan_viewapp extends AppCompatActivity {
     private int shortAnimationDuration;
     private Animator currentAnimator;
     Bitmap bmp,bmp2,bmp3;
+    SharedPreferences preferences;
+    public static final String mypreference = "Loanpreferences";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,6 +149,10 @@ public class loan_viewapp extends AppCompatActivity {
         proof1 = findViewById(R.id.thumb__1);
         proof2 = findViewById(R.id.thumb__2);
         proof3 = findViewById(R.id.thumb__3);
+
+        preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
 
 
 
@@ -309,6 +318,9 @@ public class loan_viewapp extends AppCompatActivity {
         });
     }
 
+    Utils utils = new Utils();
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
     private void api_getAppdetails(String uniqueid){
         ArrayList<String> appdetails = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
@@ -326,7 +338,7 @@ public class loan_viewapp extends AppCompatActivity {
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
-        client.newCall(request).enqueue(new Callback() {
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -695,7 +707,7 @@ Log.d("Setproof",bankname+"  if"+id);
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
-        client.newCall(request).enqueue(new Callback() {
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }

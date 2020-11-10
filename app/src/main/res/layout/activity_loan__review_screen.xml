@@ -435,7 +435,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:checked="true"
+                android:checked="false"
                 android:fontFamily="@font/bentham"
                 android:onClick="onCheckboxClicked"
                 android:text="I agree the above information entered by me are correct and verified."

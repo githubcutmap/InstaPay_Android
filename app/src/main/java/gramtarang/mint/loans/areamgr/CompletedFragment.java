@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import gramtarang.mint.R;
+import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -39,12 +40,15 @@ public class CompletedFragment extends Fragment {
 
     ListView lv_agents;
     //String managerId="9999";
-    String jsonString,response_String;
+    String jsonString,response_String,username,password;
     OkHttpClient client;
     Spinner sp_agents;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     SharedPreferences preferences;
     public final String mypreference = "mypref";
+
+    public static final String loanpreference = "Loanpreferences";
+
 
 
     public CompletedFragment() {
@@ -65,6 +69,15 @@ public class CompletedFragment extends Fragment {
     }
 
     private void api_getAgentsList(View v){
+
+        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+
+        Utils utils = new Utils();
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
+
         preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         String managerId=preferences.getString("AreaManagerId","Null");
         ArrayList<String> ManagerAgents = new ArrayList<String>();
@@ -84,7 +97,7 @@ public class CompletedFragment extends Fragment {
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
-        client.newCall(request).enqueue(new Callback() {
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -154,6 +167,12 @@ public class CompletedFragment extends Fragment {
 
 
     private void api_getApplist(View v,String agentid){
+        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+
+        Utils utils = new Utils();
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
         ArrayList<String> AppId = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
         try {
@@ -171,7 +190,7 @@ public class CompletedFragment extends Fragment {
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
-        client.newCall(request).enqueue(new Callback() {
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }

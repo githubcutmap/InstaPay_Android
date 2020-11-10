@@ -2,6 +2,8 @@ package gramtarang.mint.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -21,6 +23,7 @@ public class DialogActivity {
             dialog.setPositiveButton("Ok",onClickListener);
             dialog.setIcon(R.drawable.erroricon);
             dialog.show();
+
         }
     }
 

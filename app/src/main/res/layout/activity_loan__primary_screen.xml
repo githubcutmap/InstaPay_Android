@@ -62,7 +62,6 @@
                     android:id="@+id/beneficiary_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/editbox"
                     android:paddingLeft="10dp"
                     android:ems="10"
                     android:maxLength="50"

@@ -12,14 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_Login;
+import gramtarang.mint.loans.LoanActivity_MainScreen;
 import gramtarang.mint.loans.areamgr.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
+    ImageView backbtn;
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -51,12 +54,21 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
+        backbtn = findViewById(R.id.backimg);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LoanActivity_MainScreen.class);
+                startActivity(intent);
             }
         });
     }

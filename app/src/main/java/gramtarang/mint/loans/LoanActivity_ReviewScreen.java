@@ -179,7 +179,8 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
             beneficiaryTenure,
             beneficiaryRepaymentPeriod,beneficiaryOwnProp,
             timestamp,regionalOffice,
-            response_String,data_json;
+            response_String,data_json,
+            username,password;
 
     Button cancel,confirm;
     boolean doubleBackToExitPressedOnce = false;
@@ -252,6 +253,8 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
         regionalOffice = preferences.getString("RegionalOffice", "Null");
         beneficiaryTenure = "24";
         beneficiaryIddetails = preferences.getString("BeneficiaryIdDetails", "Null");
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
 
         bId = findViewById(R.id.beneficiary_id);
         bName = findViewById(R.id.beneficiary_name);
@@ -282,6 +285,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         timestamp = s.format(new Date());
         client = new OkHttpClient();
+
 
 
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -359,6 +363,8 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
         }
     }
 
+    Utils utils = new Utils();
+    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
 
 
     class apiCall_loanRegister extends AsyncTask<Request, Void, String> {
@@ -459,6 +465,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, data_json);
             okhttp3.Request request = new Request.Builder()
@@ -466,7 +473,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }

@@ -74,6 +74,7 @@ public class Dashboard extends AppCompatActivity {
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
         aeps=preferences.getInt("aeps",0);
+        //aeps =0;
         pan=preferences.getInt("pan",0);
         bbps=preferences.getInt("bbps",0);
         loan=preferences.getInt("loan",0);
