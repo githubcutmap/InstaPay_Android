@@ -188,7 +188,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         @Override
         protected String doInBackground(Request... requests) {
             okhttp3.Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/im/version")
+                    .url("https://mintserver.gramtarang.org:8080/mint/im/version")
                     .addHeader("Accept", "*/*")
                     .get()
                     .build();

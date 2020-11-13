@@ -623,7 +623,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, pidData_json);
             Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/aeps/ipbalanceenquiry")
+                    .url("https://mintserver.gramtarang.org:8080/mint/aeps/ipbalanceenquiry")
                     .addHeader("AdhaarNumber", en_aadhaar)
                     .addHeader("Bankid", selected_bank_id)
                     .addHeader("phnumber", en_phn)
@@ -719,7 +719,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     }
     public void sendDatatoServer(String op1) throws IOException {
 
-        HttpUrl.Builder httpBuilder = HttpUrl.parse("http://mintserver.gramtarang.org:8080/mint/aeps/printPXML").newBuilder();
+        HttpUrl.Builder httpBuilder = HttpUrl.parse("https://mintserver.gramtarang.org:8080/mint/aeps/printPXML").newBuilder();
         httpBuilder.addQueryParameter("pxml",op1);
         Request request = new Request.Builder().url(httpBuilder.build()).build();
         Response response = httpClient.newCall(request).execute();

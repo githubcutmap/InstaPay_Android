@@ -317,7 +317,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("http://mintserver.gramtarang.org:8080/mint/loans/getagentdetails")
+                    .url("https://mintserver.gramtarang.org:8080/mint/loans/getagentdetails")
                     .addHeader("Accept", "*/*")
                     // .addHeader("Authorization","Basic MTAxMDpUZXN0QDEyMw==")
                     .post(body)
