@@ -289,9 +289,9 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                     isValidAadhar=utils.isValidAadhaar(en_aad);
                     isValidName=utils.isValidName(en_name);
                     isValidPhone=utils.isValidPhone(en_phn);
-                    isValidAmount=utils.isValidAmount(en_am);
+                    //  isValidAmount=utils.isValidAmount(en_am);
                     isValidBankName= query.isValidBankName(selected_bank_name);
-                    if (isValidAadhar && isValidPhone && isValidName  && isValidAmount ) {
+                    if (isValidAadhar && isValidPhone && isValidName ) {
                         try {
                             //Rd service api calling method called
                             Matra_capture(pidOptions);
@@ -315,10 +315,10 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                         et_PhoneNumber.setError("Enter Valid Phone Number");
                         btn_submit.setEnabled(true);
                     }
-                    if(!isValidAmount){
+                  /*  if(!isValidAmount){
                         et_amount.setError("Amount should be in range between INR100 to INR10000");
                         btn_submit.setEnabled(true);
-                    }
+                    }*/
                 } else {
                     Toast.makeText(activity_Aeps_Withdraw.this, "No Internet Connection", Toast.LENGTH_LONG).show();
                     btn_submit.setEnabled(true);
@@ -508,7 +508,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
      * it is running asyncnously in the background so that out main thread will not hampered
      * @return responseString*/
     Utils utils=new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
     class apicallOfWithdrawalActivity extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
@@ -568,7 +568,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             balance=jsonData.getString("balanceAmount");
                             bank_RRN=jsonData.getString("bankRRN");
                             transaction_type=jsonData.getString("transactionType");
-                            merchant_transid=jsonData.getString("merchantTxnId");
+                            merchant_transid=jsonData.getString("wallet_txn_id");
                             timestamp=jsonData.getString("requestTransactionTime");
                             message=jsonData.getString("message");
                             fpTransId=jsonData.getString("fpTransactionId");

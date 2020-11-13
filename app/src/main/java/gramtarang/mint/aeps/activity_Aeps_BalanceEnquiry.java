@@ -286,8 +286,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     if (isValidAadhar && isValidPhone && isValidName) {
                         try {
                             //   new  ().execute();
-                          //  capture(pidOptions);
-                            fingerprintDataConvertingToJson();
+                            capture(pidOptions);
+                            //  fingerprintDataConvertingToJson();
                         } catch (Exception e) {
                             // Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
                         }
@@ -496,7 +496,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         JSONObject jsonObject = new JSONObject();
 
         try {
-          /*  jsonObject.put("errcode", errcode);
+            jsonObject.put("errcode", errcode);
             jsonObject.put("errInfo", errInfo);
             jsonObject.put("fCount", fCount);
             jsonObject.put("fType", fType);
@@ -516,9 +516,9 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             jsonObject.put("sessionKey", SessionKey);
             jsonObject.put("hmac", hmac);
             jsonObject.put("PidDatatype", PidDatatype);
-            jsonObject.put("Piddata", Piddata);*/
+            jsonObject.put("Piddata", Piddata);
 
-          jsonObject.put("errcode", "errcode1");
+      /*  jsonObject.put("errcode", "errcode1");
             jsonObject.put("errInfo", "errInfo1");
             jsonObject.put("fCount", "fCount1");
             jsonObject.put("fType", "fType1");
@@ -538,7 +538,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             jsonObject.put("sessionKey", "SessionK1ey");
             jsonObject.put("hmac", "hma1c");
             jsonObject.put("PidDatatype", "PidDatat1ype");
-            jsonObject.put("Piddata", "Pidda1ta");
+            jsonObject.put("Piddata", "Pidda1ta");*/
             pidData_json = jsonObject.toString();
             new apiCall_BalanceEnquiry().execute();
         } catch (JSONException e) {
@@ -631,8 +631,14 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     .addHeader("imeiNumber", androidId)
                     .addHeader("latitude", latitude)
                     .addHeader("longitude", longitude)
-
-                    .addHeader("Accept", "*/*")
+                    /* .addHeader("AdhaarNumber", "123456781190")
+                     .addHeader("Bankid", "1234")
+                     .addHeader("phnumber", "7896541230")
+                     .addHeader("name", "megapower")
+                     .addHeader("imeiNumber", "1234567890")
+                     .addHeader("latitude", "123.1")
+                     .addHeader("longitude", "145.2")*/
+                    // .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
             httpClient.newCall(request).enqueue(new Callback() {

@@ -148,7 +148,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
     Button btn_login;
     int aeps,loan,bbps,pan,card;
     ImageView btn_loginOptions;
-    OkHttpClient client;
+    OkHttpClient client,httpClient;
     boolean doubleBackToExitPressedOnce = false;
     MobileSMSAPI sms = new MobileSMSAPI();
     //This method working as auto scaling of ui by density
@@ -195,13 +195,13 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         // Initialization of all the UI component
         et_userName = findViewById(R.id.username);
         et_pass = findViewById(R.id.password);
-      //  btn_loginOptions = findViewById(R.id.right_arrow);
+        //  btn_loginOptions = findViewById(R.id.right_arrow);
         btn_login = findViewById(R.id.login_button);
         btn_login.setEnabled(true);
         tv_version = findViewById(R.id.version);
         tv_dateofrelease = findViewById(R.id.dateofr);
         tv_androidId = findViewById(R.id.andid);
-      //  et_loginOptions = findViewById(R.id.select);
+        //  et_loginOptions = findViewById(R.id.select);
         tv_version.setText(R.string.app_version);
         tv_dateofrelease.setText(R.string.dateofrelease);
         client = new OkHttpClient();
@@ -227,14 +227,14 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                     agentPassword = et_pass.getText().toString();}catch (NullPointerException e){
                     et_pass.setError("Enter Password");
                 }
-                    isValidUsername = util.isValidName(username);
+                isValidUsername = util.isValidName(username);
 
-                    if (!isValidUsername) {
-                        et_userName.setError("Enter Valid Username");
-                    }
-                    else{
-                        new apiCall_getagentdetails().execute();
-                    }
+                if (!isValidUsername) {
+                    et_userName.setError("Enter Valid Username");
+                }
+                else{
+                    new apiCall_getagentdetails().execute();
+                }
 
 
              /*   if (selected_option != 1) {
@@ -296,17 +296,18 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 //String en_flag= BCrypt.hashpw("Test@123", BCrypt.gensalt(12));
 
 
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username,agentPassword);
+
 
     class apiCall_getagentdetails extends AsyncTask<Request, Void, String> {
 
         @Override
         protected String doInBackground(Request... requests) {
             JSONObject jsonObject = new JSONObject();
-          //  Log.d("TAG","EN_FLAG"+en_flag);
+            //  Log.d("TAG","EN_FLAG"+en_flag);
             try {
+                httpClient = utils.createAuthenticatedClient(username,agentPassword);
+                System.out.println("USERNAME "+username+"PASSWORD "+agentPassword);
                 jsonObject.put("id",username);
-                jsonObject.put("androidid", androidId);
                 jsonObject.put("password",agentPassword);
                 jsonString = jsonObject.toString();
 
@@ -316,9 +317,9 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("http://bankmgr.gramtarang.org:8081/mint/loans/getagentdetails")
+                    .url("http://mintserver.gramtarang.org:8080/mint/loans/getagentdetails")
                     .addHeader("Accept", "*/*")
-                  // .addHeader("Authorization","Basic MTAxMDpUZXN0QDEyMw==")
+                    // .addHeader("Authorization","Basic MTAxMDpUZXN0QDEyMw==")
                     .post(body)
                     .build();
             httpClient.newCall(request).enqueue(new Callback() {
@@ -344,9 +345,12 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                 public void onResponse(Call call, Response response) throws IOException {
                     assert response.body() != null;
                     response_String = response.body().string();
+                    System.out.println("RESPONSE IS"+response_String);
                     if (response_String != null) {
                         JSONObject jsonResponse = null;
+
                         try {
+
                             jsonResponse = new JSONObject(response_String);
                             JSONArray llist1 = jsonResponse.getJSONArray("llist1");
                             agentemail = llist1.getJSONObject(0).getString("email");

@@ -255,7 +255,6 @@ public class activity_WelcomeScreen extends AppCompatActivity {
             return null;
         }
 
-
     }
     public void move(){
         new Handler().postDelayed(new Runnable() {

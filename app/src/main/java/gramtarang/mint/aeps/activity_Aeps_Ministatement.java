@@ -570,7 +570,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
      * it is running asyncnously in the background so that out main thread will not hampered
      * @return responseString*/
 
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
     class Ministatement_apiCalling extends AsyncTask<Request, Void, String> {
 
         @Override
