@@ -516,7 +516,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             RequestBody body = RequestBody.create(JSON, pidData_json);
             Request request = new Request.Builder()
-                    .url("https://mintserver.gramtarang.org:8080/mint/aeps/ipwithdrawal")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/aeps/ipwithdrawal")
                     .addHeader("AdhaarNumber",en_aad)
                     .addHeader("Bankid",selected_bank_id)
                     .addHeader("phnumber",en_phn)

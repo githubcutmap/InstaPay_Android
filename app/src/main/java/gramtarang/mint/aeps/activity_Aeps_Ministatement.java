@@ -580,7 +580,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, pidData_json);
             Request request = new Request.Builder()
-                    .url("https://mintserver.gramtarang.org:8080/mint/aeps/ipministatement")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/aeps/ipministatement")
                     .addHeader("AdhaarNumber", en_aadhaar)
                     .addHeader("bankId", selected_bank_id)
                     .addHeader("MobileNumber", en_phn)

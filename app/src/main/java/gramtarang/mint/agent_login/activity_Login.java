@@ -317,7 +317,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("https://mintserver.gramtarang.org:8080/mint/loans/getagentdetails")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/loans/getagentdetails")
                     .addHeader("Accept", "*/*")
                     // .addHeader("Authorization","Basic MTAxMDpUZXN0QDEyMw==")
                     .post(body)
@@ -350,7 +350,6 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                         JSONObject jsonResponse = null;
 
                         try {
-
                             jsonResponse = new JSONObject(response_String);
                             JSONArray llist1 = jsonResponse.getJSONArray("llist1");
                             agentemail = llist1.getJSONObject(0).getString("email");

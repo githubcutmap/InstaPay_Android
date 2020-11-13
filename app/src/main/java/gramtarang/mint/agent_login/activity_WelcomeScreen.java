@@ -188,13 +188,19 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         @Override
         protected String doInBackground(Request... requests) {
             okhttp3.Request request = new Request.Builder()
-                    .url("https://mintserver.gramtarang.org:8080/mint/im/version")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/im/version")
                     .addHeader("Accept", "*/*")
                     .get()
                     .build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
+                    DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","Server Unreachable.",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finishAffinity();
+                        }
+                    });
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {

@@ -527,7 +527,7 @@ public class activity_Aeps_Deposit extends AppCompatActivity implements LogOutTi
                .build();*/
             Log.d(TAG, "doInBackground: formbody"+body);
             Request request = new Request.Builder()
-                    .url("https://mintserver.gramtarang.org:8080/aeps/deposit") //https://15.206.223.162:8080/piddata
+                    .url("https://aepsapi.gramtarang.org:8008/aeps/deposit") //https://15.206.223.162:8080/piddata
                     .addHeader("AdhaarNumber", adharrNumber_string)
                     .addHeader("Bankid",selected_bank_id)
                     .addHeader("phnumber", phone_string)
