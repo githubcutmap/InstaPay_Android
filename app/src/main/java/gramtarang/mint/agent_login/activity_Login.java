@@ -348,25 +348,29 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                     System.out.println("RESPONSE IS"+response_String);
                     if (response_String != null) {
                         JSONObject jsonResponse = null;
+                        JSONObject jsonResponse1=null;
 
                         try {
                             jsonResponse = new JSONObject(response_String);
-                            JSONArray llist1 = jsonResponse.getJSONArray("llist1");
-                            agentemail = llist1.getJSONObject(0).getString("email");
-                            agentphn = llist1.getJSONObject(0).getString("contact_no");
-                            agentname = llist1.getJSONObject(0).getString("name");
-                            bankmitraid=llist1.getJSONObject(0).getString("id");
-                            areamanager_id=llist1.getJSONObject(0).getString("area_manager_id");
-                            role=llist1.getJSONObject(0).getInt("role");
-                            aeps=llist1.getJSONObject(0).getInt("aeps");
-                            pan=llist1.getJSONObject(0).getInt("pan");
-                            bbps=llist1.getJSONObject(0).getInt("bbps");
-                            card=llist1.getJSONObject(0).getInt("card");
-                            loan=llist1.getJSONObject(0).getInt("loan");
-                            Log.d("TAG","AMID:"+areamanager_id+"Roles:"+aeps+pan+card+loan+bbps);
-                            activity_Login.this.runOnUiThread(new Runnable() {
+                            jsonResponse1=jsonResponse.getJSONObject("llist1");
+                            //JSONArray llist1 = jsonResponse.getJSONArray("llist1");
+                            agentemail = jsonResponse1.getString("email");
+                            agentphn = jsonResponse1.getString("contact_no");
+                            agentname = jsonResponse1.getString("name");
+                            bankmitraid=jsonResponse1.getString("id");
+                            areamanager_id=jsonResponse1.getString("area_manager_id");
+                            role=jsonResponse1.getInt("role");
+                            aeps=jsonResponse1.getInt("aeps");
+                            pan=jsonResponse1.getInt("pan");
+                            bbps=jsonResponse1.getInt("bbps");
+                            card=jsonResponse1.getInt("card");
+                            loan=jsonResponse1.getInt("loan");
+                           /**/
+                            Log.d("EMAIL","AFter PARSING"+agentemail);
+                           activity_Login.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+
                                     //Snackbar.make(coordinatorLayout, "success", Snackbar.LENGTH_LONG).setAction("action",null).show();
 
                                     method(agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
@@ -374,7 +378,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                             });
 
                         } catch (JSONException e) {
-                            Log.d("TAG", "Login Failed" );
+                            Log.d("TAG", "Exception Caught "+e );
                             new Handler(Looper.getMainLooper()).post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -396,7 +400,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
                         }
 
-                        Log.d("TAG", "Response Email:" + agentemail + agentname + agentphn);
+                        Log.d("TAG", "Response Email:" + agentemail );
                     }
 
                 }

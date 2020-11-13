@@ -230,7 +230,7 @@ tv_agentname.setText(agentname);
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("https://bankmgr.gramtarang.org:8081/mint/im/getagentlastlogin")
+                    .url("https://mintserver.gramtarang.org:8080/mint/im/getagentlastlogin")
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
@@ -252,7 +252,7 @@ tv_agentname.setText(agentname);
                         try {
                             jsonResponse = new JSONObject(response_String);
                             JSONArray llist1 = jsonResponse.getJSONArray("getagentlastlogin");
-                            lastlogin_time = llist1.getJSONObject(0).getString("timestamp");
+                            lastlogin_time = jsonResponse.getString("timestamp");
                             Log.d("TAG","Last Login is:"+lastlogin_time);
                             tv_timestamp.setText(lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));
 
