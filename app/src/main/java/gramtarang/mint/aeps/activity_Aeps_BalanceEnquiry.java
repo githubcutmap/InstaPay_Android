@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -143,7 +144,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     public String pCount;
     public String pType;
     public String pidData_json;
-    OkHttpClient client; OkHttpClient httpClient;
+    OkHttpClient client;
+    OkHttpClient httpClient;
     ArrayList<String> arryList_bankName = new ArrayList<String>();
     ArrayList<String> arrayList_bankNumber = new ArrayList<String>();
 
@@ -245,13 +247,18 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         // latitude="21.22";
         //  longitude="112.2";
         // androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
+
         //bankNames are getting from SQL database for validation purpose
-        SQLQueries getbanknames = new SQLQueries();
+        /*SQLQueries getbanknames = new SQLQueries();
         SQLQueries bankvalidation = new SQLQueries();
         arryList_bankName = getbanknames.getBankNames();
-        arrayList_bankNumber = getbanknames.getBankIIN();
+        arrayList_bankNumber = getbanknames.getBankIIN();*/
+
+        new apiCall_getBanks().execute();
+
         //AUto complete of bank id
-        util.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
+         util.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
         //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,7 +288,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     isValidAadhar = util.isValidAadhaar(en_aadhaar);
                     isValidName = util.isValidName(en_name);
                     isValidPhone = util.isValidPhone(en_phn);
-                    isValidBankName = bankvalidation.isValidBankName(selected_bank_name);
+                    //isValidBankName = bankvalidation.isValidBankName(selected_bank_name);
                     Log.d(TAG, "Validations are:" + isValidPhone + isValidBankName + isValidAadhar + isValidName);
                     if (isValidAadhar && isValidPhone && isValidName) {
                         try {
@@ -309,6 +316,54 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             }
 
         });
+
+    }
+
+     class apiCall_getBanks extends AsyncTask<Request, Void, String> {
+        @Override
+        protected String doInBackground(Request... requests) {
+            httpClient = utils.createAuthenticatedClient("2323", "Test@123");
+            okhttp3.Request request = new Request.Builder()
+                    .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                    .addHeader("Accept", "*/*")
+                    .get()
+                    .build();
+            httpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    assert response.body() != null;
+                    //the response we are getting from api
+                    response_String = response.body().string();
+                    if (response_String != null) {
+                        Log.d("TAG","Response is+"+response_String.toString());
+                        JSONArray jsonResponse = null;
+                        try {
+                            jsonResponse = new JSONArray(response_String);
+                            for(int j = 0; j < jsonResponse.length(); j++){
+                                JSONObject jresponse = jsonResponse.getJSONObject(j);
+                                arryList_bankName.add(jresponse.getString("bankname"));
+                                arrayList_bankNumber.add(jresponse.getString("iinno"));
+                            }
+
+                            Log.d("TAG","BANK NAMES"+arryList_bankName+arrayList_bankNumber);
+                            //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+
+                            //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        catch (NullPointerException e) {
+                        }
+                    }
+
+                }
+            });
+
+            return null;
+        }
 
     }
 

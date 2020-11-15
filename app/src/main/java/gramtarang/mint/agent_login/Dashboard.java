@@ -40,7 +40,7 @@ public class Dashboard extends AppCompatActivity {
     public static final String mypreference = "mypref";
     String agentname,androidId,jsonString,response_String,lastlogin_time,username,password;
     int aeps,bbps,loan,pan,card;
-    ImageView imaeps,imbbps,impan,imcard,imloan,logout;
+    ImageView imaeps,imbbps,impan,imcard,imloan,improfile,logout;
     LinearLayout llaeps,llbbps,llpan,llcard,llloan;
     OkHttpClient client,httpClient;
     TextView tv_timestamp,tv_agentname,tv_textMessage;
@@ -86,6 +86,7 @@ public class Dashboard extends AppCompatActivity {
         imcard=findViewById(R.id.card);
         imbbps=findViewById(R.id.bbps);
         logout=findViewById(R.id.logout);
+        improfile = findViewById(R.id.agentprofile);
 tv_timestamp=findViewById(R.id.menu_timestamp);
 tv_agentname=findViewById(R.id.agent_name);
 tv_agentname.setText(agentname);
@@ -208,6 +209,14 @@ tv_agentname.setText(agentname);
                         }
                     });
                 }
+            }
+        });
+
+        improfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, activity_AgentsProfile.class);
+                startActivity(intent);
             }
         });
     }
