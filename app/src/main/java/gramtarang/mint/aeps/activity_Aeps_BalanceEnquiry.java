@@ -250,12 +250,12 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
 
 
         //bankNames are getting from SQL database for validation purpose
-        /*SQLQueries getbanknames = new SQLQueries();
+        SQLQueries getbanknames = new SQLQueries();
         SQLQueries bankvalidation = new SQLQueries();
         arryList_bankName = getbanknames.getBankNames();
-        arrayList_bankNumber = getbanknames.getBankIIN();*/
+        arrayList_bankNumber = getbanknames.getBankIIN();
 
-        new apiCall_getBanks().execute();
+        //new apiCall_getBanks().execute();
 
         //AUto complete of bank id
          util.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
@@ -288,7 +288,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     isValidAadhar = util.isValidAadhaar(en_aadhaar);
                     isValidName = util.isValidName(en_name);
                     isValidPhone = util.isValidPhone(en_phn);
-                    //isValidBankName = bankvalidation.isValidBankName(selected_bank_name);
+                    isValidBankName = bankvalidation.isValidBankName(selected_bank_name);
                     Log.d(TAG, "Validations are:" + isValidPhone + isValidBankName + isValidAadhar + isValidName);
                     if (isValidAadhar && isValidPhone && isValidName) {
                         try {
