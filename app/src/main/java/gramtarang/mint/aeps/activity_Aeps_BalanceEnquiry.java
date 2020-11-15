@@ -143,7 +143,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     public String pCount;
     public String pType;
     public String pidData_json;
-    OkHttpClient client;
+    OkHttpClient client; OkHttpClient httpClient;
     ArrayList<String> arryList_bankName = new ArrayList<String>();
     ArrayList<String> arrayList_bankNumber = new ArrayList<String>();
 
@@ -288,6 +288,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                             //   new  ().execute();
                             capture(pidOptions);
                             //  fingerprintDataConvertingToJson();
+                      // new apiCall_BalanceEnquiry().execute();
                         } catch (Exception e) {
                             // Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
                         }
@@ -546,7 +547,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         }
     }
     Utils utils=new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
+
     class apiCall_BalanceEnquiry extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
@@ -559,8 +560,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             // RequestBody body = RequestBody.create(JSON, pidData_json);
 
 
-
-
+            httpClient = utils.createAuthenticatedClient(username, password);
+Log.d("TAG","Message is"+username+password);
           /*  RequestBody formBody = new FormBody.Builder()
                     .add("AdhaarNumber",en_aadhaar)
                     .add("imeiNumber", androidId)

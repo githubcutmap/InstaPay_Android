@@ -152,7 +152,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     public static String pidData_json;
     public static Activity activity;
     ImageView backbtn;
-    OkHttpClient client;
+    OkHttpClient client,httpClient;
     Button btn_submit;
     EditText et_adhaarNumber;
     EditText et_amount;
@@ -508,11 +508,12 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
      * it is running asyncnously in the background so that out main thread will not hampered
      * @return responseString*/
     Utils utils=new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
+
     class apicallOfWithdrawalActivity extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
 //            loadingDialog.startLoading();
+            httpClient = utils.createAuthenticatedClient(username, password);
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             RequestBody body = RequestBody.create(JSON, pidData_json);
             Request request = new Request.Builder()

@@ -211,7 +211,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     String bank_RRN;
     ///////////////////////////////////////////////////////
     public static String pidData_json;
-    OkHttpClient client;
+    OkHttpClient client,httpClient;
     ImageView backbtn;
     EditText et_AdhaarNumber, et_NameOFTheCustomer, et_PhoneNumber;
     Button btn_submit;
@@ -570,13 +570,13 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
      * it is running asyncnously in the background so that out main thread will not hampered
      * @return responseString*/
 
-    OkHttpClient httpClient = utils.createAuthenticatedClient("1010", "Test@123");
+
     class Ministatement_apiCalling extends AsyncTask<Request, Void, String> {
 
         @Override
         protected String doInBackground(Request... requests) {
 //            utils.getprogressDialog(activity_Aeps_Ministatement.this,"Transaction in process","Please Wait...");
-
+            httpClient = utils.createAuthenticatedClient(username, password);
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, pidData_json);
             Request request = new Request.Builder()

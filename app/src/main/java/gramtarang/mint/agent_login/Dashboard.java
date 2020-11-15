@@ -219,8 +219,8 @@ tv_agentname.setText(agentname);
         protected String doInBackground(Request... requests) {
             JSONObject jsonObject = new JSONObject();
             try {
-                Log.d("TAG","ANDROID"+androidId);
-                jsonObject.put("androidid", androidId);
+
+                jsonObject.put("username", username);
                 jsonObject.put("loginstatus", "Success");
                 jsonString = jsonObject.toString();
 
@@ -230,7 +230,7 @@ tv_agentname.setText(agentname);
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("https://mintserver.gramtarang.org:8080/mint/im/getagentlastlogin")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/im/getagentlastlogin")
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();
