@@ -1,8 +1,6 @@
 package gramtarang.mint.agent_login;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,44 +18,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.res.FontResourcesParserCompat;
 
 
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mindrot.jbcrypt.BCrypt;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 import gramtarang.mint.R;
-import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
-import gramtarang.mint.api.DBApi;
 import gramtarang.mint.api.MobileSMSAPI;
 
-import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.ConnectionClass;
 import gramtarang.mint.utils.DialogActivity;
 import gramtarang.mint.utils.LogOutTimer;
 import gramtarang.mint.utils.LoginVerification;
-import gramtarang.mint.utils.SQLQueries;
 import gramtarang.mint.utils.Utils;
-import okhttp3.Authenticator;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Credentials;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -68,10 +47,6 @@ import okhttp3.Response;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
-
-import okhttp3.FormBody;
-import okhttp3.Route;
 
 
 /*activity_Login activity
@@ -137,9 +112,9 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
     String appversion;
     String dateofrelease;
     String selected_method;
-    String response_String;
+    String response_String, agentAadhaar;
     String jsonString;
-    String timestamp,areamanager_id;
+    String timestamp,areamanager_id,areamanager_name;
     EditText et_userName, et_loginOptions,et_pass;
     ConnectionClass connectionClass;
     int selected_option = 1, i;
@@ -359,7 +334,10 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                             agentname = jsonResponse1.getString("name");
                             bankmitraid=jsonResponse1.getString("id");
                             areamanager_id=jsonResponse1.getString("area_manager_id");
+                            areamanager_name=jsonResponse1.getString("area_manager");
+                            agentAadhaar =jsonResponse1.getString("aadhaar_number");
                             role=jsonResponse1.getInt("role");
+
                             aeps=jsonResponse1.getInt("aeps");
                             pan=jsonResponse1.getInt("pan");
                             bbps=jsonResponse1.getInt("bbps");
@@ -373,7 +351,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
                                     //Snackbar.make(coordinatorLayout, "success", Snackbar.LENGTH_LONG).setAction("action",null).show();
 
-                                    method(agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
+                                    method(agentAadhaar,areamanager_name,agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
                                 }
                             });
 
@@ -412,7 +390,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         }
 
     }
-    public void method(String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
+    public void method(String aadhaar,String areamanager_name,String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
         // utils.getprogressDialog(activity_Login.this, "Logging in", "Please Wait");
         verification_type = "OTP";
 //            btn_login.setEnabled(false);
@@ -435,7 +413,9 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         editor.putString("AgentName", name);
         editor.putString("AgentEmail", email);
         editor.putString("AgentPhone", phn);
+        editor.putString("AreaManagerName", areamanager_name);
         editor.putString("BankMitraId", bankmitraid);
+        editor.putString("AgentAadhaar", aadhaar);
         editor.putString("VerificationMethod", verification_type);
         editor.putString("LoginOTP", generated_pin);
         editor.putString("AreaManagerId", areamanagerid);

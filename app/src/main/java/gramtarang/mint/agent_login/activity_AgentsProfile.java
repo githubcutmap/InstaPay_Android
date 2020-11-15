@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
-import gramtarang.mint.utils.SQLQueries;
 
 
 public class activity_AgentsProfile extends AppCompatActivity {
@@ -24,8 +24,8 @@ public class activity_AgentsProfile extends AppCompatActivity {
 
     private static final String TAG = "AgentProfile";
     ImageView backbtn;
-    TextView agent_id,agent_name,agent_aadhar,agent_phone,agent_mail,agent_pan,agent_llt;
-    String ag_details[],androidId;
+    TextView agent_id,agent_name,agent_aadhar,agent_phone,agent_mail,agent_areamgr,agent_areamgr_id;
+    String ag_details[],androidId,agentName,agentEmail,agentPhone,agentId,areamanager,areamanagerId, agentAadhaar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,20 +37,31 @@ public class activity_AgentsProfile extends AppCompatActivity {
         agent_aadhar = findViewById(R.id.agent_aadhar);
         agent_phone = findViewById(R.id.agent_phone);
         agent_mail = findViewById(R.id.agent_mail);
-        agent_pan = findViewById(R.id.agent_pan);
-        agent_llt = findViewById(R.id.agent_llt);
+        agent_areamgr=findViewById(R.id.agent_areamgr);
+        agent_areamgr_id=findViewById(R.id.agent_areamgr_id);
+
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         androidId=preferences.getString("AndroidId","No name defined");
-        SQLQueries query=new SQLQueries();
-        ag_details= query.getAgentDetails(androidId);
-        agent_id.setText(ag_details[0]);
-        agent_name.setText(ag_details[1]+" "+ag_details[2]);
-        agent_aadhar.setText(ag_details[3]);
-        agent_phone.setText(ag_details[4]);
-        agent_mail.setText(ag_details[5]);
-        agent_pan.setText(ag_details[6]);
-        agent_llt.setText(ag_details[7]);
 
+        agentName=preferences.getString("AgentName","No name defined");
+        agentEmail=preferences.getString("AgentEmail","No name defined");
+        agentPhone=preferences.getString("AgentPhone","No name defined");
+        agentId=preferences.getString("Username","No name defined");
+        areamanager=preferences.getString("AreaManagerName","No name defined");
+        areamanagerId=preferences.getString("AreaManagerId","No name defined");
+        agentAadhaar=preferences.getString("AgentAadhaar","No name defined");
+try{
+    agent_id.setText(agentId);
+    agent_name.setText(agentName);
+    agent_mail.setText(agentEmail);
+    agent_phone.setText(agentPhone);
+    agent_aadhar.setText(agentAadhaar);
+    agent_areamgr_id.setText(areamanagerId);
+    agent_areamgr.setText(areamanager);
+}catch (Exception e){
+    e.printStackTrace();
+}
+Log.d("TAG","Responses are:"+androidId+agentPhone+agentEmail+agentName+agentId+areamanager+areamanagerId);
         //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
