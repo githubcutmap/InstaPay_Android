@@ -48,7 +48,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoginVerification extends AppCompatActivity {
-    OkHttpClient client;
+    OkHttpClient client,httpClient;
     EditText edit_otp;
     TextView timer,otp_type;
     Button submit,resend_btn;
@@ -329,30 +329,20 @@ else{
         }.start();
     }
 
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
 
     class apiCall_insertloginlog extends AsyncTask<Request, Void, String> {
         @SuppressLint("HardwareIds")
         @Override
         protected String doInBackground(Request... requests) {
             JSONObject jsonObject = new JSONObject();
+            httpClient = utils.createAuthenticatedClient(username, password);
             try {
-                SharedPreferences preferences;
-                String mypreference = "mypref";
-                preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-                androidId= preferences.getString("AndroidId","No name defined");
-                latitude=preferences.getString("Latitude","No name defined");
-                longitude=preferences.getString("Longitude","No name defined");
-                agentId=preferences.getString("AgentId","No name defined");
-                agentphn=preferences.getString("AgentPhone","No name defined");;
-                agentemail=preferences.getString("AgentEmail","No name defined");
-                agentname=preferences.getString("AgentName","No name defined");
-                verification_type=preferences.getString("VerificationMethod","No name defined");
-                generated_pin=preferences.getString("LoginOTP","No name defined");
+
 
                 Log.d("RAF","Message"+agentId+androidId+latitude+longitude+login_status);
                 jsonObject.put("s_id", null);
-                jsonObject.put("agentid",agentId);
+                jsonObject.put("agentid",username);
                 jsonObject.put("androidid", androidId);
                 jsonObject.put("latitude",latitude.toString());
                 jsonObject.put("longitude",longitude);
@@ -366,7 +356,7 @@ else{
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, jsonString);
             Request request = new Request.Builder()
-                    .url("http://bankmgr.gramtarang.org:8081/mint/im/loginlogs")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/im/loginlogs")
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();

@@ -42,7 +42,7 @@ public class Dashboard extends AppCompatActivity {
     int aeps,bbps,loan,pan,card;
     ImageView imaeps,imbbps,impan,imcard,imloan,logout;
     LinearLayout llaeps,llbbps,llpan,llcard,llloan;
-    OkHttpClient client;
+    OkHttpClient client,httpClient;
     TextView tv_timestamp,tv_agentname,tv_textMessage;
     boolean doubleBackToExitPressedOnce = false;
     @Override
@@ -212,15 +212,16 @@ tv_agentname.setText(agentname);
         });
     }
     Utils utils=new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
 
     class apiCall_getlastlogin extends AsyncTask<Request, Void, String> {
         @Override
         protected String doInBackground(Request... requests) {
+            httpClient = utils.createAuthenticatedClient(username, password);
             JSONObject jsonObject = new JSONObject();
             try {
 
-                jsonObject.put("username", username);
+                jsonObject.put("agentid", username);
                 jsonObject.put("loginstatus", "Success");
                 jsonString = jsonObject.toString();
 
@@ -251,7 +252,6 @@ tv_agentname.setText(agentname);
                         JSONObject jsonResponse = null;
                         try {
                             jsonResponse = new JSONObject(response_String);
-                            JSONArray llist1 = jsonResponse.getJSONArray("getagentlastlogin");
                             lastlogin_time = jsonResponse.getString("timestamp");
                             Log.d("TAG","Last Login is:"+lastlogin_time);
                             tv_timestamp.setText(lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));
