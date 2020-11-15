@@ -205,17 +205,16 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:weightSum="3">
 
                 <LinearLayout
-                    android:layout_height="150dp"
-                    android:layout_width="30dp"
+                    android:layout_height="160dp"
+                    android:layout_width="160dp"
                     android:layout_margin="5dp"
                     android:orientation="vertical"
                     android:layout_gravity="center"
@@ -248,8 +247,44 @@
 
 
                 <LinearLayout
-                    android:layout_height="150dp"
-                    android:layout_width="30dp"
+                    android:layout_height="160dp"
+                    android:layout_width="160dp"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/agent_profile">
+
+                    <ImageView
+                        android:id="@+id/agentprofile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/skybluecard"
+                        android:padding="25dp"
+                        app:srcCompat="@drawable/profile" />
+
+                    <TextView
+                        android:id="@+id/profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/bentham"
+                        android:gravity="center|bottom"
+                        android:textStyle="bold"
+                        android:text="PROFILE"
+                        android:textColor="@color/maroon"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_height="160dp"
+                    android:layout_width="160dp"
                     android:layout_margin="5dp"
                     android:orientation="vertical"
                     android:layout_gravity="center"
