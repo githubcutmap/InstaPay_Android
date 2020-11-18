@@ -254,10 +254,10 @@ public class AadhaarPay extends AppCompatActivity implements LogOutTimer.LogOutL
 
         bank_autofill = findViewById(R.id.bank_auto);
         final Utils utils=new Utils();
-        final SQLQueries query=new SQLQueries();
+     /*   final SQLQueries query=new SQLQueries();
 
         arryList_bankNames =query.getBankNames();
-        arryList_bankIIN =query.getBankIIN();
+        arryList_bankIIN =query.getBankIIN();*/
 
         utils.AutoCompleteTV_BankId(AadhaarPay.this, bank_autofill, arryList_bankNames, arryList_bankIIN,TAG);
         btn_submit = findViewById(R.id.submitbtn);
@@ -288,7 +288,7 @@ public class AadhaarPay extends AppCompatActivity implements LogOutTimer.LogOutL
                     isValidName=utils.isValidName(string_name);
                     isValidPhone=utils.isValidPhone(string_phoneNumber);
                     isValidAmount=utils.isValidAmount(string_amount);
-                    isValidBankName= query.isValidBankName(selected_bank_name);
+                  //  isValidBankName= query.isValidBankName(selected_bank_name);
 
                     if (isValidAadhar && isValidPhone && isValidName  && isValidAmount ) {
                         try {

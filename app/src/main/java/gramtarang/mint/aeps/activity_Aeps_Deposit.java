@@ -246,11 +246,11 @@ public class activity_Aeps_Deposit extends AppCompatActivity implements LogOutTi
 
         bank_autofill = findViewById(R.id.bank_auto);
         //data retrive from SQL
-        final Utils utils=new Utils();
+       /* final Utils utils=new Utils();
         final SQLQueries query=new SQLQueries();
         arrayList_bankName =query.getBankNames();
-        arrayList_bankIIN =query.getBankIIN();
-        utils.AutoCompleteTV_BankId(activity_Aeps_Deposit.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
+        arrayList_bankIIN =query.getBankIIN();*/
+        //utils.AutoCompleteTV_BankId(activity_Aeps_Deposit.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
 
         btn_submit = findViewById(R.id.submitbtn);
         //back button
@@ -266,7 +266,7 @@ public class activity_Aeps_Deposit extends AppCompatActivity implements LogOutTi
             public void onClick(View v) {
                 if (CheckNetwork.isInternetAvailable(activity_Aeps_Deposit.this)) //returns true if internet available
                 {
-                    selected_bank_id= utils.AutoCompleteTV_BankId(activity_Aeps_Deposit.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
+                   /* selected_bank_id= utils.AutoCompleteTV_BankId(activity_Aeps_Deposit.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
                     selected_bank_name=utils.AutoCompleteTV_BankName(activity_Aeps_Deposit.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
 
                     adharrNumber_string = et_adhaar.getText().toString().trim();
@@ -277,7 +277,7 @@ public class activity_Aeps_Deposit extends AppCompatActivity implements LogOutTi
                     isValidAadhar=utils.isValidAadhaar(adharrNumber_string);
                     isValidName=utils.isValidName(name_string);
                     isValidPhone=utils.isValidPhone(phone_string);
-                    isValidBankName= query.isValidBankName(selected_bank_name);
+                    isValidBankName= query.isValidBankName(selected_bank_name);*/
                     if (isValidAadhar && isValidPhone && isValidName ) {
                         try {
                             //Rd service api call

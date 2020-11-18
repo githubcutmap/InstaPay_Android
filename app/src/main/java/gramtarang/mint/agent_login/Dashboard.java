@@ -263,7 +263,13 @@ tv_agentname.setText(agentname);
                             jsonResponse = new JSONObject(response_String);
                             lastlogin_time = jsonResponse.getString("timestamp");
                             Log.d("TAG","Last Login is:"+lastlogin_time);
-                            tv_timestamp.setText(lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));
+                            Dashboard.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tv_timestamp.setText(lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));
+
+                                }
+                            });
 
                             preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();

@@ -1,9 +1,15 @@
 package gramtarang.mint.utils;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +17,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SQLQueries extends AppCompatActivity {
 
@@ -25,9 +37,10 @@ public class SQLQueries extends AppCompatActivity {
 
     List<String> al = new ArrayList<String>();
 
-    String agentid,lastlogin,
+    String agentid,lastlogin,response_String,
             db_otp,role,mAgentId,
             agentPhn,branchcode;
+    OkHttpClient httpClient;
     public String  getBankId(String bankname){
         try {
 
@@ -675,44 +688,97 @@ public String getAgentPhn(){
     ArrayList<String> banks_arr = new ArrayList<String>();
     ArrayList<String> banksID_arr = new ArrayList<String>();
     public ArrayList<String> getBankNames() {
-        try {
+        Utils utils=new Utils();
+                //httpClient = utils.createAuthenticatedClient(username, password);
+                okhttp3.Request request = new Request.Builder()
+                        .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                        .addHeader("Accept", "*/*")
+                        .get()
+                        .build();
+                httpClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        assert response.body() != null;
+                        //the response we are getting from api
+                        response_String = response.body().string();
+                        if (response_String != null) {
+                            Log.d("TAG","Response is+"+response_String.toString());
+                            JSONArray jsonResponse = null;
+                            try {
+                                jsonResponse = new JSONArray(response_String);
+                                for(int j = 0; j < jsonResponse.length(); j++){
+                                    JSONObject jresponse = jsonResponse.getJSONObject(j);
+                                    banks_arr.add(jresponse.getString("bankname"));
+                                    banksID_arr.add(jresponse.getString("iinno"));
+                                }
+
+                                Log.d("SQL QUERIES","BANK NAMES"+banks_arr+banksID_arr);
+                                //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+
+                                //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            catch (NullPointerException e) {
+                            }
+                        }
+
+                    }
+                });
 
 
-            Class.forName("com.mysql.jdbc.Driver");
-            connectionClass=new ConnectionClass();
-            Connection con = connectionClass.CONN();
-            if (con == null) {
 
+        Log.d("SQL QUERIES","BANK NAMES"+banks_arr+banksID_arr);
+        return banks_arr;
+    }
+    public ArrayList<String> getBankNames2(String username,String password) {
+        Utils utils=new Utils();
+        httpClient = utils.createAuthenticatedClient(username, password);
+        okhttp3.Request request = new Request.Builder()
+                .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                .addHeader("Accept", "*/*")
+                .get()
+                .build();
+        httpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
             }
-            else {
-                Statement statement = con.createStatement();
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
+                //the response we are getting from api
+                response_String = response.body().string();
+                if (response_String != null) {
+                    Log.d("TAG","Response is+"+response_String.toString());
+                    JSONArray jsonResponse = null;
+                    try {
+                        jsonResponse = new JSONArray(response_String);
+                        for(int j = 0; j < jsonResponse.length(); j++){
+                            JSONObject jresponse = jsonResponse.getJSONObject(j);
+                            banks_arr.add(jresponse.getString("bankname"));
+                            banksID_arr.add(jresponse.getString("iinno"));
+                        }
 
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM bankslist");
+                        Log.d("SQL QUERIES","BANK NAMES"+banks_arr+banksID_arr);
+                        //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
 
-                while (resultSet.next()) {
-
-                    bankNames = resultSet.getString("bankname");
-                    banks_arr.add(bankNames);
-
-
-
-
+                        //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    catch (NullPointerException e) {
+                    }
                 }
 
+            }
+        });
 
 
 
-            }  }
-
-
-
-        catch(NullPointerException | SQLException | ClassNotFoundException e)
-
-        {
-
-            e.printStackTrace();
-
-        }
+        Log.d("SQL QUERIES","BANK NAMES"+banks_arr+banksID_arr);
         return banks_arr;
     }
 
