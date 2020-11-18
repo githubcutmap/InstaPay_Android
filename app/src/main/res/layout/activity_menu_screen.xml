@@ -132,8 +132,6 @@
             android:textColor="@color/maroon"
             android:textSize="18sp" />
     </LinearLayout>
-
-
             <LinearLayout
                 android:layout_height="160dp"
                 android:layout_width="160dp"
@@ -142,93 +140,16 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="1">
-                    <ImageView
-                        android:id="@+id/aadhaar_pay"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:layout_weight="1"
-                        android:padding="13dp"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/greencard"
-                        app:srcCompat="@drawable/ac_opning" />
-
-                    <TextView
-                        android:id="@+id/aadharpay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/bentham"
-                        android:gravity="bottom"
-                        android:textStyle="bold"
-                        android:text="Aadhaar Pay"
-                         android:textColor="@color/maroon"
-                        android:textSize="17sp" />
-                </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_height="160dp"
-                android:layout_width="160dp"
-                android:layout_margin="5dp"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1">
-                    <ImageView
-                        android:id="@+id/deposit"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:layout_weight="1"
-                        android:padding="13dp"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/pinkcard"
-                        app:srcCompat="@drawable/deposit" />
-
-                    <TextView
-                        android:id="@+id/deposit1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/bentham"
-                        android:gravity="center|bottom"
-                        android:textStyle="bold"
-                        android:text="Deposit"
-                         android:textColor="@color/maroon"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_height="160dp"
-                android:layout_width="160dp"
-                android:layout_margin="5dp"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1">
-                    <ImageView
-                        android:id="@+id/image_ministatement"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:layout_weight="1"
-                        android:padding="16dp"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/orangecard"
-                        app:srcCompat="@drawable/ministatement" />
+                <ImageView
+                    android:id="@+id/image_ministatement"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:padding="16dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/orangecard"
+                    app:srcCompat="@drawable/ministatement" />
 
                 <TextView
                     android:id="@+id/ms"
@@ -239,9 +160,9 @@
                     android:gravity="center|bottom"
                     android:textStyle="bold"
                     android:text="Mini\nStatement"
-                     android:textColor="@color/maroon"
+                    android:textColor="@color/maroon"
                     android:textSize="18sp" />
-                </LinearLayout>
+            </LinearLayout>
 
 
             <LinearLayout
@@ -252,29 +173,112 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="1">
-                    <ImageView
-                        android:id="@+id/aeps_balenquiry"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="top"
-                        android:layout_weight="1"
-                        android:padding="16dp"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/purplecard"
-                        app:srcCompat="@drawable/balance_enquiry" />
+                <ImageView
+                    android:id="@+id/aeps_balenquiry"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:padding="16dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/purplecard"
+                    app:srcCompat="@drawable/balance_enquiry" />
 
-                    <TextView
-                        android:id="@+id/be"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/bentham"
-                        android:gravity="center|bottom"
-                        android:textStyle="bold"
-                        android:text="Balance Enquiry"
-                         android:textColor="@color/maroon"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/be"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/bentham"
+                    android:gravity="center|bottom"
+                    android:textStyle="bold"
+                    android:text="Balance Enquiry"
+                    android:textColor="@color/maroon"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_height="160dp"
+                android:layout_width="160dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/aadhaar_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:padding="13dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/greencard"
+                    app:srcCompat="@drawable/ac_opning" />
+
+                <TextView
+                    android:id="@+id/aadharpay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/bentham"
+                    android:gravity="bottom"
+                    android:textStyle="bold"
+                    android:text="Aadhaar Pay"
+                    android:textColor="@color/maroon"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_height="160dp"
+                android:layout_width="160dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/deposit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:padding="13dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/pinkcard"
+                    app:srcCompat="@drawable/deposit" />
+
+                <TextView
+                    android:id="@+id/deposit1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/bentham"
+                    android:gravity="center|bottom"
+                    android:textStyle="bold"
+                    android:text="Deposit"
+                    android:textColor="@color/maroon"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
 
 
 
