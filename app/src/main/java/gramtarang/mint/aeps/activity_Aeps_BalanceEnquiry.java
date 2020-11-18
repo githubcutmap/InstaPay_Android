@@ -10,10 +10,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -41,13 +43,13 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_Login;
-import gramtarang.mint.utils.AepsBanks;
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.CheckNetwork;
 import gramtarang.mint.utils.ConnectionClass;
@@ -208,8 +210,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-       /* adjustFontScale(getResources().getConfiguration());
-        onConfigurationChanged(getResources().getConfiguration());*/
+        adjustFontScale(getResources().getConfiguration());
+        onConfigurationChanged(getResources().getConfiguration());
         setContentView(R.layout.activity_aeps_bal);
 
 
@@ -251,19 +253,15 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
 
 
         //bankNames are getting from SQL database for validation purpose
-       // SQLQueries getbanknames = new SQLQueries();
-       // SQLQueries bankvalidation = new SQLQueries();
-      //  arryList_bankName = getbanknames.getBankNames2("1010","Test@123");
-       // arrayList_bankNumber = getbanknames.getBankIIN();*/
-//System.out.println("Trail"+arryList_bankName);
-       // Log.d("TAG","BANK NAMES"+arryList_bankName);
-        //new apiCall_getBanks().execute();
-arryList_bankName=getBankNames2(username,password);
-arrayList_bankNumber=getBankNumbers2(username,password);
+        /*SQLQueries getbanknames = new SQLQueries();
+        SQLQueries bankvalidation = new SQLQueries();
+        arryList_bankName = getbanknames.getBankNames();
+        arrayList_bankNumber = getbanknames.getBankIIN();*/
 
-        //Auto complete of bank id
-       //  util.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
-        //back button
+        new apiCall_getBanks().execute();
+
+        //AUto complete of bank id
+       //      //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -292,7 +290,7 @@ arrayList_bankNumber=getBankNumbers2(username,password);
                     isValidAadhar = util.isValidAadhaar(en_aadhaar);
                     isValidName = util.isValidName(en_name);
                     isValidPhone = util.isValidPhone(en_phn);
-                 //   isValidBankName = bankvalidation.isValidBankName(selected_bank_name);
+                    //isValidBankName = bankvalidation.isValidBankName(selected_bank_name);
                     Log.d(TAG, "Validations are:" + isValidPhone + isValidBankName + isValidAadhar + isValidName);
                     if (isValidAadhar && isValidPhone && isValidName) {
                         try {
@@ -323,7 +321,63 @@ arrayList_bankNumber=getBankNumbers2(username,password);
 
     }
 
+     class apiCall_getBanks extends AsyncTask<Request, Void, String> {
+        @Override
+        protected String doInBackground(Request... requests) {
+            httpClient = utils.createAuthenticatedClient(username, password);
+            okhttp3.Request request = new Request.Builder()
+                    .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                    .addHeader("Accept", "*/*")
+                    .get()
+                    .build();
+            httpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    assert response.body() != null;
+                    //the response we are getting from api
+                    response_String = response.body().string();
+                    if (response_String != null) {
+                        Log.d("TAG","Response is+"+response_String.toString());
+                        JSONArray jsonResponse = null;
+                        try {
+                            jsonResponse = new JSONArray(response_String);
+                            for(int j = 0; j < jsonResponse.length(); j++){
+                                JSONObject jresponse = jsonResponse.getJSONObject(j);
+                                arryList_bankName.add(jresponse.getString("bankname"));
+                                arrayList_bankNumber.add(jresponse.getString("iinno"));
+                            }
 
+                            Log.d("TAG","BANK NAMES"+arryList_bankName+arrayList_bankNumber);
+                            setAutoCompleteTV();
+
+                            //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+
+                            //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        catch (NullPointerException e) {
+                        }
+                    }
+
+                }
+            });
+
+            return null;
+        }
+
+    }
+    public void setAutoCompleteTV(){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Log.d(TAG, "setauto complete: " + arrayList_bankNumber + arryList_bankName);
+                utils.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry .this,bank_autofill,arryList_bankName,arrayList_bankNumber,TAG);
+            }
+        });
+     }
 
     //RD service api calling of mantra Fingerprint device
     public String capture(String pidOptions) {
@@ -347,90 +401,6 @@ arrayList_bankNumber=getBankNumbers2(username,password);
         if (!isIntentSafe) {
         }
         return pidDataXML;
-    }
-    public ArrayList<String> getBankNumbers2(String username,String password) {
-        Utils utils=new Utils();
-        httpClient = utils.createAuthenticatedClient(username, password);
-        okhttp3.Request request = new Request.Builder()
-                .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
-                .addHeader("Accept", "*/*")
-                .get()
-                .build();
-        httpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                //the response we are getting from api
-                response_String = response.body().string();
-                if (response_String != null) {
-                    Log.d("TAG","Response is+"+response_String.toString());
-                    JSONArray jsonResponse = null;
-                    try {
-                        jsonResponse = new JSONArray(response_String);
-                        for(int j = 0; j < jsonResponse.length(); j++){
-                            JSONObject jresponse = jsonResponse.getJSONObject(j);
-                            arrayList_bankNumber.add(jresponse.getString("iinno"));
-                        }
-
-                        Log.d("BALANCE ENQUIRY","BANK NUMBERS"+arrayList_bankNumber);
-                        //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
-
-                        //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    catch (NullPointerException e) {
-                    }
-                }
-
-            }
-        });
-        return arrayList_bankNumber;
-    }
-    public ArrayList<String> getBankNames2(String username,String password) {
-        Utils utils=new Utils();
-        httpClient = utils.createAuthenticatedClient(username, password);
-        okhttp3.Request request = new Request.Builder()
-                .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
-                .addHeader("Accept", "*/*")
-                .get()
-                .build();
-        httpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                assert response.body() != null;
-                //the response we are getting from api
-                response_String = response.body().string();
-                if (response_String != null) {
-                    Log.d("TAG","Response is+"+response_String.toString());
-                    JSONArray jsonResponse = null;
-                    try {
-                        jsonResponse = new JSONArray(response_String);
-                        for(int j = 0; j < jsonResponse.length(); j++){
-                            JSONObject jresponse = jsonResponse.getJSONObject(j);
-                            arryList_bankName.add(jresponse.getString("bankname"));
-                        }
-
-                        Log.d("BALANCE ENQUIRY","BANK NAMES"+arryList_bankName);
-                        //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
-
-                        //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    catch (NullPointerException e) {
-                    }
-                }
-
-            }
-        });
-        return arryList_bankName;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -815,7 +785,6 @@ Log.d("TAG","Message is"+username+password);
             return null;
         }
     }
-
     public void sendDatatoServer(String op1) throws IOException {
 
         HttpUrl.Builder httpBuilder = HttpUrl.parse("https://aepsapi.gramtarang.org:8008/mint/aeps/printPXML").newBuilder();

@@ -312,7 +312,7 @@ int selectedBankIndex;
         bank_autofill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(c, adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(c, adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
                 selected_bank = adapter.getItem(position).toString();
                 selected_bank_index = banks_arr.indexOf(adapter.getItem(position));
                 selected_bank_id = banksID_arr.get(selected_bank_index);
@@ -342,9 +342,9 @@ int selectedBankIndex;
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(c,
+                /*Toast.makeText(c,
                         adapter.getItem(position).toString(),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
 
                 selected_bank = adapter.getItem(position).toString();
                 selected_bank_index = banks_arr.indexOf(adapter.getItem(position));
