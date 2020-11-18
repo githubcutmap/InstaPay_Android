@@ -32,7 +32,7 @@ import gramtarang.mint.R;
 import gramtarang.mint.adapters.Adapter_loansAgent;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -202,8 +202,8 @@ public class LoanActuivity_ViewApplication extends AppCompatActivity implements 
     }
 
     private void loansDetails(String selectedLoanId) {
-        SQLQueries loansDetails = new SQLQueries();
-        LoansDetailsArr = loansDetails.getLoanDetails(selectedLoanId);
+       /* SQLQueries loansDetails = new SQLQueries();
+        LoansDetailsArr = loansDetails.getLoanDetails(selectedLoanId);*/
 
         Log.d("ViewApplication"," ids of agents under manager: "+LoansDetailsArr);
         String[] LoansDetailArray = LoansDetailsArr.toArray(new String[0]);

@@ -12,7 +12,7 @@ import gramtarang.mint.adapters.Adapter_loansAgent;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 
 public class LoanActivity_viewAppId extends AppCompatActivity implements LogOutTimer.LogOutListener {
     private  String TAG="LOAN_appid";
@@ -78,8 +78,8 @@ public class LoanActivity_viewAppId extends AppCompatActivity implements LogOutT
 
     }
     private void loansList(String selectedAgentId) {
-        SQLQueries loanslist = new SQLQueries();
-        LoansListArr = loanslist.getLoanList(selectedAgentId);
+   /*     SQLQueries loanslist = new SQLQueries();
+        LoansListArr = loanslist.getLoanList(selectedAgentId);*/
         Log.d("ViewApplication"," ids of agents under manager loanslist: "+LoansListArr);
         adapter_loansAgent = new Adapter_loansAgent(LoansListArr,this);
         rv_agentApplicationId.setAdapter(adapter_loansAgent);

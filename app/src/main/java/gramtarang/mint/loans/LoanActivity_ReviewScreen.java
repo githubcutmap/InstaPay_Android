@@ -79,11 +79,11 @@ import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.api.MobileSMSAPI;
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.CheckNetwork;
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.DialogActivity;
-import gramtarang.mint.utils.LoadingDialog;
+
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;

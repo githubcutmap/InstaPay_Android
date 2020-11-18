@@ -40,9 +40,9 @@ import gramtarang.mint.aeps.activity_Aeps_BalanceEnquiry;
 import gramtarang.mint.api.DBApi;
 import gramtarang.mint.utils.DialogActivity;
 import gramtarang.mint.utils.LocationTrack;
-import gramtarang.mint.utils.SQLQueries;
+
 import gramtarang.mint.utils.Utils;
-import gramtarang.mint.utils.VolleyInstance;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -90,7 +90,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         img_mintLogo.startAnimation(myanim);
         app_name.startAnimation(myanim);
         client = new OkHttpClient();
-        SQLQueries query=new SQLQueries();
+
         locationTrack = new LocationTrack(activity_WelcomeScreen.this);
         if (locationTrack.canGetLocation()) {
             longitude = String.valueOf(locationTrack.getLongitude());

@@ -185,7 +185,7 @@ else{
         }
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         timestamp = s.format(new Date());
-        SQLQueries query=new SQLQueries();
+
         timer();
 
         if (verification_type=="OTP") {
@@ -303,13 +303,7 @@ else{
     };
 
 
-    public void insertlog(){
-        SQLQueries insert_login_logs=new SQLQueries();
-        insert_login_logs.insert_login_log(i,agentId,username,androidId,latitude,longitude,timestamp,login_status);
 
-
-
-    }
 
     public void timer(){
         new CountDownTimer(60000, 1000) {

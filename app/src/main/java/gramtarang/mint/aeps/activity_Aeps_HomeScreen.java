@@ -31,7 +31,7 @@ import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_AgentsProfile;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.loans.LoanActivity_MainScreen;
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.LogOutTimer;
 import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
@@ -96,7 +96,7 @@ public class activity_Aeps_HomeScreen extends AppCompatActivity implements LogOu
 
     Switch transSwitch;
     String agent_firstname,agent_lastname,title,message;
-    ConnectionClass connectionClass;
+
     private static final int REQUEST_CODE = 101;
     SharedPreferences preferences;
     public static final String mypreference = "mypref";

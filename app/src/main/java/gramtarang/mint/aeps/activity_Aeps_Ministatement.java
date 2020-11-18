@@ -91,11 +91,11 @@ import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.api.MobileSMSAPI;
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.CheckNetwork;
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.DialogActivity;
-import gramtarang.mint.utils.LoadingDialog;
+
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -182,9 +182,9 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     public static final String mypreference = "mypref";
     private static final String TAG = "MINI STATEMENT";
     String username,password,transtype="MINI STATEMENT",agent_phone_number,agent_name,selected_bank_name,selected_bank_id,agentid,latitude,longitude,banks,selected_bank,en_aadhaar, en_name, en_phn,BankId,timeStamp2,avlBalance, responseString,androidId,mdate,mtxnType,mnarration,mamount,pidDataXML, message, status, status_code,custName,ipAddress,lati,longi,transaction_amount, pidOptions,data, timestamp,fpTransId,agentId;
-    ConnectionClass connectionClass;
+
     int i;
-    LoadingDialog loadingDialog = new LoadingDialog(activity_Aeps_Ministatement.this);
+    //LoadingDialog loadingDialog = new LoadingDialog(activity_Aeps_Ministatement.this);
     //bellow variable re for rd Service of fingerPrint device
     public static String ci;
     private static String dc;
@@ -295,7 +295,7 @@ String response_String;
         //AutoFIll the bank name
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
-       // SQLQueries query=new SQLQueries();
+       //
         //search for BANKIIN & BAnk name in database
        // arrayList_bankIIN =query.getBankIIN();
         //arrList_BankName =query.getBankNames();

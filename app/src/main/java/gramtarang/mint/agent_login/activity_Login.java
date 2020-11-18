@@ -30,7 +30,7 @@ import java.io.IOException;
 import gramtarang.mint.R;
 import gramtarang.mint.api.MobileSMSAPI;
 
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.DialogActivity;
 import gramtarang.mint.utils.LogOutTimer;
 import gramtarang.mint.utils.LoginVerification;
@@ -116,7 +116,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
     String jsonString;
     String timestamp,areamanager_id,areamanager_name;
     EditText et_userName, et_loginOptions,et_pass;
-    ConnectionClass connectionClass;
+
     int selected_option = 1, i;
     boolean isValidUsername,isphnregistered,isemailregistered;
     TextView tv_version, tv_dateofrelease, tv_androidId;

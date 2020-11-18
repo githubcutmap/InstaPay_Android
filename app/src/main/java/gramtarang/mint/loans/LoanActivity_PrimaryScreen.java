@@ -68,11 +68,11 @@ import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.api.MobileSMSAPI;
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.CheckNetwork;
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.DialogActivity;
-import gramtarang.mint.utils.LoadingDialog;
+
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -166,7 +166,7 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
         beneficiary_uniqueId,loan_type,gender,entered_otp;
     ArrayList<String> apgvbBranch_arr = new ArrayList<String>();
     ArrayList<String> apgvbBranchID_arr = new ArrayList<String>();
-SQLQueries query=new SQLQueries();
+
     public static final String mypreference = "Loanpreferences";SharedPreferences preferences;
     boolean doubleBackToExitPressedOnce = false;
     private int selected_index;
@@ -300,9 +300,9 @@ SQLQueries query=new SQLQueries();
                 Log.d("TAG","ID is"+beneficiary_uniqueId);
                 if(!gender.equals("Gender") &&isValidDOB &&pro_name!=null && beneficiary_name!=null && selected_apgvb_branch!=null && beneficiary_phone.length()==10 &&isValidPhone && isValidAadhaar && accountno.length()==11 &&
                         !unitname.equals("Unit Name") && unitaddress!=null && resaddress!=null && vpo!=null && distt!=null && pin!=null && !lineactivity.equals("Line of Activity")) {
-                    SQLQueries BenfDetailsforOTP=new SQLQueries();
+                   // SQLQueries BenfDetailsforOTP=new SQLQueries();
                     Log.d("OTP","generated otp"+generated_otp);
-                    BenfDetailsforOTP.insertbeneficiaryforotp(i,beneficiary_name,beneficiary_phone,generated_otp);
+                  //  BenfDetailsforOTP.insertbeneficiaryforotp(i,beneficiary_name,beneficiary_phone,generated_otp);
                     MobileSMSAPI sms = new MobileSMSAPI();
                     sms.sendloanverification(beneficiary_name,beneficiary_phone,generated_otp);
                   //  sms.sendSms1(generated_otp, beneficiary_phone, beneficiary_name);

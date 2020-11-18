@@ -46,11 +46,11 @@ import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.CheckNetwork;
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.DialogActivity;
-import gramtarang.mint.utils.LoadingDialog;
+
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -159,13 +159,13 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     EditText et_amount;
     EditText et_PhoneNumber;
     EditText et_CustomerName;
-    ConnectionClass connectionClass;
+
     AutoCompleteTextView bank_autofill;
 
     ArrayList<String> arrayList_bankName = new ArrayList<String>();
     ArrayList<String> arrayList_bankIIN = new ArrayList<String>();
 
-    LoadingDialog loadingDialog = new LoadingDialog(activity_Aeps_Withdraw.this);
+    //LoadingDialog loadingDialog = new LoadingDialog(activity_Aeps_Withdraw.this);
     //bellow boolean variables for validation
     boolean isValidAadhar,isValidBankName,isValidName,isValidAmount,isValidPhone;
     boolean doubleBackToExitPressedOnce = false;
@@ -257,7 +257,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         //AutoFIll the bank name
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
-       // SQLQueries query=new SQLQueries();
+       //
         //search for BANKIIN & BAnk name in database
         //arrayList_bankName =query.getBankNames();
        // arrayList_bankIIN =query.getBankIIN();

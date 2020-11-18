@@ -3,6 +3,7 @@ package gramtarang.mint.aeps;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,16 +48,18 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.CheckNetwork;
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.DialogActivity;
-import gramtarang.mint.utils.LoadingDialog;
+
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -116,13 +119,13 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     Button submit;
     ImageView backbtn;
     AlertDialog alertDialog;
-    ConnectionClass connectionClass;
+
     boolean isValidAadhar, isValidBankName;
     String[] deviceList = new String[]{"Mantra", "StarTeck"};
     AutoCompleteTextView bank_autofill;
     boolean isValidName, isValidPhone;
     String username,password,selected_bank_id, selected_bank_name, en_aadhaar, en_name, en_phn, latitude, longitude, response_String, androidId, banks, selected_bank, banks_no, pidDataXML, message, status, status_code, pidOptions, data, transaction_status, balance, bank_RRN, transaction_type, merchant_transid, timestamp, fpTransId, agentId;
-    LoadingDialog loadingDialog = new LoadingDialog(activity_Aeps_BalanceEnquiry.this);
+
     //bellow parameters are coming from RD service of fingerPrint device
     public String ci;
     private String dc;
@@ -295,8 +298,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     if (isValidAadhar && isValidPhone && isValidName) {
                         try {
                             //   new  ().execute();
-                            capture(pidOptions);
-                            //  fingerprintDataConvertingToJson();
+                           capture(pidOptions);
+                           //  fingerprintDataConvertingToJson();
                       // new apiCall_BalanceEnquiry().execute();
                         } catch (Exception e) {
                             // Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
@@ -585,8 +588,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             jsonObject.put("hmac", hmac);
             jsonObject.put("PidDatatype", PidDatatype);
             jsonObject.put("Piddata", Piddata);
-
-      /*  jsonObject.put("errcode", "errcode1");
+/*
+       jsonObject.put("errcode", "errcode1");
             jsonObject.put("errInfo", "errInfo1");
             jsonObject.put("fCount", "fCount1");
             jsonObject.put("fType", "fType1");
@@ -627,7 +630,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             // RequestBody body = RequestBody.create(JSON, pidData_json);
 
 
-            httpClient = utils.createAuthenticatedClient(username, password);
+           httpClient = utils.createAuthenticatedClient(username, password);
+         //   httpClient = utils.createAuthenticatedClient("1010", "Test@123");
 Log.d("TAG","Message is"+username+password);
           /*  RequestBody formBody = new FormBody.Builder()
                     .add("AdhaarNumber",en_aadhaar)
@@ -699,14 +703,15 @@ Log.d("TAG","Message is"+username+password);
                     .addHeader("imeiNumber", androidId)
                     .addHeader("latitude", latitude)
                     .addHeader("longitude", longitude)
-                    /* .addHeader("AdhaarNumber", "123456781190")
+                    .addHeader("Accept", "*/*")
+                   /* .addHeader("AdhaarNumber", "123456781190")
                      .addHeader("Bankid", "1234")
                      .addHeader("phnumber", "7896541230")
                      .addHeader("name", "megapower")
                      .addHeader("imeiNumber", "1234567890")
                      .addHeader("latitude", "123.1")
                      .addHeader("longitude", "145.2")*/
-                    // .addHeader("Accept", "*/*")
+
                     .post(body)
                     .build();
             httpClient.newCall(request).enqueue(new Callback() {
@@ -759,6 +764,8 @@ Log.d("TAG","Message is"+username+password);
                         }
                         //moving to the next screen after getting the response also
                         // we are sending the require data through intent
+
+
                         Intent intent = new Intent(activity_Aeps_BalanceEnquiry.this, activity_Aeps_BalanceEnq_Receipt.class);
                         intent.putExtra("balance", balance);
                         intent.putExtra("merchant_transid", merchant_transid);

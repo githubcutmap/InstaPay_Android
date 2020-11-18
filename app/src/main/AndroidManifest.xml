@@ -46,8 +46,7 @@
         <activity android:name=".loans.LoanActivity_viewAppId" />
         <activity android:name=".loans.LoanActivity_ReviewScreen" />
         <activity android:name=".loans.LoanActivity_DocumentsUpload" />
-        <activity android:name=".aadhaarPay.AadhaarPay_Receipt" />
-        <activity android:name=".aeps.activity_Aeps_Deposit_Receipt" />
+
         <activity android:name=".aeps.activity_Aeps_Ministatement_Report" />
         <activity android:name=".agent_login.activity_Login" />
         <activity android:name=".loans.LoanActivity_PrimaryScreen" />
@@ -73,16 +72,11 @@
         <activity
             android:name=".loans.LoanActuivity_ViewApplication"
             android:parentActivityName=".loans.LoanActivity_MainScreen" />
-        <activity
-            android:name=".aeps.activity_Aeps_Deposit"
-            android:parentActivityName=".aeps.activity_Aeps_HomeScreen"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".agent_login.activity_AgentsProfile"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
-        <activity
-            android:name=".aadhaarPay.AadhaarPay"
-            android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
+
         <activity
             android:name=".aeps.activity_Aeps_BalanceEnq_Receipt"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />

@@ -25,7 +25,7 @@ import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.api.MobileSMSAPI;
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 
 
 /*activity_Aeps_BalanceEnq_recept activity
@@ -128,7 +128,7 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         onConfigurationChanged(getResources().getConfiguration());
         setContentView(R.layout.activity_aeps_balance_receipt);
 
-        SQLQueries getAgentId=new SQLQueries();
+
 
         tv_aadhaarnumber=findViewById(R.id.aadhaar_number);
         tv_bal=findViewById(R.id.available_balance);
@@ -169,8 +169,8 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
 
 //agentid=getAgentId.getAgentID(androidId);
 //inserting data into database
-        SQLQueries insertintodb=new SQLQueries();
-        insertintodb.inserttranslogs(i,androidId,latitude,longitude,custName,trans_id,status,status_code,message,transtype,timestamp,fpTransId,rrn_no,agentid,transaction_amount,available_balance);
+     //   SQLQueries insertintodb=new SQLQueries();
+    //    insertintodb.inserttranslogs(i,androidId,latitude,longitude,custName,trans_id,status,status_code,message,transtype,timestamp,fpTransId,rrn_no,agentid,transaction_amount,available_balance);
         MobileSMSAPI sendmsg=new MobileSMSAPI();
         sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
         tv_bankname.setText(bankName);

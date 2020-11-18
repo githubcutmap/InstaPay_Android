@@ -45,7 +45,7 @@ import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.loans.areamgr.loan_viewapp;
 import gramtarang.mint.utils.LocationTrack;
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;

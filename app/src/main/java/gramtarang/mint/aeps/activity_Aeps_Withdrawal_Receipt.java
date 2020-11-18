@@ -24,9 +24,9 @@ import java.util.Date;
 import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.api.MobileSMSAPI;
-import gramtarang.mint.utils.ConnectionClass;
+
 import gramtarang.mint.utils.LogOutTimer;
-import gramtarang.mint.utils.SQLQueries;
+
 
 /*activity_Aeps_Withdrawal_Receipt activity contains the data we need to show to the user after
  * the transaction.
@@ -75,7 +75,7 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
     TextView tv_timestamp,tv_bal,tv_bankname,tv_aadhaarnumber,tv_transid,tv_agentid,tv_rrnno,customer_name,tex_message,tv_transamount;
     String agent_phone_number,agent_name,transtype="AEPS WITHDRAW",latitude,longitude,ipAddress,timestamp,available_balance,bankName,aadhaar_number,trans_id,agentid,rrn_no,custName,message,trans_amount,macAddress,androidId,fpTransId,status,status_code,transaction_type="Withdraw";
     Button btn_back;
-    ConnectionClass connectionClass;int i;
+         int i;
     //This method working as auto scaling of ui by density
     public void adjustFontScale(Configuration configuration) {
 
@@ -170,10 +170,10 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
         status_code=intent.getStringExtra("status_code");
         // transaction_type=intent.getStringExtra("transaction_type");
         //getting data from database
-        SQLQueries getAgentId=new SQLQueries();
+        //SQLQueries getAgentId=new SQLQueries();
         //agentid=getAgentId.getAgentID(androidId);
-        SQLQueries insertintodb=new SQLQueries();
-        insertintodb.inserttranslogs(i,androidId,latitude,longitude,custName,trans_id,status,status_code,message,transtype,timestamp,fpTransId,rrn_no,agentid,trans_amount,available_balance);
+     //   SQLQueries insertintodb=new SQLQueries();
+       // insertintodb.inserttranslogs(i,androidId,latitude,longitude,custName,trans_id,status,status_code,message,transtype,timestamp,fpTransId,rrn_no,agentid,trans_amount,available_balance);
         MobileSMSAPI sendmsg=new MobileSMSAPI();
         sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
 
