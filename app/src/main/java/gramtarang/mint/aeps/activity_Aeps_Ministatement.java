@@ -217,7 +217,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     Button btn_submit;
     boolean isValidAadhar,isValidBankName,isValidName,isValidPhone;
     AutoCompleteTextView bank_autofill;
-
+String response_String;
     ArrayList<String> arrList_BankName = new ArrayList<String>();
     ArrayList<String> arrayList_bankIIN = new ArrayList<String>();
 
@@ -295,11 +295,13 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
         //AutoFIll the bank name
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
-        SQLQueries query=new SQLQueries();
+       // SQLQueries query=new SQLQueries();
         //search for BANKIIN & BAnk name in database
-        arrayList_bankIIN =query.getBankIIN();
-        arrList_BankName =query.getBankNames();
+       // arrayList_bankIIN =query.getBankIIN();
+      //  arrList_BankName =query.getBankNames();
         //agentid=query.getAgentID(androidId);
+        arrList_BankName=getBankNames2(username,password);
+        arrayList_bankIIN=getBankNumbers2(username,password);
         utils.AutoCompleteTV_BankId(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
         //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
@@ -325,7 +327,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
                     selected_bank_name=utils.AutoCompleteTV_BankName(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
                     isValidName=utils.isValidName(en_name);
                     isValidPhone=utils.isValidPhone(en_phn);
-                    isValidBankName= query.isValidBankName(selected_bank_name);
+                    //isValidBankName= query.isValidBankName(selected_bank_name);
                     if (isValidAadhar && isValidPhone && isValidName && isValidBankName) {
                         try {
                             //Rd service api calling method called
@@ -384,7 +386,90 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
         return pidDataXML;
     }
 
+    public ArrayList<String> getBankNumbers2(String username,String password) {
+        Utils utils=new Utils();
+        httpClient = utils.createAuthenticatedClient(username, password);
+        okhttp3.Request request = new Request.Builder()
+                .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                .addHeader("Accept", "*/*")
+                .get()
+                .build();
+        httpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
+                //the response we are getting from api
+                response_String = response.body().string();
+                if (response_String != null) {
+                    Log.d("TAG","Response is+"+response_String.toString());
+                    JSONArray jsonResponse = null;
+                    try {
+                        jsonResponse = new JSONArray(response_String);
+                        for(int j = 0; j < jsonResponse.length(); j++){
+                            JSONObject jresponse = jsonResponse.getJSONObject(j);
+                            arrayList_bankIIN.add(jresponse.getString("iinno"));
+                        }
 
+                        Log.d("MINI STATEMENT","BANK NUMBERS"+arrayList_bankIIN);
+                        //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+
+                        //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    catch (NullPointerException e) {
+                    }
+                }
+
+            }
+        });
+        return arrayList_bankIIN;
+    }
+    public ArrayList<String> getBankNames2(String username,String password) {
+        Utils utils=new Utils();
+        httpClient = utils.createAuthenticatedClient(username, password);
+        okhttp3.Request request = new Request.Builder()
+                .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                .addHeader("Accept", "*/*")
+                .get()
+                .build();
+        httpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
+                //the response we are getting from api
+                response_String = response.body().string();
+                if (response_String != null) {
+                    Log.d("TAG","Response is+"+response_String.toString());
+                    JSONArray jsonResponse = null;
+                    try {
+                        jsonResponse = new JSONArray(response_String);
+                        for(int j = 0; j < jsonResponse.length(); j++){
+                            JSONObject jresponse = jsonResponse.getJSONObject(j);
+                            arrList_BankName.add(jresponse.getString("bankname"));
+                        }
+
+                        Log.d("MINI STATEMENT","BANK NAMES"+arrList_BankName);
+                        //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+
+                        //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    catch (NullPointerException e) {
+                    }
+                }
+
+            }
+        });
+        return arrList_BankName;
+    }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

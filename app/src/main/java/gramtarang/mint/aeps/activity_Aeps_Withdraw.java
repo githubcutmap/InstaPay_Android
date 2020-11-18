@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -101,7 +102,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     SharedPreferences preferences;
     public static final String mypreference = "mypref";
     private static final String TAG = "AepsWithdraw";
-    String responseString;
+    String responseString,response_String;
     String selected_bank_name;
     String selected_bank_id;
     String latitude;
@@ -256,10 +257,12 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         //AutoFIll the bank name
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
-        SQLQueries query=new SQLQueries();
+       // SQLQueries query=new SQLQueries();
         //search for BANKIIN & BAnk name in database
-        arrayList_bankName =query.getBankNames();
-        arrayList_bankIIN =query.getBankIIN();
+        //arrayList_bankName =query.getBankNames();
+       // arrayList_bankIIN =query.getBankIIN();
+        arrayList_bankName=getBankNames2(username,password);
+        arrayList_bankIIN=getBankNumbers2(username,password);
         utils.AutoCompleteTV_BankId(activity_Aeps_Withdraw.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
         btn_submit = findViewById(R.id.submitbtn);
         btn_submit.setEnabled(true);
@@ -290,7 +293,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                     isValidName=utils.isValidName(en_name);
                     isValidPhone=utils.isValidPhone(en_phn);
                     //  isValidAmount=utils.isValidAmount(en_am);
-                    isValidBankName= query.isValidBankName(selected_bank_name);
+                 //   isValidBankName= query.isValidBankName(selected_bank_name);
                     if (isValidAadhar && isValidPhone && isValidName ) {
                         try {
                             //Rd service api calling method called
@@ -338,7 +341,90 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         startActivityForResult(intentCapture, 1);
         return pidDataXML;
     }
+    public ArrayList<String> getBankNumbers2(String username,String password) {
+        Utils utils=new Utils();
+        httpClient = utils.createAuthenticatedClient(username, password);
+        okhttp3.Request request = new Request.Builder()
+                .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                .addHeader("Accept", "*/*")
+                .get()
+                .build();
+        httpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
+                //the response we are getting from api
+                response_String = response.body().string();
+                if (response_String != null) {
+                    Log.d("TAG","Response is+"+response_String.toString());
+                    JSONArray jsonResponse = null;
+                    try {
+                        jsonResponse = new JSONArray(response_String);
+                        for(int j = 0; j < jsonResponse.length(); j++){
+                            JSONObject jresponse = jsonResponse.getJSONObject(j);
+                            arrayList_bankIIN.add(jresponse.getString("iinno"));
+                        }
 
+                        Log.d("WITHDRAW","BANK NUMBERS"+arrayList_bankIIN);
+                        //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+
+                        //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    catch (NullPointerException e) {
+                    }
+                }
+
+            }
+        });
+        return arrayList_bankIIN;
+    }
+    public ArrayList<String> getBankNames2(String username,String password) {
+        Utils utils=new Utils();
+        httpClient = utils.createAuthenticatedClient(username, password);
+        okhttp3.Request request = new Request.Builder()
+                .url("https://aepsapi.gramtarang.org:8008/mint/aeps/getBanks")
+                .addHeader("Accept", "*/*")
+                .get()
+                .build();
+        httpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                assert response.body() != null;
+                //the response we are getting from api
+                response_String = response.body().string();
+                if (response_String != null) {
+                    Log.d("TAG","Response is+"+response_String.toString());
+                    JSONArray jsonResponse = null;
+                    try {
+                        jsonResponse = new JSONArray(response_String);
+                        for(int j = 0; j < jsonResponse.length(); j++){
+                            JSONObject jresponse = jsonResponse.getJSONObject(j);
+                            arrayList_bankName.add(jresponse.getString("bankname"));
+                        }
+
+                        Log.d("WITHDRAW","BANK NAMES"+arrayList_bankName);
+                        //   setText(tv_dateofrelease,dateofrelease,tv_version,latest_app_version);
+
+                        //Log.d("TAG","SAME CLASS"+latest_app_version+dateofrelease+androidId+latitude+longitude);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    catch (NullPointerException e) {
+                    }
+                }
+
+            }
+        });
+        return arrayList_bankName;
+    }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
