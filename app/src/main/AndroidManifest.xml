@@ -37,7 +37,8 @@
         <activity android:name=".bbps.bbps_receipt"></activity>
         <activity android:name=".bbps.bbps_billpayment" />
         <activity android:name=".bbps.bbps_billfetch" />
-        <activity android:name=".bbps.bbps_biller"></activity>
+        <activity android:name=".bbps.bbps_biller"
+            ></activity>
         <activity android:name=".agent_login.Dashboard"></activity>
         <activity
             android:name=".loans.areamgr.MainActivity"

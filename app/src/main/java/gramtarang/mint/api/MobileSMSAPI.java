@@ -1,5 +1,6 @@
 package gramtarang.mint.api;
 import android.os.StrictMode;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +28,7 @@ public class  MobileSMSAPI extends AppCompatActivity {
         try
         {
 // Construct data
-
+            Log.d("MobileSMS","Message sent "+otp);
             String data="user=" + URLEncoder.encode("GRAMTARANG", "UTF-8");
             data +="&password=" + URLEncoder.encode("Gramtarang@2020", "UTF-8");
             data +="&message=" + URLEncoder.encode(greeting+","+" "+username+"\n"+"Your OTP for login is:"+otp+"\n"+"\n"+"With Regards,"+"\n"+"GTIDS IT Team", "UTF-8");

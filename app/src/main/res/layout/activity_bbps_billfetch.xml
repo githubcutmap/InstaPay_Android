@@ -5,28 +5,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#fff">
-    <LinearLayout
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@color/lightcream">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="BHARAT BILLPAY PAYMENT SYSTEM"
-            android:fontFamily="@font/helveticaneuemed"
-            android:textColor="@color/grayblack"
-            android:textSize="16dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bbps_logo"></ImageView>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@color/lightcream">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="BHARAT BILLPAY PAYMENT SYSTEM"
+                android:fontFamily="@font/helveticaneuemed"
+                android:textColor="@color/grayblack"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bbps_logo"
+                android:padding="5dp"></ImageView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-
+    <ScrollView android:layout_marginTop="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
     <LinearLayout
         android:layout_width="360dp"
         android:layout_height="wrap_content"
@@ -43,12 +53,15 @@
             android:background="@color/red"
             android:layout_gravity="center"/>
 
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/billpayments_editbox"
-            android:layout_marginTop="60dp">
+            android:layout_marginTop="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -190,14 +203,40 @@
                 android:textColor="@color/black"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:gravity="right">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BACK"
+                android:fontFamily="@font/helveticaneuemedium"
+                android:id="@+id/back"
+                android:padding="10dp"
+                android:layout_gravity="center"
+
+                android:layout_marginLeft="10dp"
+                android:shadowColor="@color/gray_dark"
+                android:background="@color/white"></Button>
+
         <Button
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text="GET DETAILS"
             android:layout_gravity="center"
             android:background="@drawable/red_button"
-            android:layout_marginTop="30dp"></Button>
-    </LinearLayout>
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:shadowColor="@color/gray_dark"></Button>
 
+        </LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
