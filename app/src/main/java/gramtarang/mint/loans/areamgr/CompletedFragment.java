@@ -47,8 +47,6 @@ public class CompletedFragment extends Fragment {
     SharedPreferences preferences;
     public final String mypreference = "mypref";
 
-    public static final String loanpreference = "Loanpreferences";
-
 
 
     public CompletedFragment() {
@@ -70,9 +68,11 @@ public class CompletedFragment extends Fragment {
 
     private void api_getAgentsList(View v){
 
-        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
+
+        Log.d("comple","usr getagent completed"+username+password);
 
         Utils utils = new Utils();
         OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
@@ -167,7 +167,7 @@ public class CompletedFragment extends Fragment {
 
 
     private void api_getApplist(View v,String agentid){
-        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
 

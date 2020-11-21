@@ -47,7 +47,6 @@ public class PendingFragment extends Fragment {
     Spinner sp_agents;
     SharedPreferences preferences;
     public final String mypreference = "mypref";
-    public static final String loanpreference = "Loanpreferences";
 
 
 
@@ -74,21 +73,25 @@ public class PendingFragment extends Fragment {
 
     private void api_getAgentsList(View v){
 
-        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
 
         Utils utils = new Utils();
         OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+        Log.d("username","usr getagent pending"+username+password);
 
 
 
         preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         String managerId=preferences.getString("AreaManagerId","Null");
+
+        Log.d("areamn",managerId);
+
         ArrayList<String> ManagerAgents = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("area_manager_id", managerId);
+            jsonObject.put("area_manager_id", username);
             //jsonObject.put("Status", status);
             jsonString = jsonObject.toString();
 
@@ -173,7 +176,7 @@ public class PendingFragment extends Fragment {
 
     private void api_getApplist(View v,String agentid){
 
-        preferences = getActivity().getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
 

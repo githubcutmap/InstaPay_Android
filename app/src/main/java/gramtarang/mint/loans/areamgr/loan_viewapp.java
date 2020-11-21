@@ -92,7 +92,8 @@ public class loan_viewapp extends AppCompatActivity {
     private Animator currentAnimator;
     Bitmap bmp,bmp2,bmp3;
     SharedPreferences preferences;
-    public static final String mypreference = "Loanpreferences";
+    public static final String mypreference = "mypref";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,6 +154,7 @@ public class loan_viewapp extends AppCompatActivity {
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
+
 
 
 
