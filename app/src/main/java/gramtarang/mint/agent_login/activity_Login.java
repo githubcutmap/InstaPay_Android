@@ -303,6 +303,18 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
                 public void onFailure(Call call, IOException e) {
                     Log.d("TAG", "response onfailure"+e );
+                    activity_Login.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            DialogActivity.DialogCaller.showDialog(activity_Login.this,"Alert","Invalid Credentials.\nPlease Contact Administrator",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                        }
+                    });
+
                     //Snackbar.make(coordinatorLayout, "Agent not registered.\\nPlease Contact Administrator", Snackbar.LENGTH_LONG).setAction("action",null).show();
                    /* DialogActivity.DialogCaller.showDialog(activity_Login.this,"Login Failed","Server Unreachable.\nPlease contact administrator.",new DialogInterface.OnClickListener() {
                         @Override
