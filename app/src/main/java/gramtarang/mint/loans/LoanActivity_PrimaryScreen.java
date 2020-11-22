@@ -168,6 +168,7 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
     ArrayList<String> apgvbBranchID_arr = new ArrayList<String>();
 
     public static final String mypreference = "Loanpreferences";SharedPreferences preferences;
+    public final String preference = "mypref";
     boolean doubleBackToExitPressedOnce = false;
     private int selected_index;
 
@@ -236,7 +237,7 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
     //SQLQueries getbanknames=new SQLQueries();
     //apgvbBranch_arr=getbanknames.getApgvbBankBranch();
     utils.AutoCompleteTV_ApgvbBranch(LoanActivity_PrimaryScreen.this,bank_autofill,apgvbBranch_arr,"LoanActivity_Primary");
-//back button
+    //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -495,6 +496,11 @@ if(beneficiary_phone.length()!=0){
     };
 
     class apiCall_getloanbanks extends AsyncTask<Request, Void, String> {
+        SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
+        String username=pref.getString("Username","No name defined");
+        String password=pref.getString("Password","No name defined");
+        Utils utils = new Utils();
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
 
         @Override
         protected String doInBackground(Request... requests) {
@@ -504,7 +510,7 @@ if(beneficiary_phone.length()!=0){
                     //.addHeader("Accept", "/")
                     .get()
                     .build();
-            client.newCall(request).enqueue(new Callback() {
+            httpClient.newCall(request).enqueue(new Callback() {
                 @Override
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
