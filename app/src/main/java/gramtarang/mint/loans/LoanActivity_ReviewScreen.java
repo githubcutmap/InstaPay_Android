@@ -253,8 +253,8 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
         regionalOffice = preferences.getString("RegionalOffice", "Null");
         beneficiaryTenure = "24";
         beneficiaryIddetails = preferences.getString("BeneficiaryIdDetails", "Null");
-        username=preferences.getString("Username","No name defined");
-        password=preferences.getString("Password","No name defined");
+        username=preferences2.getString("Username","No name defined");
+        password=preferences2.getString("Password","No name defined");
 
         bId = findViewById(R.id.beneficiary_id);
         bName = findViewById(R.id.beneficiary_name);

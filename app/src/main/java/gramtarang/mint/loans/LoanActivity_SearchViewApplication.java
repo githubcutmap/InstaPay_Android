@@ -143,6 +143,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
     Bitmap bmp,bmp2,bmp3;
     SharedPreferences preferences;
     public static final String mypreference = "Loanpreferences";
+    public static final String userpreference = "mypref";
 
     @Override
     public void onBackPressed() {
@@ -211,7 +212,7 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         proof3 = findViewById(R.id.thumb__3);
 
 
-        preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(userpreference, Context.MODE_PRIVATE);
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
 
