@@ -249,6 +249,18 @@ tv_agentname.setText(agentname);
 
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
                 public void onFailure(Call call, IOException e) {
+                    Dashboard.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            DialogActivity.DialogCaller.showDialog(Dashboard.this,"Alert","Server Unreachable.",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finishAffinity();
+                                }
+                            });
+                        }
+                    });
+
                 }
 
                 //if API call got success then it will go for this onResponse also where we are collection

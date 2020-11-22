@@ -4,6 +4,32 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.provider.Settings;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
@@ -23,9 +49,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +63,7 @@ import gramtarang.mint.aeps.activity_Aeps_BalanceEnq_Receipt;
 import gramtarang.mint.aeps.activity_Aeps_BalanceEnquiry;
 import gramtarang.mint.api.DBApi;
 import gramtarang.mint.utils.DialogActivity;
-import gramtarang.mint.utils.LocationTrack;
+
 
 import gramtarang.mint.utils.Utils;
 
@@ -55,7 +79,16 @@ import okhttp3.Response;
 
 /*acitivity_WelcomeScreen activity is containing the popup screen when the application
  * is opened*/
-public class activity_WelcomeScreen extends AppCompatActivity {
+public class activity_WelcomeScreen extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+    private static final String TAG = "MainActivity";
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLocation;
+    private LocationManager mLocationManager;
+    private LocationRequest mLocationRequest;
+    private com.google.android.gms.location.LocationListener listener;
+    private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
+    private long FASTEST_INTERVAL = 2000; /* 2 sec */
+    private LocationManager locationManager;
     OkHttpClient client;
     ImageView img_mintLogo;
     TextView app_name;
@@ -77,7 +110,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
     boolean isLatestVersion, isLocationgranted;
     SharedPreferences preferences;
     public static final String mypreference = "mypref";
-    LocationTrack locationTrack;boolean isRooted;
+    boolean isRooted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +124,7 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         app_name.startAnimation(myanim);
         client = new OkHttpClient();
 
-        locationTrack = new LocationTrack(activity_WelcomeScreen.this);
+        /*locationTrack = new LocationTrack(activity_WelcomeScreen.this);
         if (locationTrack.canGetLocation()) {
             longitude = String.valueOf(locationTrack.getLongitude());
             latitude = String.valueOf(locationTrack.getLatitude());
@@ -99,8 +132,8 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         }
         else {
             locationTrack.showSettingsAlert();
-        }
-        new apiCall_getversion().execute();
+        }*/
+
         //   androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
@@ -125,13 +158,13 @@ public class activity_WelcomeScreen extends AppCompatActivity {
                 }
             });
         }
-        try {
+       /* try {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                 DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","Unable retrieve the location.\nPlease enable location permission and restart the app.",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        System.exit(0);
+                       // System.exit(0);
                     }
                 });
             }
@@ -145,7 +178,117 @@ public class activity_WelcomeScreen extends AppCompatActivity {
         }
         catch (NullPointerException e){
             e.printStackTrace();
+        }*/
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        checkLocation(); //check whether location service is enable or not in your  phone
+    }
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
+        startLocationUpdates();
+        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLocation == null){
+            startLocationUpdates();
+        }
+        if (mLocation != null) {
+            // mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
+            //mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
+        } else {
+           // Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Connection Suspended");
+        mGoogleApiClient.connect();
+    }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+    protected void startLocationUpdates() {
+        // Create the location request
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL);
+        // Request location updates
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                mLocationRequest, this);
+        Log.d("reque", "--->>>>");
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+     latitude=String.valueOf(location.getLatitude());
+       longitude= String.valueOf(location.getLongitude() );
+        new apiCall_getversion().execute();
+       // Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        // You can now create a LatLng Object for use with maps
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+    }
+    private boolean checkLocation() {
+        if(!isLocationEnabled())
+            showAlert();
+        return isLocationEnabled();
+    }
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Enable Location")
+                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
+                        "use this app")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        System.exit(0);
+                    }
+                });
+        dialog.show();
+    }
+    private boolean isLocationEnabled() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
     boolean doubleBackToExitPressedOnce = false;
     @Override
@@ -268,8 +411,9 @@ public class activity_WelcomeScreen extends AppCompatActivity {
             public void run() {
                 preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("Latitude",latitude);
-                editor.putString("Longitude",longitude);
+
+                editor.putString("Latitude",String.valueOf(latitude));
+                editor.putString("Longitude",String.valueOf(longitude));
                 editor.commit();
                 Intent i = new Intent(activity_WelcomeScreen.this, activity_Login.class);
                 startActivity(i);
