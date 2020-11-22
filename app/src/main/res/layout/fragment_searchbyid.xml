@@ -30,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/button1"
             android:text="Search"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"

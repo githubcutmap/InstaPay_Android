@@ -86,7 +86,7 @@
         android:gravity="center">
 
         <Button
-            android:background="@drawable/disabled_button"
+
             android:id="@+id/resend_btn"
             android:enabled="false"
             android:layout_gravity="center"
@@ -109,7 +109,6 @@
             android:gravity="center"
             android:fontFamily="@font/bentham"
             android:textStyle="bold"
-            android:background="@drawable/button"
             android:enabled="false"
 
             android:text="Verify"

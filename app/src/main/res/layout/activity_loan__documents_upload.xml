@@ -320,7 +320,6 @@
             android:textStyle="bold"
             android:textColor="#fff"
             android:textSize="18sp"
-            android:background="@drawable/button1"
             >
 
         </Button>
@@ -335,7 +334,6 @@
             android:textStyle="bold"
             android:textColor="#fff"
             android:textSize="18sp"
-            android:background="@drawable/button"
             >
 
         </Button>

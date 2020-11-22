@@ -250,21 +250,22 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/button1"
-            android:enabled="true"
-            android:gravity="center"
-            android:text="Fetch"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
-            android:textColorLink="#FFFFFF"
-            android:textSize="18dp"
-            android:fontFamily="sans-serif-medium"/>
-        <ImageView
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:enabled="true"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="Fetch"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textColorLink="#FFFFFF"
+                android:textSize="18dp" />
+
+            <ImageView
             android:id="@+id/backimg"
             android:layout_width="50dp"
             android:layout_height="50dp"

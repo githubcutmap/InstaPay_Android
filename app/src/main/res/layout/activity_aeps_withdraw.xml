@@ -301,7 +301,6 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/button1"
         android:enabled="true"
         android:fontFamily="sans-serif-medium"
         android:text="WITHDRAW"
