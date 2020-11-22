@@ -159,6 +159,7 @@ public class loan_viewapp extends AppCompatActivity {
 
 
 
+
         Log.d("TAG","Latitude and Longitude:"+am_latitude+am_longitude);
         client=new OkHttpClient();
         api_getAppdetails(uniqueId);
@@ -640,7 +641,7 @@ Log.d("Setproof",bankname+"  if"+id);
             @Override
             public void onClick(View view) {
 
-                locationTrack = new LocationTrack(loan_viewapp.this);
+               locationTrack = new LocationTrack(loan_viewapp.this);
                 if (locationTrack.canGetLocation()) {
                     am_longitude = locationTrack.getLongitude();
                     am_latitude = locationTrack.getLatitude();
