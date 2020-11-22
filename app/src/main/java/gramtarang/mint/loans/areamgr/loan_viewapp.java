@@ -151,9 +151,7 @@ public class loan_viewapp extends AppCompatActivity {
         proof2 = findViewById(R.id.thumb__2);
         proof3 = findViewById(R.id.thumb__3);
 
-        preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        username=preferences.getString("Username","No name defined");
-        password=preferences.getString("Password","No name defined");
+
 
 
 
@@ -321,10 +319,17 @@ public class loan_viewapp extends AppCompatActivity {
         });
     }
 
-    Utils utils = new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
+
+
 
     private void api_getAppdetails(String uniqueid){
+        Utils utils = new Utils();
+        preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+        Log.d("User + Pass: ",username+password);
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
         ArrayList<String> appdetails = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
         try {
@@ -692,6 +697,12 @@ Log.d("Setproof",bankname+"  if"+id);
 
 
     private void api_updateApplication(String appid,double lat,double lon,int stat){
+        Utils utils = new Utils();
+        preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+        Log.d("User + Pass: ",username+password);
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("uniqueid", appid);

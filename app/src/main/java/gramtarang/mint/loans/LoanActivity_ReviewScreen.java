@@ -363,14 +363,20 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
         }
     }
 
-    Utils utils = new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
+
 
 
     class apiCall_loanRegister extends AsyncTask<Request, Void, String> {
 
         @Override
         protected String doInBackground(Request... requests) {
+            username=preferences2.getString("Username","No name defined");
+            password=preferences2.getString("Password","No name defined");
+            Log.d("User + Pass: ",username+password);
+            Utils utils = new Utils();
+            OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
             JSONObject jsonObject = new JSONObject();
             try {
                 Log.d("TAG","Inside apicall try");

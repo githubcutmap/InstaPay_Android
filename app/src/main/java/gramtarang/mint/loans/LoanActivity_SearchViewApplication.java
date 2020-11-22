@@ -212,10 +212,6 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
         proof3 = findViewById(R.id.thumb__3);
 
 
-        preferences = getSharedPreferences(userpreference, Context.MODE_PRIVATE);
-        username=preferences.getString("Username","No name defined");
-        password=preferences.getString("Password","No name defined");
-
 
         etUserEnteredSearchID.addTextChangedListener(LoanViewApplicationTextWatcher);
         search.addTextChangedListener(LoanViewApplicationTextWatcher);
@@ -401,10 +397,14 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
     }
 
 
-    Utils utils = new Utils();
-    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
 
     private void api_getAppdetails(String id){
+        Utils utils = new Utils();
+        preferences = getSharedPreferences(userpreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+        Log.d("User + Pass: ",username+password);
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
         ArrayList<String> appdetails = new ArrayList<String>();
         JSONObject jsonObject = new JSONObject();
         try {
