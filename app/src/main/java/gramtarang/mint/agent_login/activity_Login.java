@@ -126,30 +126,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
     OkHttpClient client,httpClient;
     boolean doubleBackToExitPressedOnce = false;
     MobileSMSAPI sms = new MobileSMSAPI();
-    //This method working as auto scaling of ui by density
-    /*public void adjustFontScale(Configuration configuration) {
-        configuration.fontScale = (float) 1.0;
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        metrics.scaledDensity = configuration.fontScale * metrics.density;
-        getBaseContext().getResources().updateConfiguration(configuration, metrics);
-    }
 
-    @SuppressLint("NewApi")
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        newConfig.densityDpi= (int) (metrics.density * 160f);
-        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        metrics.scaledDensity = newConfig.densityDpi * metrics.density;
-        getBaseContext().getResources().updateConfiguration(newConfig, metrics);
-
-    }
-*/
 
     @SuppressLint("NewApi")
     @Override
@@ -212,14 +189,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                 }
 
 
-             /*   if (selected_option != 1) {
 
-
-                } else {
-
-                    Toast.makeText(activity_Login.this, "Please Select Login Option ", Toast.LENGTH_LONG).show();
-                    btn_login.setEnabled(true);
-                }*/
             }
         });
     }
@@ -244,31 +214,6 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
             }
         }, 2000);
     }
-
-    // necessary data are saving into SQL database
-    public void insertlog() {
-       /* SQLQueries insert_login_logs = new SQLQueries();
-        insert_login_logs.insert_login_log(i, agentId, username, androidId, latitude, longitude, timestamp, login_status);
-
-*/
-    }
-
-/*    private static OkHttpClient createAuthenticatedClient(final String api_username,
-                                                          final String api_password) {
-        // build client with authentication information.
-        OkHttpClient httpClient = new OkHttpClient.Builder().authenticator(new Authenticator() {
-            public Request authenticate(Route route, Response response) throws IOException {
-                String credential = Credentials.basic(api_username, api_password);
-                return response.request().newBuilder().header("Authorization", credential).build();
-            }
-        }).build();
-        return httpClient;
-    }
-
-    OkHttpClient httpClient = createAuthenticatedClient("apiadminuser", "CuTm@_GtiDs+3#2020@!");*/
-
-
-//String en_flag= BCrypt.hashpw("Test@123", BCrypt.gensalt(12));
 
 
 
@@ -299,10 +244,9 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                     .build();
             httpClient.newCall(request).enqueue(new Callback() {
                 @Override
-
                 //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
                 public void onFailure(Call call, IOException e) {
-                    Log.d("TAG", "response onfailure"+e );
+                    Log.d("TAG", "response onfailure"+e);
                     activity_Login.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -315,14 +259,6 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                         }
                     });
 
-                    //Snackbar.make(coordinatorLayout, "Agent not registered.\\nPlease Contact Administrator", Snackbar.LENGTH_LONG).setAction("action",null).show();
-                   /* DialogActivity.DialogCaller.showDialog(activity_Login.this,"Login Failed","Server Unreachable.\nPlease contact administrator.",new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });*/
-                    // Toast.makeText(activity_Login.this,"Agent not registered.\nPlease Contact Administrator"+androidId,Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -381,12 +317,6 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                                 }
                             });
 
-                            /*activity_Login.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(activity_Login.this,"Agent not registered",Toast.LENGTH_SHORT).show();
-                                }
-                            });*/
 
                         }
 

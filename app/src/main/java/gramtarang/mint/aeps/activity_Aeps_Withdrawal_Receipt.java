@@ -168,13 +168,7 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
         // fpTransId=intent.getStringExtra("fpTransId");
         status=intent.getStringExtra("status");
         status_code=intent.getStringExtra("status_code");
-        // transaction_type=intent.getStringExtra("transaction_type");
-        //getting data from database
-        //SQLQueries getAgentId=new SQLQueries();
-        //agentid=getAgentId.getAgentID(androidId);
-     //   SQLQueries insertintodb=new SQLQueries();
-       // insertintodb.inserttranslogs(i,androidId,latitude,longitude,custName,trans_id,status,status_code,message,transtype,timestamp,fpTransId,rrn_no,agentid,trans_amount,available_balance);
-        MobileSMSAPI sendmsg=new MobileSMSAPI();
+     MobileSMSAPI sendmsg=new MobileSMSAPI();
         sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
 
 

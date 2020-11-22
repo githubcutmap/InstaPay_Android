@@ -108,23 +108,6 @@ tv_agentname.setText(agentname);
         });
         new apiCall_getlastlogin().execute();
 
-/*        if(aeps == 1){
-            llaeps.setVisibility(View.VISIBLE);
-        }
-        if(pan == 1){
-            llpan.setVisibility(View.VISIBLE);
-        }
-        if(bbps == 1){
-            llbbps.setVisibility(View.VISIBLE);
-        }
-        if(loan == 1){
-            llloan.setVisibility(View.VISIBLE);
-        }
-        if(card == 1){
-            llcard.setVisibility(View.VISIBLE);
-        }*/
-
-
         imaeps.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {

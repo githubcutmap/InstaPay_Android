@@ -167,11 +167,7 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         status_code=intent.getStringExtra("status_code");
         transaction_type=intent.getStringExtra("transaction_type");
 
-//agentid=getAgentId.getAgentID(androidId);
-//inserting data into database
-     //   SQLQueries insertintodb=new SQLQueries();
-    //    insertintodb.inserttranslogs(i,androidId,latitude,longitude,custName,trans_id,status,status_code,message,transtype,timestamp,fpTransId,rrn_no,agentid,transaction_amount,available_balance);
-        MobileSMSAPI sendmsg=new MobileSMSAPI();
+ MobileSMSAPI sendmsg=new MobileSMSAPI();
         sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
         tv_bankname.setText(bankName);
         if(rrn_no==null){

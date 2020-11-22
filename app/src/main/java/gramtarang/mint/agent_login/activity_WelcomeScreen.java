@@ -93,14 +93,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
     ImageView img_mintLogo;
     TextView app_name;
     String agent_id,response_String,jsonString,areamanagerid;
-    String agent_name;
-    String agent_aadhar;
-    String agent_phone;
-    String agent_mail;
-    String agent_pan;
-    String agent_llt;
-    String ag_details[];
-    String app_version = "Version:Beta V 0.4";
+
     String dateofrelease;
     String latest_app_version;
     String androidId;
@@ -124,17 +117,6 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         app_name.startAnimation(myanim);
         client = new OkHttpClient();
 
-        /*locationTrack = new LocationTrack(activity_WelcomeScreen.this);
-        if (locationTrack.canGetLocation()) {
-            longitude = String.valueOf(locationTrack.getLongitude());
-            latitude = String.valueOf(locationTrack.getLatitude());
-
-        }
-        else {
-            locationTrack.showSettingsAlert();
-        }*/
-
-        //   androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
         Utils util=new Utils();
@@ -158,27 +140,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
                 }
             });
         }
-       /* try {
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","Unable retrieve the location.\nPlease enable location permission and restart the app.",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                       // System.exit(0);
-                    }
-                });
-            }
-
-            if(isLocationgranted  && latitude.equals("0.0") && longitude.equals("0.0")){
-                Intent intent = new Intent(this,activity_WelcomeScreen.class);
-                this.startActivity(intent);
-                this.finishAffinity();
-            }
-
-        }
-        catch (NullPointerException e){
-            e.printStackTrace();
-        }*/
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)

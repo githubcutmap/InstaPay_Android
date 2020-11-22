@@ -248,23 +248,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
         androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-
-        // androidId = preferences.getString("AndroidId", "No name defined");
-        // latitude="21.22";
-        //  longitude="112.2";
-        // androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-
-
-        //bankNames are getting from SQL database for validation purpose
-        /*SQLQueries getbanknames = new SQLQueries();
-        SQLQueries bankvalidation = new SQLQueries();
-        arryList_bankName = getbanknames.getBankNames();
-        arrayList_bankNumber = getbanknames.getBankIIN();*/
-
         new apiCall_getBanks().execute();
-
-        //AUto complete of bank id
-       //      //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,10 +262,6 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             public void onClick(View v) {
 
                 String title = "Balance Enquiry";
-                // message = "Under Development";
-               /* Utils util = new Utils();
-                util.dialog(activity_Aeps_BalanceEnquiry.this,title,message);*/
-
                 if (CheckNetwork.isInternetAvailable(activity_Aeps_BalanceEnquiry.this)) //returns true if internet available
                 {
 

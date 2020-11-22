@@ -281,25 +281,12 @@ String response_String;
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         latitude=preferences.getString("Latitude","No name defined");
         longitude=preferences.getString("Longitude","No name defined");
-        //latitude="22.1111";
-        //  longitude="121.99";
-        //  androidId=preferences.getString("AndroidId","No name defined");
         androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         agentId=preferences.getString("AgentId","No name defined");
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
-        // agent_phone_number=preferences.getString("AgentPhn","No name defined");
-        //agent_phone_number="9963022226";
-        // agent_name="test";
-        // agent_name=preferences.getString("AgentName","No name defined");
-        //AutoFIll the bank name
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
-       //
-        //search for BANKIIN & BAnk name in database
-       // arrayList_bankIIN =query.getBankIIN();
-        //arrList_BankName =query.getBankNames();
-        //agentid=query.getAgentID(androidId);
         new apiCall_getBanks().execute();
 
         //back button
@@ -703,25 +690,11 @@ String response_String;
 
                         } catch (JSONException  e) {
 
-//                            insertlog();
-
-/*activity_Aeps_Ministatement.this.runOnUiThread(new Runnable() {
-    @Override
-    public void run() {
-        Toast.makeText(getApplicationContext(),"Invalid Input,Try Again!!",Toast.LENGTH_SHORT).show();
-        btn_submit.setEnabled(true);
-    }
-});
-   */                         Log.d(TAG, "Transaction failed"+message+"\n"+"TimeStamp:"+timeStamp2);
-                            //          Toast.makeText(activity_Aeps_Ministatement.this,"Transaction failed"+message,Toast.LENGTH_SHORT).show();
-
+                      Log.d(TAG, "Transaction failed"+message+"\n"+"TimeStamp:"+timeStamp2);
 
                             e.printStackTrace();
                         }
                         catch (NullPointerException  e) {
-                            // insertlog();
-                            // Toast.makeText(getApplicationContext(),"Transaction failed"+message+"\n"+"TimeStamp:"+timeStamp2,Toast.LENGTH_SHORT);
-
 
                             e.printStackTrace();
                         }
@@ -747,16 +720,5 @@ String response_String;
             return responseString;
         }
     }
-    //insertinglog method we are strong the data to database and
-    // passing the required data to the next screen as well
-    public void insertlog(){
-        // SQLQueries insertintodb=new SQLQueries();
-        String trans_id=null;
-        String trans_amount="0.00";
-        String rrn_no=null;
-        // insertintodb.inserttranslogs(i,androidId,latitude,longitude,custName,trans_id,status,status_code,message,transtype,timestamp,fpTransId,rrn_no,agentid,trans_amount,avlBalance);
-        //   MobileSMSAPI sendmsg=new MobileSMSAPI();
-        // sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
 
-    }
 }

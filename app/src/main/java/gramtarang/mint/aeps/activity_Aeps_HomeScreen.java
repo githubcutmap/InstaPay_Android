@@ -102,32 +102,7 @@ public class activity_Aeps_HomeScreen extends AppCompatActivity implements LogOu
     public static final String mypreference = "mypref";
     Utils utils = new Utils();
 
-    //This method working as auto scaling of ui by density
-/*    public void adjustFontScale(Configuration configuration) {
 
-        configuration.fontScale = (float) 1.0;
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        metrics.scaledDensity = configuration.fontScale * metrics.density;
-        getBaseContext().getResources().updateConfiguration(configuration, metrics);
-    }*/
-   /* //This method working as auto scaling of ui by density
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        newConfig.densityDpi= (int) (metrics.density * 160f);
-        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(metrics);
-        metrics.scaledDensity = newConfig.densityDpi * metrics.density;
-        getBaseContext().getResources().updateConfiguration(newConfig, metrics);
-
-    }*/
-
-    //logout, Profile on the option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -162,35 +137,10 @@ public class activity_Aeps_HomeScreen extends AppCompatActivity implements LogOu
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
     }
-
- /*  boolean doubleBackToExitPressedOnce = false;
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Click again to exit.", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-                Intent intent=new Intent(getApplicationContext(),activity_Login.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        }, 2000);
-    }*/
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -232,19 +182,8 @@ client=new OkHttpClient();
         aepsWithdraw.setEnabled(true);
         aepsBalance.setEnabled(true);
         aadhaarPay.setEnabled(true);
-//        loan.setEnabled(true);
 
-        //APICalling apiCalling = new APICalling();
-        //ArrayList arrayList = apiCalling.getagentdetails("2323","b912df01ef572d57");
-        //Log.d("TAG","agents"+arrayList);
-
-        //SQLQueries getAgentName=new SQLQueries();
-        //agent_firstname=getAgentName.GetAgentName(androidId);
-//        agent_name.setText((CharSequence) arrayList);
-        //lastlogin_time=getAgentName.getlastlogin(androidId);
         Log.d("TAG","Last Login Time is:"+lastlogin_time);
-      //  try{menu_timestamp.setText(lastlogin_time.substring(8,10)+"-"+lastlogin_time.substring(5,7)+"-"+lastlogin_time.substring(0,4)+" "+lastlogin_time.substring(11,16));}  catch (Exception e){menu_timestamp.setText("--");}
-
 
 logout.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -254,47 +193,6 @@ logout.setOnClickListener(new View.OnClickListener() {
         startActivity(intent);
     }
 });
-
-/*String time;
-time=getlAgentName.getLastLogin(androidId);
-menu_timeaststamp.setText(time);*/
-
-
-
-        //this is the toogle button between card and AEPs transaction
-       /* BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_aeps:
-                        Toast.makeText(getApplicationContext(), "Aeps", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_card:
-                        Toast.makeText(getApplicationContext(), "Card", Toast.LENGTH_SHORT).show();
-                        title = "Card";
-                        message = "This function is not available in your login please try after some time or contact your admin";
-                        dialog(title,message);
-                        break;
-                    case R.id.action_billPayment:
-                        Toast.makeText(getApplicationContext(), "Bill Payment", Toast.LENGTH_SHORT).show();
-                        title = "Bill Payment";
-                        message = "This function is not available in your login please try after some time or contact your admin";
-                        dialog(title,message);
-                        break;
-                    case R.id.action_loan:
-                        Toast.makeText(getApplicationContext(), "Loan", Toast.LENGTH_SHORT).show();
-                        title = "Loan";
-                        Intent intent = new Intent(getApplicationContext(), LoanActivity_PrimaryScreen.class);
-                        startActivity(intent);
-                        break;
-                }
-                return true;
-            }
-        });*/
-
-
-        //this button navigating to AEPs balance enquiry screen
         aepsBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
