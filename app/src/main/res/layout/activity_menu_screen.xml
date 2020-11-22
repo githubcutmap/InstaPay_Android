@@ -199,10 +199,10 @@
 
 
 
-
-
-
         </LinearLayout>
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -315,6 +315,23 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/backimg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+
+                android:background="@drawable/button1"
+                app:srcCompat="@drawable/backarrow" />
+
+        </LinearLayout>
 
 
 
@@ -333,17 +350,18 @@
         app:cardCornerRadius="20dp">
 
 
-
-
-
-
-
-
-
     </androidx.cardview.widget.CardView>
-    </LinearLayout>
 
+
+
+
+    </LinearLayout>
     </ScrollView>
+
+
+
+
+
     <include
         android:id="@+id/menu_footer"
         layout="@layout/footer_template"/>

@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import gramtarang.mint.R;
+import gramtarang.mint.agent_login.Dashboard;
 import gramtarang.mint.agent_login.activity_AgentsProfile;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.loans.LoanActivity_MainScreen;
@@ -91,7 +92,7 @@ public class activity_Aeps_HomeScreen extends AppCompatActivity implements LogOu
     TextView time;
     TextView agent_name;
     TextView transName;
-    ImageView aadhaarPay,aepsBalance,aepsWithdraw,aepsDeposit,ministatement,eodreport,accOpen,loan,rrnStatus,billPayments,card,logout;
+    ImageView aadhaarPay,aepsBalance,aepsWithdraw,aepsDeposit,ministatement,eodreport,accOpen,loan,rrnStatus,billPayments,card,logout,backimg;
 
 
     Switch transSwitch;
@@ -176,7 +177,7 @@ client=new OkHttpClient();
         //billPayments = findViewById(R.id.billPayments);
        // card = findViewById(R.id.card);
         logout=findViewById(R.id.logout);
-
+        backimg=findViewById(R.id.backimg);
 
         ministatement.setEnabled(true);
         aepsWithdraw.setEnabled(true);
@@ -184,6 +185,14 @@ client=new OkHttpClient();
         aadhaarPay.setEnabled(true);
 
         Log.d("TAG","Last Login Time is:"+lastlogin_time);
+        backimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                startActivity(intent);
+
+            }
+        });
 
 logout.setOnClickListener(new View.OnClickListener() {
     @Override
