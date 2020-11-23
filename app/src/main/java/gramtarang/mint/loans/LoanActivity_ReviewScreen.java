@@ -385,7 +385,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                 jsonObject.put("beneficiary_name", beneficiaryName);
                 jsonObject.put("beneficiary_phn", beneficiaryPhone);
                 jsonObject.put("beneficiary_accno",beneficiaryAccNumber);
-                jsonObject.put("beneficiary_lineofactivity",beneficiaryOccupation);
+                jsonObject.put("beneficiarylineofactivity",beneficiaryOccupation);
                 jsonObject.put("beneficiary_fatherhusband", beneficiary_father_husband);
                 jsonObject.put("beneficiary_dob",beneficiaryDOB);
                 jsonObject.put("beneficiary_aadhaarno", beneficiaryAadhaar);
@@ -421,9 +421,9 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                 jsonObject.put("armgrlatitude","0");
                 jsonObject.put("armgrlongitude","0");
                 jsonObject.put("armgrstatus",0);
-                jsonObject.put("ddate","0");
-                jsonObject.put("dmoney","0");
-                jsonObject.put("rreason","0");
+                jsonObject.put("ddate",null);
+                jsonObject.put("dmoney",null);
+                jsonObject.put("rreason",null);
                 data_json = jsonObject.toString();
                 /*
          {

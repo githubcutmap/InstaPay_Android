@@ -430,7 +430,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
                         }
                         catch (NullPointerException e) {
                         }
-                        if(!getString(R.string.app_version).equals(latest_app_version)){
+                        /*if(!getString(R.string.app_version).equals(latest_app_version)){
                             Log.d("TAG","Errorrrrr"+getString(R.string.app_version)+latest_app_version);
                             activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
                                 @Override
@@ -443,11 +443,12 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
                                     });
                                 }
                             });
-                            /*   */
-                        }
-                        else{
+                            *//*   *//*
+                        }*/
+                        //else{
                             isLatestVersion=true;
-                            if(isLatestVersion && !isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
+                            //
+                            if(!isRooted&&isConnected() && !latitude.equals("0.0") && !longitude.equals("0.0") ){
                                 activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -456,7 +457,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
                                 });
 
                             }
-                        }
+                        //}
 
 
 
