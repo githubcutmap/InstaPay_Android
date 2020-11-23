@@ -16,6 +16,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -279,8 +281,8 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                 {
                     btn_submit.setEnabled(false);
                     //bankname autofilled
-                    selected_bank_id= utils.AutoCompleteTV_BankId(activity_Aeps_Withdraw.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
-                    selected_bank_name=utils.AutoCompleteTV_BankName(activity_Aeps_Withdraw.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
+                    //selected_bank_id= utils.AutoCompleteTV_BankId(activity_Aeps_Withdraw.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
+                    //selected_bank_name=utils.AutoCompleteTV_BankName(activity_Aeps_Withdraw.this, bank_autofill, arrayList_bankName, arrayList_bankIIN,TAG);
                     ////Collecting the user inputted data
                     en_aad = et_adhaarNumber.getText().toString().trim();
                     en_name = et_CustomerName.getText().toString().trim();
@@ -294,6 +296,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                  //   isValidBankName= query.isValidBankName(selected_bank_name);
                     if (isValidAadhar && isValidPhone && isValidName ) {
                         try {
+                            Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
                             //Rd service api calling method called
                             Matra_capture(pidOptions);
                             //fingerprintDataConvertedtoJSON();                       } catch (Exception e) {
@@ -383,9 +386,33 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         runOnUiThread(new Runnable() {
             public void run() {
                 Log.d("TAG","BANK NAMES"+arrayList_bankName+arrayList_bankIIN);
-                utils.AutoCompleteTV_BankId(activity_Aeps_Withdraw.this,bank_autofill,arrayList_bankName,arrayList_bankIIN,TAG);
+                //utils.AutoCompleteTV_BankId(activity_Aeps_Withdraw.this,bank_autofill,arrayList_bankName,arrayList_bankIIN,TAG);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                        (activity_Aeps_Withdraw.this,android.R.layout.select_dialog_item, arrayList_bankName);
+                bank_autofill.setThreshold(1);
+                bank_autofill.setAdapter(adapter);
+                Log.d(TAG,"array after async: "+arrayList_bankName);
+                Log.d(TAG,"array after async id: "+arrayList_bankIIN);
+
+
+                bank_autofill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //Toast.makeText(c, adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                        selected_bank_name = adapter.getItem(position).toString();
+                        int selected_bank_index = arrayList_bankName.indexOf(adapter.getItem(position));
+                        selected_bank_id = arrayList_bankIIN.get(selected_bank_index);
+                        Log.d(TAG, "array Selected bank: " + selected_bank_name);
+                        Log.d(TAG, "array Selected bank index: " + selected_bank_index);
+                        Log.d(TAG, "array Selected bank ID: " + selected_bank_id);
+                        /*al.add(banksID_arr.get(selected_bank_index));
+                        al.add(selected_bank);
+                        arr=al.toArray(arr);*/
+                    }
+                });
             }
         });
+
     }
 
 

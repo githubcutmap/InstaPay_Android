@@ -122,7 +122,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         app_name.startAnimation(myanim);
         client = new OkHttpClient();
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
             requestLocationPermission();
         } else{
             System.out.println("IAM HERE ERROR");

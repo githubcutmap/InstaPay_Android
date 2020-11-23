@@ -16,6 +16,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -309,14 +311,15 @@ String response_String;
                     en_phn = et_PhoneNumber.getText().toString().trim();
                     //validating the user inputted Data
                     isValidAadhar=utils.isValidAadhaar(en_aadhaar);
-                    selected_bank_id= utils.AutoCompleteTV_BankId(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
-                    selected_bank_name=utils.AutoCompleteTV_BankName(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
+                   // selected_bank_id= utils.AutoCompleteTV_BankId(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
+                    //selected_bank_name=utils.AutoCompleteTV_BankName(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
                     isValidName=utils.isValidName(en_name);
                     isValidPhone=utils.isValidPhone(en_phn);
                     //isValidBankName= query.isValidBankName(selected_bank_name);
-                    if (isValidAadhar && isValidPhone && isValidName && isValidBankName) {
+                    if (isValidAadhar && isValidPhone && isValidName) {
                         try {
                             //Rd service api calling method called
+                            Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
                             Matra_capture(pidOptions);
                             // fingerPrintDataConvertingJSON();
                         }
@@ -336,10 +339,10 @@ String response_String;
                         et_NameOFTheCustomer.setError("Enter Valid Name");
                         btn_submit.setEnabled(true);
                     }
-                    if(!isValidBankName){
+                    /*if(!isValidBankName){
                         bank_autofill.setError("Enter Valid Bank Name");
                         btn_submit.setEnabled(true);
-                    }
+                    }*/
                     if(!isValidPhone){
                         et_PhoneNumber.setError("Enter Valid Phone Number");
                         btn_submit.setEnabled(true);
@@ -412,8 +415,31 @@ String response_String;
     public void setAutoCompleteTV(){
         runOnUiThread(new Runnable() {
             public void run() {
-                Log.d(TAG, "setauto complete: " + arrList_BankName+arrayList_bankIIN);
-                utils.AutoCompleteTV_BankId(activity_Aeps_Ministatement .this,bank_autofill,arrList_BankName,arrayList_bankIIN,TAG);
+                Log.d(TAG, "setauto complete: " + arrList_BankName + arrayList_bankIIN);
+                //utils.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry .this,bank_autofill,arryList_bankName,arrayList_bankNumber,TAG);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                        (activity_Aeps_Ministatement.this,android.R.layout.select_dialog_item, arrList_BankName);
+                bank_autofill.setThreshold(1);
+                bank_autofill.setAdapter(adapter);
+                Log.d(TAG,"array after async: "+arrList_BankName);
+                Log.d(TAG,"array after async id: "+arrayList_bankIIN);
+
+
+                bank_autofill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //Toast.makeText(c, adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                        selected_bank_name = adapter.getItem(position).toString();
+                        int selected_bank_index = arrList_BankName.indexOf(adapter.getItem(position));
+                        selected_bank_id = arrayList_bankIIN.get(selected_bank_index);
+                        Log.d(TAG, "array Selected bank: " + selected_bank_name);
+                        Log.d(TAG, "array Selected bank index: " + selected_bank_index);
+                        Log.d(TAG, "array Selected bank ID: " + selected_bank_id);
+                        /*al.add(banksID_arr.get(selected_bank_index));
+                        al.add(selected_bank);
+                        arr=al.toArray(arr);*/
+                    }
+                });
             }
         });
     }

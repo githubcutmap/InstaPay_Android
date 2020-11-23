@@ -294,7 +294,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
 
 
 
-                new apiCall_loanRegister().execute();
+                apiCall_loanRegister();
                 Log.d("TAG", "after apicall try");
                 Log.d("TAG sharedpref", beneficiaryUniqueId + agentName + agentId + agent_contact + beneficiaryName +
                         beneficiaryPhone + beneficiaryAccNumber + beneficiaryOccupation + beneficiary_father_husband + beneficiaryDOB +
@@ -367,16 +367,12 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
 
 
 
-    class apiCall_loanRegister extends AsyncTask<Request, Void, String> {
-
-        @Override
-        protected String doInBackground(Request... requests) {
+    private void apiCall_loanRegister(){
             username=preferences2.getString("Username","No name defined");
             password=preferences2.getString("Password","No name defined");
             Log.d("User + Pass: ",username+password);
             Utils utils = new Utils();
             OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
-
             JSONObject jsonObject = new JSONObject();
             try {
                 Log.d("TAG","Inside apicall try");
@@ -425,6 +421,9 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                 jsonObject.put("armgrlatitude","0");
                 jsonObject.put("armgrlongitude","0");
                 jsonObject.put("armgrstatus",0);
+                jsonObject.put("ddate","0");
+                jsonObject.put("dmoney","0");
+                jsonObject.put("rreason","0");
                 data_json = jsonObject.toString();
                 /*
          {
@@ -497,12 +496,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                         }
                 }
             });
-
-            return null;
         }
-
-
-    }
 
 
 

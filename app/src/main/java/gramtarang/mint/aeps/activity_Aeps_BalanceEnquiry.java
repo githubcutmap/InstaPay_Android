@@ -22,6 +22,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -265,8 +267,9 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                 if (CheckNetwork.isInternetAvailable(activity_Aeps_BalanceEnquiry.this)) //returns true if internet available
                 {
 
-                    selected_bank_id = util.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
-                    selected_bank_name = util.AutoCompleteTV_BankName(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
+                    //selected_bank_id = util.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
+                    //selected_bank_name = util.AutoCompleteTV_BankName(activity_Aeps_BalanceEnquiry.this, bank_autofill, arryList_bankName, arrayList_bankNumber, TAG);
+                    Log.d(TAG,"Selected if bank: "+selected_bank_name+" "+selected_bank_id);
                     en_aadhaar = aadhaar.getText().toString().trim();
                     en_name = name.getText().toString().trim();
                     en_phn = phonenumber.getText().toString().trim();
@@ -278,6 +281,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     if (isValidAadhar && isValidPhone && isValidName) {
                         try {
                             //   new  ().execute();
+                            Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
                            capture(pidOptions);
                            //  fingerprintDataConvertingToJson();
                       // new apiCall_BalanceEnquiry().execute();
@@ -357,7 +361,30 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         runOnUiThread(new Runnable() {
             public void run() {
                 Log.d(TAG, "setauto complete: " + arrayList_bankNumber + arryList_bankName);
-                utils.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry .this,bank_autofill,arryList_bankName,arrayList_bankNumber,TAG);
+                //utils.AutoCompleteTV_BankId(activity_Aeps_BalanceEnquiry .this,bank_autofill,arryList_bankName,arrayList_bankNumber,TAG);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                        (activity_Aeps_BalanceEnquiry.this,android.R.layout.select_dialog_item, arryList_bankName);
+                bank_autofill.setThreshold(1);
+                bank_autofill.setAdapter(adapter);
+                Log.d(TAG,"array after async: "+arryList_bankName);
+                Log.d(TAG,"array after async id: "+arrayList_bankNumber);
+
+
+                bank_autofill.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //Toast.makeText(c, adapter.getItem(position).toString(), Toast.LENGTH_SHORT).show();
+                        selected_bank_name = adapter.getItem(position).toString();
+                        int selected_bank_index = arryList_bankName.indexOf(adapter.getItem(position));
+                        selected_bank_id = arrayList_bankNumber.get(selected_bank_index);
+                        Log.d(TAG, "array Selected bank: " + selected_bank_name);
+                        Log.d(TAG, "array Selected bank index: " + selected_bank_index);
+                        Log.d(TAG, "array Selected bank ID: " + selected_bank_id);
+                        /*al.add(banksID_arr.get(selected_bank_index));
+                        al.add(selected_bank);
+                        arr=al.toArray(arr);*/
+                    }
+                });
             }
         });
      }
