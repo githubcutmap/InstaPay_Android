@@ -233,7 +233,7 @@ else{
             try {
 
 
-                Log.d("RAF","Message"+agentId+androidId+latitude+longitude+login_status);
+                Log.d("RAF","Message"+username+androidId+latitude+longitude+login_status);
                 jsonObject.put("s_id", null);
                 jsonObject.put("agentid",username);
                 jsonObject.put("androidid", androidId);

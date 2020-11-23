@@ -122,17 +122,53 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         app_name.startAnimation(myanim);
         client = new OkHttpClient();
 
-        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
+        if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.N){
+            Log.d("VERSION","Android Version is:Nougat");
             requestLocationPermission();
-        } else{
-            System.out.println("IAM HERE ERROR");
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
+           /* mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
             mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-            checkLocation(); ///check whether location service is enable or not in your  phone
+            checkLocation();*/
+        }   else if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.N_MR1){
+            Log.d("VERSION","Android Version is:Nougat_2");
+            requestLocationPermission();
+            /*mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mLocationManager = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+            checkLocation();*/
+        }
+        else if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.Q){
+            Log.d("VERSION","Android Version is:Q");
+            requestLocationPermission();
+        }
+        else if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.R){
+            Log.d("VERSION","Android Version is:R");
+           requestLocationPermission();
+        }
+        else if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.P){
+            Log.d("VERSION","Android Version is:P");
+            requestLocationPermission();
+        }
+        else if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.O){
+            Log.d("VERSION","Android Version is:O");
+            requestLocationPermission();
+        }
+        else if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.O_MR1){
+            Log.d("VERSION","Android Version is:O_2");
+            requestLocationPermission();
+        }
+
+        else{
+            System.out.println("IAM HERE ERROR");
+            requestLocationPermission();
+
+           ///check whether location service is enable or not in your  phone
             // do something for phones running an SDK before lollipop
         }
         mGoogleApiClient = new GoogleApiClient.Builder(this)
