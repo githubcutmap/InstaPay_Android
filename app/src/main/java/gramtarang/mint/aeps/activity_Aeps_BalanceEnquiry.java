@@ -710,6 +710,7 @@ Log.d("TAG","Message is"+username+password);
                     .addHeader("imeiNumber", androidId)
                     .addHeader("latitude", latitude)
                     .addHeader("longitude", longitude)
+                    .addHeader("outletid","82923")
                     .addHeader("Accept", "*/*")
                    /* .addHeader("AdhaarNumber", "123456781190")
                      .addHeader("Bankid", "1234")

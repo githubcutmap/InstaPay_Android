@@ -104,7 +104,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
     String androidId;
     String latitude;
     String longitude;
-    String agentId;
+    String agentId;String otpurl;
     boolean isLatestVersion, isLocationgranted;
     SharedPreferences preferences;
     public static final String mypreference = "mypref";
@@ -350,6 +350,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         //  Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         System.out.println("SOMETHING"+latitude+longitude);
         new apiCall_getversion().execute();
+//sendOtp("7093460377","Hello this is final message");
 
         // You can now create a LatLng Object for use with maps
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -506,6 +507,23 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         }
 
     }
+ /*public void sendOtp(String number,String message){
+     String otpurl="http://smslogin.mobi/spanelv2/api.php?username=gramtarang&password=Ind123456&to="+number+"&from=LEOSMS&message="+message;
+
+     RequestBody reqbody = RequestBody.create(null, new byte[0]);
+     Request.Builder formBody = new Request.Builder().url(otpurl).method("POST",reqbody).header("Content-Length", "0");
+     client.newCall(formBody.build()).enqueue(new Callback() {
+         @Override
+         public void onFailure(Call call, IOException e) {
+
+         }
+
+         @Override
+         public void onResponse(Call call, Response response) throws IOException {
+
+         }
+     });
+ }*/
     public void move(){
         new Handler().postDelayed(new Runnable() {
             @Override

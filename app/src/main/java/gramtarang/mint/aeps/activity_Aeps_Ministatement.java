@@ -659,6 +659,7 @@ String response_String;
                     .addHeader("imeiNumber",androidId)//androidId
                     .addHeader("latitude", String.valueOf(latitude))
                     .addHeader("longitude", String.valueOf(longitude))
+                    .addHeader("outletid","82923")
                     .post(body)
                     .build();
             Log.d(TAG,"Done Headerss");
