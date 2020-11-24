@@ -35,6 +35,7 @@ import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.utils.DialogActivity;
+import gramtarang.mint.utils.Utils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -49,6 +50,7 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
     int flag=0;boolean canProceed;int imageflag=0;
     SharedPreferences preferences;String extflag,extension,beneficiaryUniqueId,beneficiaryUniqueId2,loanAmount,idDetails,file_ext_type;
     public static final String mypreference = "Loanpreferences";
+    public final String preference = "mypref";
     Button businessPhoto,idProof,propertyProof;
     Button upload,cancel;
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -437,17 +439,22 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
                     OkHttpClient client = new OkHttpClient();
 
                     run();
+                    SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
+                    String username=pref.getString("Username","No name defined");
+                    String password=pref.getString("Password","No name defined");
+                    Utils utils = new Utils();
+                    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
 //
-
-
-                    client.newCall(request).enqueue(new Callback() {
+                    httpClient.newCall(request).enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
+                            Log.d("Doc: ","fail");
                             e.printStackTrace();
                         }
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
+                            Log.d("Doc: ","response: "+ response);
 
                         }
                     });
@@ -502,8 +509,15 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
                             .addHeader("ext",extension.trim())
                             .post(requestBody)
                             .build();
-                    OkHttpClient client = new OkHttpClient();
-                    client.newCall(request).enqueue(new Callback() {
+
+                    SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
+                    String username=pref.getString("Username","No name defined");
+                    String password=pref.getString("Password","No name defined");
+                    Utils utils = new Utils();
+                    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
+                    //OkHttpClient client = new OkHttpClient();
+                    httpClient.newCall(request).enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             e.printStackTrace();
@@ -511,6 +525,7 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
+                            Log.d("TAG","response: "+ response);
 
                         }
                     });}else{
@@ -553,8 +568,15 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
                             .addHeader("ext",extension.trim())
                             .post(requestBody)
                             .build();
+
+                    SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
+                    String username=pref.getString("Username","No name defined");
+                    String password=pref.getString("Password","No name defined");
+                    Utils utils = new Utils();
+                    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
                     OkHttpClient client = new OkHttpClient();
-                    client.newCall(request).enqueue(new Callback() {
+                    httpClient.newCall(request).enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             e.printStackTrace();
@@ -562,6 +584,7 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
+                            Log.d("Tag","response: "+ response);
 
                         }
                     });}else{
