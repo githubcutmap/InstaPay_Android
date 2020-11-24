@@ -35,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -586,11 +588,23 @@ public class LoanActivity_SearchViewApplication extends AppCompatActivity implem
     }
 
     private void setproof(String bankname,String id){
+
+        preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        username=preferences.getString("Username","No name defined");
+        password=preferences.getString("Password","No name defined");
+
         Log.d("Setproof",bankname+"  if"+id);
         //https://bankmgr.gramtarang.org/webapp/uploads/ADH/ADH_apgvb_mudra_akku_582494.jpg
         //https://bankmgr.gramtarang.org/webapp/uploads/ADH/ADH_apgvb_mudra_tekk_787825.jpg
         String code = bankname.toLowerCase().substring(0,4)+"_"+id.substring(11,17);
         Log.d("Setproof code",code);
+
+        Authenticator.setDefault (new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password.toCharArray());
+            }
+        });
+
         Thread thread = new Thread(new Runnable() {
 
             @Override
