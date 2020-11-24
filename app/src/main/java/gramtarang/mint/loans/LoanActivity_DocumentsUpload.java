@@ -48,7 +48,7 @@ import okhttp3.Response;
 public class LoanActivity_DocumentsUpload extends AppCompatActivity {
     TextView tv_uniqueId,tv_loanamount,delete;
     int flag=0;boolean canProceed;int imageflag=0;
-    SharedPreferences preferences;String extflag,extension,beneficiaryUniqueId,beneficiaryUniqueId2,loanAmount,idDetails,file_ext_type;
+    SharedPreferences preferences,preferences2;String extflag,extension,beneficiaryUniqueId,beneficiaryUniqueId2,loanAmount,idDetails,file_ext_type;
     public static final String mypreference = "Loanpreferences";
     public final String preference = "mypref";
     Button businessPhoto,idProof,propertyProof;
@@ -58,12 +58,12 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
     private long downloadId;
     TextView file_name;double filesize;
     Spinner sp_idDetails;
-    String file_path=null,upload_selection,appId,aadhaar;
+    String file_path=null,upload_selection,appId,aadhaar,username,password;
     ImageView photoSuccess,idSuccess,propertySuccess;
     boolean isPhotoUploaded,isIdUploaded,isPropertyUploaded;
     boolean doubleBackToExitPressedOnce = false;
 
-
+    OkHttpClient httpClient;
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -84,17 +84,21 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
             }
         }, 2000);
     }
-
+    Utils utils = new Utils();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan__documents_upload);
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        preferences2= getSharedPreferences(preference, Context.MODE_PRIVATE);
         beneficiaryUniqueId=preferences.getString("BeneficiaryUniqueId","No name defined");
         beneficiaryUniqueId2=preferences.getString("BeneficiaryUniqueId2","No name defined");
         loanAmount=preferences.getString("LoanAmount","No name defined");
         aadhaar=preferences.getString("BeneficiaryAadhaar","No name defined");
         appId=preferences.getString("BeneficiaryUniqueId","NO name defined");
+        username=preferences2.getString("Username","NO name defined");
+        password=preferences2.getString("Password","NO name defined");
+        Log.d("LOAN","USRPAS"+username+password);
         businessPhoto =findViewById(R.id.customer_img);
 
         tv_uniqueId=findViewById(R.id.uniqueId);
@@ -419,7 +423,8 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
             extflag = path.substring(path.lastIndexOf("."));
             extension = extflag.replace(".", "");
             Log.d("TAG", "FIle Extension is:" + extension);
-
+            Log.d("LOAN","ONE"+username+password);
+            httpClient = utils.createAuthenticatedClient(username,password);
 
             try {
                 if(extension.equals("jpg")){
@@ -430,6 +435,8 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
                             .build();
                     Request request = new Request.Builder()
                             .url("http://bankmgr.gramtarang.org:8081/mint/doc/upload2")
+                           /* .addHeader("aadhaarnumber","309979918328")
+                            .addHeader("applicationId","APGVB/1169/870825".replace("/","_"))*/
                             .addHeader("aadhaarnumber", aadhaar)
                             .addHeader("applicationId",appId.replace("/", "_") )
                             .addHeader("ext", extension.trim())
@@ -439,11 +446,9 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
                     OkHttpClient client = new OkHttpClient();
 
                     run();
-                    SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
-                    String username=pref.getString("Username","No name defined");
-                    String password=pref.getString("Password","No name defined");
-                    Utils utils = new Utils();
-                    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+
+
+
 //
                     httpClient.newCall(request).enqueue(new Callback() {
                         @Override
@@ -497,6 +502,8 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
             filesize = (bytes / 1024);
             extflag = path.substring(path.lastIndexOf("."));
             extension = extflag.replace(".", "");
+            Log.d("LOAN","TWO"+username+password);
+            httpClient = utils.createAuthenticatedClient(username,password);
             try {
                 if(extension.equals("jpg")){
                     RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -504,17 +511,19 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
                             .build();
                     Request request = new Request.Builder()
                             .url("http://bankmgr.gramtarang.org:8081/mint/doc/upload1")
-                            .addHeader("aadhaarnumber",aadhaar)
-                            .addHeader("applicationId",appId.replace("/","_"))
+                           /* .addHeader("aadhaarnumber","309979918328")
+                            .addHeader("applicationId","APGVB/1169/870825".replace("/","_"))*/
+                            .addHeader("aadhaarnumber", aadhaar)
+                            .addHeader("applicationId",appId.replace("/", "_") )
                             .addHeader("ext",extension.trim())
                             .post(requestBody)
                             .build();
 
-                    SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
+                    /*SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
                     String username=pref.getString("Username","No name defined");
-                    String password=pref.getString("Password","No name defined");
-                    Utils utils = new Utils();
-                    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+                    String password=pref.getString("Password","No name defined");*/
+
+
 
                     //OkHttpClient client = new OkHttpClient();
                     httpClient.newCall(request).enqueue(new Callback() {
@@ -556,6 +565,8 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
             filesize = (bytes / 1024);
             extflag = path.substring(path.lastIndexOf("."));
             extension = extflag.replace(".", "");
+            Log.d("LOAN","THREE"+username+password);
+            httpClient = utils.createAuthenticatedClient(username,password);
             try {
                 if(extension.equals("jpg")){
                     RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -565,17 +576,17 @@ public class LoanActivity_DocumentsUpload extends AppCompatActivity {
                             .url("http://bankmgr.gramtarang.org:8081/mint/doc/upload3")
                             .addHeader("aadhaarnumber",aadhaar)
                             .addHeader("applicationId",appId.replace("/","_"))
+                           /* .addHeader("aadhaarnumber","309979918328")
+                            .addHeader("applicationId","APGVB/1169/870825".replace("/","_"))*/
                             .addHeader("ext",extension.trim())
                             .post(requestBody)
                             .build();
 
-                    SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
+                   /* SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
                     String username=pref.getString("Username","No name defined");
-                    String password=pref.getString("Password","No name defined");
-                    Utils utils = new Utils();
-                    OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+                    String password=pref.getString("Password","No name defined");*/
 
-                    OkHttpClient client = new OkHttpClient();
+
                     httpClient.newCall(request).enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {

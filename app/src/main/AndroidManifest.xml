@@ -43,7 +43,6 @@
         <activity android:name=".loans.LoanActivity_viewAppId" />
         <activity android:name=".loans.LoanActivity_ReviewScreen" />
         <activity android:name=".loans.LoanActivity_DocumentsUpload" />
-
         <activity android:name=".aeps.activity_Aeps_Ministatement_Report" />
         <activity android:name=".agent_login.activity_Login" />
         <activity android:name=".loans.LoanActivity_PrimaryScreen" />

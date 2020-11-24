@@ -110,9 +110,7 @@
             android:fontFamily="@font/bentham"
             android:textStyle="bold"
             android:enabled="false"
-
-            android:text="Verify"
-            />
+            android:text="Verify" />
 
     </LinearLayout>
 
