@@ -30,7 +30,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.ArrayList;
 import gramtarang.mint.R;
@@ -561,26 +563,20 @@ public class loan_viewapp extends AppCompatActivity {
         //https://bankmgr.gramtarang.org/webapp/uploads/ADH/ADH_apgvb_mudra_tekk_787825.jpg
         String code = bankname.toLowerCase().substring(0,4)+"_"+id.substring(11,17);
         Log.d("Setproof code",code);
+
+
+        Authenticator.setDefault (new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password.toCharArray());
+            }
+        });
+
         Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try  {
 
-                    /*URL myUrl = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
-                    HttpURLConnection conn = (HttpURLConnection) myUrl.openConnection();
-                    conn.setDoOutput(true);
-                    conn.setReadTimeout(30000);
-                    conn.setConnectTimeout(30000);
-                    conn.setUseCaches(false);
-                    conn.setAllowUserInteraction(false);
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Accept-Charset", "UTF-8");
-                    conn.setRequestMethod("GET");
-
-                    String userCredentials = username.trim() + ":" + password.trim();
-                    //String basicAuth = "Basic " + new String(Base64.encodeBytes(userCredentials.getBytes()));
-                    //conn.setRequestProperty ("Authorization", basicAuth);*/
                     URL url = new URL("http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
                     Log.d("Setproof url","http://bankmgr.gramtarang.org:8081/mint/doc/downloadadh?fname=ADH_apgvb_mudra_"+code+".jpg");
                     bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
