@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
+import gramtarang.mint.loans.LoanActivity_Category;
 import gramtarang.mint.loans.LoanActivity_MainScreen;
 import gramtarang.mint.pan.PanCard;
 import gramtarang.mint.utils.DialogActivity;
@@ -164,7 +165,7 @@ tv_agentname.setText(agentname);
             @Override
             public void onClick(View v) {
                 if(loan==1){
-                    Intent intent=new Intent(Dashboard.this, LoanActivity_MainScreen.class);
+                    Intent intent=new Intent(Dashboard.this, LoanActivity_Category.class);
                     startActivity(intent);
                 }
                 else{

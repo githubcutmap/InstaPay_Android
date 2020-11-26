@@ -141,7 +141,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
         startActivity(intent);
     }
     SharedPreferences preferences,preferences2;
-    int i=0;
+    int i=0,imLoanType=2;
     OkHttpClient client;
 
     public static final String mypreference = "Loanpreferences";
@@ -180,7 +180,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
             beneficiaryRepaymentPeriod,beneficiaryOwnProp,
             timestamp,regionalOffice,
             response_String,data_json,
-            username,password;
+            username,password,loanBankName,loanBankScheme;
 
     Button cancel,confirm;
     boolean doubleBackToExitPressedOnce = false;
@@ -253,8 +253,13 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
         regionalOffice = preferences.getString("RegionalOffice", "Null");
         beneficiaryTenure = "24";
         beneficiaryIddetails = preferences.getString("BeneficiaryIdDetails", "Null");
+        loanBankName = preferences.getString("LoanBank","No name defined");
+        loanBankScheme = preferences.getString("LoanScheme","No name defined");
         username=preferences2.getString("Username","No name defined");
         password=preferences2.getString("Password","No name defined");
+
+
+
 
         bId = findViewById(R.id.beneficiary_id);
         bName = findViewById(R.id.beneficiary_name);
@@ -368,6 +373,9 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
 
 
     private void apiCall_loanRegister(){
+        if (loanBankScheme.matches("Suyog")){
+            imLoanType = 1;
+        }
             username=preferences2.getString("Username","No name defined");
             password=preferences2.getString("Password","No name defined");
             Log.d("User + Pass: ",username+password);
@@ -424,6 +432,7 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                 jsonObject.put("ddate",null);
                 jsonObject.put("dmoney",null);
                 jsonObject.put("rreason",null);
+                jsonObject.put("imloanstypeid",imLoanType);
                 data_json = jsonObject.toString();
                 /*
          {

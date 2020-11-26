@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -68,8 +69,10 @@ public class LoanActivity_MainScreen extends AppCompatActivity implements LogOut
     ImageView backbtn;
     boolean doubleBackToExitPressedOnce = false;
     Utils utils = new Utils();
-    SharedPreferences preferences;
+    SharedPreferences preferences,preferences2;
     public final String mypreference = "mypref";
+    public final String loanpreference = "Loanpreferences";
+    TextView bankName;
 
     @Override
     public void onBackPressed() {
@@ -100,13 +103,19 @@ public class LoanActivity_MainScreen extends AppCompatActivity implements LogOut
         backbtn = findViewById(R.id.backimg);
         applyLoan = findViewById(R.id.applyloan);
         viewRegistration = findViewById(R.id.view_reg);
+        bankName = findViewById(R.id.tv_bankname);
+
+        preferences2 = getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
+        String selectedBankName = preferences2.getString("LoanBank","Bank");
+        bankName.setText(selectedBankName+" LOAN");
+
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         int role =preferences.getInt("Role",0);
         //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                Intent intent = new Intent(getApplicationContext(), LoanActivity_Category.class);
                 startActivity(intent);
             }
         });

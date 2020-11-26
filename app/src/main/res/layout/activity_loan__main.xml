@@ -20,7 +20,8 @@
             android:fontFamily="@font/bentham"
             android:textColor="@color/maroon"
             android:textStyle="bold"
-            android:text="APGVB LOAN"
+            android:text="LOAN"
+            android:id="@+id/tv_bankname"
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="24sp"/>

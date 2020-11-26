@@ -154,7 +154,7 @@ public class LoanActivity_PrimaryScreen extends AppCompatActivity implements Log
 EditText et_dob,et_proname,et_beneficiaryname,et_aadhaar,et_pan,et_phn,et_enteredotp,et_accountno,et_unitaddress,et_resaddress,et_resvpo,et_resdist,et_respin;
 Button verify_otp;
 ImageView backbtn;
-TextView send_otp;int i;
+TextView send_otp,loanScheme;int i;
 int isSelectSendOTP = 0;
     OkHttpClient client;
 boolean isValidAadhaar,isValidEmail,isValidPhone,isValidOTP;
@@ -167,7 +167,8 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
     ArrayList<String> apgvbBranch_arr = new ArrayList<String>();
     ArrayList<String> apgvbBranchID_arr = new ArrayList<String>();
 
-    public static final String mypreference = "Loanpreferences";SharedPreferences preferences;
+    public static final String mypreference = "Loanpreferences";
+    SharedPreferences preferences,preferences2;
     public final String preference = "mypref";
     boolean doubleBackToExitPressedOnce = false;
     private int selected_index;
@@ -217,6 +218,8 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
         et_respin = findViewById(R.id.et_add_pincode);
         sp_lineactivity=findViewById(R.id.occupation);
         et_proname=findViewById(R.id.pro_name);
+        loanScheme = findViewById(R.id.tv_loanscheme);
+
         et_beneficiaryname.addTextChangedListener(LoanPrimaryTextWatcher);
         et_phn.addTextChangedListener(LoanPrimaryTextWatcher);
         et_pan.addTextChangedListener(LoanPrimaryTextWatcher);
@@ -230,6 +233,10 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
         et_respin.addTextChangedListener(LoanPrimaryTextWatcher);
 
         et_dob.addTextChangedListener(LoanPrimaryTextWatcher);
+
+        preferences2 = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        String selectedBankLoanScheme = preferences2.getString("LoanScheme","LoanScheme");
+        loanScheme.setText(selectedBankLoanScheme+"\nApplication");
 
 
     new apiCall_getloanbanks().execute();
