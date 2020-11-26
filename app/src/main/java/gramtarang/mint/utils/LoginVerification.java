@@ -2,15 +2,11 @@ package gramtarang.mint.utils;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,13 +29,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import gramtarang.mint.R;
-import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
 import gramtarang.mint.agent_login.Dashboard;
-import gramtarang.mint.agent_login.activity_AgentsProfile;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.api.MobileSMSAPI;
-import gramtarang.mint.loans.LoanActivity_DocumentsUpload;
-import gramtarang.mint.loans.LoanActuivity_ViewApplication;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -130,7 +122,7 @@ Log.d("TAG","Authentication Testing:"+username+password);
                   //  Log.d(TAG,"Agent email is:"+agentemail);
                     MobileSMSAPI sms=new MobileSMSAPI();
                     Log.d(TAG,"Agent Phn is:"+agentphn);
-                    sms.sendSms1(generated_pin,agentphn,agentname);
+                    sms.sendOTP(generated_pin,agentphn,agentname);
                     timer();
                 }
                 else{

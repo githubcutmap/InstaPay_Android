@@ -18,7 +18,7 @@ public class  MobileSMSAPI extends AppCompatActivity {
 
 
 
-    public String sendSms1(String otp,String PhoneNumber,String username){
+    public String sendOTP(String otp, String PhoneNumber, String username){
         Utils gethour=new Utils();
         String greeting = gethour.gethour();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

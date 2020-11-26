@@ -435,8 +435,9 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                 //jsonObject.put("imloanstypeid",imLoanType);
                 JSONObject jsonObject2 = new JSONObject();
                 jsonObject2.put("id",imLoanType);
-                jsonObject.put("imloanstypeid",jsonObject2);
+                jsonObject.put("imloanstype",jsonObject2);
                 data_json = jsonObject.toString();
+
                 /*
          {
         "uniqueid": "APGVB/test5/test5",
@@ -482,11 +483,12 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            Log.d("RESPONSE","ID"+imLoanType)
+;        Log.d("RESPONSE","JSON"+data_json);
             MediaType JSON = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(JSON, data_json);
             okhttp3.Request request = new Request.Builder()
-                    .url("http://bankmgr.gramtarang.org:8081/mint/loans/registration")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/loans/registration")
                     .addHeader("Accept", "*/*")
                     .post(body)
                     .build();

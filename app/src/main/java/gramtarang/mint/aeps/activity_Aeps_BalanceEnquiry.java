@@ -55,6 +55,7 @@ import java.util.TimerTask;
 
 import gramtarang.mint.R;
 import gramtarang.mint.agent_login.activity_Login;
+import gramtarang.mint.api.MobileSMSAPI;
 import gramtarang.mint.utils.CaptureResponse;
 import gramtarang.mint.utils.CheckNetwork;
 
@@ -790,6 +791,8 @@ Log.d("TAG","Message is"+username+password);
                         intent.putExtra("status_code", status_code);
                         intent.putExtra("transaction_type", transaction_type);
                         startActivity(intent);
+
+
 
                     } else {
                         Toast.makeText(activity_Aeps_BalanceEnquiry.this, "You are not getting any Response From Bank !! ", Toast.LENGTH_SHORT).show();

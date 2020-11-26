@@ -338,7 +338,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 //            btn_login.setEnabled(false);
         generated_pin = utils.getOTPString();
         Log.d("TAG","pin: "+generated_pin);
-        sms.sendSms1(generated_pin, phn, name);
+        sms.sendOTP(generated_pin, phn, name);
         try {
             username = et_userName.getText().toString();
             Log.d("TAG","Entered"+username);

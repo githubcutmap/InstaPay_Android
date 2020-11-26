@@ -166,9 +166,9 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         status=intent.getStringExtra("status");
         status_code=intent.getStringExtra("status_code");
         transaction_type=intent.getStringExtra("transaction_type");
-
- MobileSMSAPI sendmsg=new MobileSMSAPI();
+        MobileSMSAPI sendmsg=new MobileSMSAPI();
         sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
+
         tv_bankname.setText(bankName);
         if(rrn_no==null){
             tv_rrnno.setText("Not Applicable");
