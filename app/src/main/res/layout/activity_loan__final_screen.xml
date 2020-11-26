@@ -42,7 +42,16 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
-
+            <TextView
+                android:id="@+id/textView023"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="SCHEME"
+                android:fontFamily="@font/bentham"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17sp" />
 
         </LinearLayout>
 
@@ -68,7 +77,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_margin="10dp">
 
 
 
@@ -76,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="15dp">
 
                     <TextView
                         android:id="@+id/textView43"
@@ -88,6 +98,7 @@
                         android:textStyle="bold"
                         android:layout_marginLeft="5dp"
                         android:textSize="16sp"
+                        android:layout_marginBottom="6dp"
                         />
 
                     <TextView
@@ -97,7 +108,7 @@
                         android:textSize="14sp"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/grayblack"
-
+                        android:layout_marginBottom="6dp"
                         />
                 </LinearLayout>
 
@@ -118,6 +129,7 @@
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
                         android:textStyle="bold"
+                        android:layout_marginBottom="6dp"
 
                         />
 
@@ -128,6 +140,7 @@
                         android:textSize="14sp"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/grayblack"
+                        android:layout_marginBottom="6dp"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -146,7 +159,7 @@
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
                         android:textStyle="bold"
-
+                        android:layout_marginBottom="6dp"
                         />
 
                     <TextView
@@ -155,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
-
+                        android:layout_marginBottom="6dp"
                         android:textSize="14sp"
                         />
                 </LinearLayout>
@@ -176,6 +189,7 @@
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
                         android:textStyle="bold"
+                        android:layout_marginBottom="6dp"
 
                         />
 
@@ -185,7 +199,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
-
+                        android:layout_marginBottom="6dp"
                         android:textSize="16sp"
                         />
                 </LinearLayout>
@@ -206,7 +220,7 @@
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
                         android:textStyle="bold"
-
+                        android:layout_marginBottom="6dp"
                         />
 
                     <TextView
@@ -216,7 +230,7 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
-
+                        android:layout_marginBottom="6dp"
                         />
                 </LinearLayout>
 
@@ -448,6 +462,7 @@
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
                         android:textStyle="bold"
+                        android:layout_marginBottom="6dp"
                         />
 
                     <TextView
@@ -457,7 +472,7 @@
                         android:textSize="16sp"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/grayblack"
-
+                        android:layout_marginBottom="6dp"
                         />
                 </LinearLayout>
                 <!--<LinearLayout
@@ -567,6 +582,7 @@
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
                         android:textStyle="bold"
+                        android:layout_marginBottom="6dp"
                         />
 
                     <TextView
@@ -576,7 +592,7 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/bentham"
                         android:textColor="@color/grayblack"
-
+                        android:layout_marginBottom="6dp"
                         />
                 </LinearLayout>
 
