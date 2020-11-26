@@ -513,7 +513,7 @@ if(beneficiary_phone.length()!=0){
         protected String doInBackground(Request... requests) {
             client=new OkHttpClient();
             Request request = new Request.Builder()
-                    .url("http://bankmgr.gramtarang.org:8081/mint/loans/getBanks")
+                    .url("https://aepsapi.gramtarang.org:8008/mint/loans/getBanks")
                     //.addHeader("Accept", "/")
                     .get()
                     .build();

@@ -101,7 +101,7 @@ public class PendingFragment extends Fragment {
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, jsonString);
         okhttp3.Request request = new Request.Builder()
-                .url("http://bankmgr.gramtarang.org:8081/mint/loans/getagentidbyam")
+                .url("https://aepsapi.gramtarang.org:8008/mint/loans/getagentidbyam")
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
@@ -196,7 +196,7 @@ public class PendingFragment extends Fragment {
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, jsonString);
         okhttp3.Request request = new Request.Builder()
-                .url("http://bankmgr.gramtarang.org:8081/mint/loans/getloansbyagentid")
+                .url("https://aepsapi.gramtarang.org:8008/mint/loans/getloansbyagentid")
                 .addHeader("Accept", "*/*")
                 .post(body)
                 .build();
