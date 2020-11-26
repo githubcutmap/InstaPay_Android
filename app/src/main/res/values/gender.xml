@@ -70,5 +70,17 @@
         <item>Others</item>
     </string-array>
 
+    <string-array name="loansBank">
+        <item>Select Bank</item>
+        <item>APGVB</item>
+        <item>Axis Bank</item>
+    </string-array>
+
+    <string-array name="loansType">
+        <item>Select Scheme</item>
+        <item>Suyog</item>
+        <item>Jagananna Thodu</item>
+    </string-array>
+
 
 </resources>

@@ -12,9 +12,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-
-
-
     <uses-permission
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
@@ -30,12 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".bbps.bbps_receipt"></activity>
+        <activity android:name=".loans.LoanActivity_Category"></activity>
+        <activity android:name=".bbps.bbps_receipt" />
         <activity android:name=".bbps.bbps_billpayment" />
         <activity android:name=".bbps.bbps_billfetch" />
-        <activity android:name=".bbps.bbps_biller"
-            ></activity>
-        <activity android:name=".agent_login.Dashboard"></activity>
+        <activity android:name=".bbps.bbps_biller" />
+        <activity android:name=".agent_login.Dashboard" />
         <activity
             android:name=".loans.areamgr.MainActivity"
             android:label="@string/title_activity_main" />
@@ -58,30 +55,25 @@
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
         <activity
             android:name=".loans.LoanActivity_MainScreen"
-            android:parentActivityName=".agent_login.Dashboard"></activity>
+            android:parentActivityName=".agent_login.Dashboard" />
         <activity
             android:name=".loans.LoanActivity_SecondaryScreen"
             android:parentActivityName=".loans.LoanActivity_MainScreen" />
         <activity
             android:name=".loans.LoanActivity_SearchViewApplication"
-            android:parentActivityName=".loans.LoanActivity_MainScreen"></activity>
+            android:parentActivityName=".loans.LoanActivity_MainScreen" />
         <activity
             android:name=".loans.LoanActuivity_ViewApplication"
             android:parentActivityName=".loans.LoanActivity_MainScreen" />
-
         <activity
             android:name=".agent_login.activity_AgentsProfile"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
-
         <activity
             android:name=".aeps.activity_Aeps_BalanceEnq_Receipt"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
         <activity
             android:name=".aeps.activity_Aeps_BalanceEnquiry"
-            android:parentActivityName=".aeps.activity_Aeps_HomeScreen">
-
-
-        </activity>
+            android:parentActivityName=".aeps.activity_Aeps_HomeScreen"></activity>
         <activity
             android:name=".aeps.activity_Aeps_Withdraw"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
