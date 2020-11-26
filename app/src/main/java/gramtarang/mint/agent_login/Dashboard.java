@@ -165,7 +165,7 @@ tv_agentname.setText(agentname);
             @Override
             public void onClick(View v) {
                 if(loan==1){
-                    Intent intent=new Intent(Dashboard.this, LoanActivity_Category.class);
+                    Intent intent=new Intent(Dashboard.this, LoanActivity_MainScreen.class);
                     startActivity(intent);
                 }
                 else{

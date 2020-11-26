@@ -306,7 +306,7 @@
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:textColor="#000"
-        android:text="android Id"
+        android:text=""
         android:textSize="17sp">
 
     </TextView>

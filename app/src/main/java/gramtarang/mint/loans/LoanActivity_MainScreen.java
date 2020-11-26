@@ -105,17 +105,13 @@ public class LoanActivity_MainScreen extends AppCompatActivity implements LogOut
         viewRegistration = findViewById(R.id.view_reg);
         bankName = findViewById(R.id.tv_bankname);
 
-        preferences2 = getSharedPreferences(loanpreference, Context.MODE_PRIVATE);
-        String selectedBankName = preferences2.getString("LoanBank","Bank");
-        bankName.setText(selectedBankName+" LOAN");
-
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         int role =preferences.getInt("Role",0);
         //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LoanActivity_Category.class);
+                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
                 startActivity(intent);
             }
         });
@@ -125,7 +121,7 @@ public class LoanActivity_MainScreen extends AppCompatActivity implements LogOut
             public void onClick(View view) {
 //  || role==1
                 if(role==0){
-                    Intent intent = new Intent(LoanActivity_MainScreen.this,LoanActivity_PrimaryScreen.class);
+                    Intent intent = new Intent(LoanActivity_MainScreen.this,LoanActivity_Category.class);
                     startActivity(intent);
                 }
                 else{

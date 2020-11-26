@@ -56,7 +56,7 @@ public class LoanActivity_Category extends AppCompatActivity {
                     editor.putString("LoanBank", selected_bank);
                     editor.putString("LoanScheme", selected_scheme);
                     editor.commit();
-                    Intent intent = new Intent(getApplicationContext(),LoanActivity_MainScreen.class);
+                    Intent intent = new Intent(getApplicationContext(),LoanActivity_PrimaryScreen.class);
                     startActivity(intent);
                 }
               /*  if (selected_bank.matches("Select Bank")){

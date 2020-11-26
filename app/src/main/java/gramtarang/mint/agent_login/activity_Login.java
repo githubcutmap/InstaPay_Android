@@ -119,7 +119,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
     int selected_option = 1, i;
     boolean isValidUsername,isphnregistered,isemailregistered;
-    TextView tv_version, tv_dateofrelease, tv_androidId;
+    TextView tv_version, tv_dateofrelease;
     Button btn_login;
     int aeps,loan,bbps,pan,card;
     ImageView btn_loginOptions;
@@ -152,7 +152,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         btn_login.setEnabled(true);
         tv_version = findViewById(R.id.version);
         tv_dateofrelease = findViewById(R.id.dateofr);
-        tv_androidId = findViewById(R.id.andid);
+        //tv_androidId = findViewById(R.id.andid);
         //  et_loginOptions = findViewById(R.id.select);
         tv_version.setText(R.string.app_version);
         tv_dateofrelease.setText(R.string.dateofrelease);
@@ -161,7 +161,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         Utils util = new Utils();
 
 
-        tv_androidId.setText(androidId);
+        //tv_androidId.setText(androidId);
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         timestamp = s.format(new Date());
 

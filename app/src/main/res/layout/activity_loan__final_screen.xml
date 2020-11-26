@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=""
+                android:text="Scheme"
                 android:fontFamily="@font/bentham"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="5dp">
 
                     <TextView
                         android:id="@+id/textView43"
@@ -643,8 +643,9 @@
         android:layout_marginTop="15dp"
         android:textColor="@color/success_green_dark"
         android:fontFamily="cursive">
-
     </TextView>
+
+
     <include
         android:id="@+id/aeps_withdraw_re_footer"
         layout="@layout/footer_template" />
