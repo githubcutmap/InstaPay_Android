@@ -65,8 +65,8 @@ public class LoanActivity_FinalScreen extends AppCompatActivity implements LogOu
     public static final String mypreference2 = "mypref";
     public static final String mypreference = "Loanpreferences";
     Button print,back;
-    TextView tv_status,tv_timestamp,tv_agentName,bId, bloanAmount,bName, bBank, bLoanType,bIdDetails;
-    String beneficiaryUniqueId, agentName, beneficiaryName, beneficiaryBank, beneficiaryloanType, timestamp,beneficiaryLoanAmount,beneficiaryiddetails;
+    TextView tv_scheme,tv_status,tv_timestamp,tv_agentName,bId, bloanAmount,bName, bBank, bLoanType,bIdDetails;
+    String schemetype,beneficiaryUniqueId, agentName, beneficiaryName, beneficiaryBank, beneficiaryloanType, timestamp,beneficiaryLoanAmount,beneficiaryiddetails;
     boolean doubleBackToExitPressedOnce = false;
     @Override
     public void onBackPressed() {
@@ -94,6 +94,8 @@ public class LoanActivity_FinalScreen extends AppCompatActivity implements LogOu
         setContentView(R.layout.activity_loan__final_screen);
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         preferences2= getSharedPreferences(mypreference2, Context.MODE_PRIVATE);
+        tv_scheme=findViewById(R.id.textView023);
+        schemetype= preferences.getString("LoanScheme","No name defined");
         agentName=preferences2.getString("AgentName","Null");
         beneficiaryUniqueId = preferences.getString("BeneficiaryUniqueId2","Null");
         beneficiaryName = preferences.getString("BeneficiaryName","Null");
@@ -112,7 +114,7 @@ public class LoanActivity_FinalScreen extends AppCompatActivity implements LogOu
         /*bLoanType=findViewById(R.id.loantype);*/
         tv_status=findViewById(R.id.status);
         bloanAmount=findViewById(R.id.loanamount);
-
+        tv_scheme.setText(schemetype);
         bId.setText(beneficiaryUniqueId);
         bName.setText(beneficiaryName);
         tv_status.setText("Pending");
