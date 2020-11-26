@@ -432,7 +432,10 @@ public class LoanActivity_ReviewScreen extends AppCompatActivity implements LogO
                 jsonObject.put("ddate",null);
                 jsonObject.put("dmoney",null);
                 jsonObject.put("rreason",null);
-                jsonObject.put("imloanstypeid",imLoanType);
+                //jsonObject.put("imloanstypeid",imLoanType);
+                JSONObject jsonObject2 = new JSONObject();
+                jsonObject2.put("id",imLoanType);
+                jsonObject.put("imloanstypeid",jsonObject2);
                 data_json = jsonObject.toString();
                 /*
          {
