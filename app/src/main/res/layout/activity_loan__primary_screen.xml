@@ -356,7 +356,11 @@
         app:boxStrokeColor="@color/colorPrimary"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
                 </com.google.android.material.textfield.TextInputLayout>
-
+<TextView
+    android:id="@+id/aadverify"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="VERIFY"/>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/pan_d"
                     android:hint="PAN No. (Optional)"

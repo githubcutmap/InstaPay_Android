@@ -154,10 +154,10 @@ public class LoanActivity_PrimaryScreen extends AppCompatActivity implements Log
 EditText et_dob,et_proname,et_beneficiaryname,et_aadhaar,et_pan,et_phn,et_enteredotp,et_accountno,et_unitaddress,et_resaddress,et_resvpo,et_resdist,et_respin;
 Button verify_otp;
 ImageView backbtn;
-TextView send_otp,loanScheme;int i;
+TextView send_otp,loanScheme,aadverify;int i;
 int isSelectSendOTP = 0;
     OkHttpClient client;
-boolean isValidAadhaar,isValidEmail,isValidPhone,isValidOTP;
+boolean isValidAadhaar,isValidEmail,isValidPhone,isValidOTP,checkAadhaar;
 Spinner sp_gender,sp_unitname,sp_lineactivity;
 boolean isValidDOB;
     AutoCompleteTextView bank_autofill;
@@ -206,6 +206,7 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
         et_dob=findViewById(R.id.dob);
         verify_otp=findViewById(R.id.verifyOtp);
         sp_gender=findViewById(R.id.gender);
+        aadverify=findViewById(R.id.aadverify);
         et_enteredotp=findViewById(R.id.enteredotp);
         bank_autofill=findViewById(R.id.near_bank_auto);
         backbtn = findViewById(R.id.backimg);
@@ -238,7 +239,15 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
         String selectedBankLoanScheme = preferences2.getString("LoanScheme","LoanScheme");
         loanScheme.setText(selectedBankLoanScheme+"\nApplication");
 
+/*aadverify.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        beneficiary_aadhaar=et_aadhaar.getText().toString();
+        Log.d("TAG","AADHAAR RESPONSE-1"+beneficiary_aadhaar);
+       new apiCall_verifyAadhaar().execute();
 
+    }
+});*/
     new apiCall_getloanbanks().execute();
     Utils utils=new Utils();
     //SQLQueries getbanknames=new SQLQueries();
@@ -271,7 +280,7 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
                 pin = et_respin.getText().toString().trim();
                 resaddress=et_resaddress.getText().toString().trim();
                 lineactivity=sp_lineactivity.getSelectedItem().toString().trim();
-
+new apiCall_verifyAadhaar().execute();
                 selected_index = utils.AutoCompleteTV_ApgvbBranch(LoanActivity_PrimaryScreen.this,bank_autofill,apgvbBranch_arr,"LoanActivity_Primary");
                 Log.d("TAG", "Selected Index:" + selected_index);
                 selected_apgvb_branch = apgvbBranch_arr.get(selected_index);
@@ -305,6 +314,7 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
                 String flagid=utils.getOTPString();
                 beneficiary_uniqueId="apgvb"+"/"+"mudra"+"/"+trim_branch.toLowerCase()+"/"+flagid;
                 beneficiaryId2="APGVB"+"/"+branchcode+"/"+flagid;
+
                 Log.d("TAG","ID is"+beneficiary_uniqueId);
                 if(!gender.equals("Gender") &&isValidDOB &&pro_name!=null && beneficiary_name!=null && selected_apgvb_branch!=null && beneficiary_phone.length()==10 &&isValidPhone && isValidAadhaar && accountno.length()==11 &&
                         !unitname.equals("Unit Name") && unitaddress!=null && resaddress!=null && vpo!=null && distt!=null && pin!=null && !lineactivity.equals("Line of Activity")) {
@@ -448,7 +458,7 @@ if(beneficiary_phone.length()!=0){
                    startActivity(intent);
                }
                else{
-                   et_enteredotp.setError("Invaid OTP");
+                   et_enteredotp.setError("Invalid OTP");
                }
 
                if (entered_otp.length() < 6){
@@ -484,7 +494,7 @@ if(beneficiary_phone.length()!=0){
             resaddress=et_resaddress.getText().toString().trim();
 
             if(beneficiary_name!=null &&beneficiarydob!=null &&pro_name!=null  &&beneficiary_name!=null  && beneficiary_phone.length() == 10 &&
-                    entered_otp.length() == 6 && accountno.length() == 11 && unitaddress != null && resaddress != null){
+                    entered_otp.length() == 6 && accountno.length() == 11 && unitaddress != null && resaddress != null && !checkAadhaar){
 
                 verify_otp.setEnabled(true);
                 verify_otp.setBackground(getDrawable(R.drawable.button));
@@ -501,7 +511,69 @@ if(beneficiary_phone.length()!=0){
 
         }
     };
+    class apiCall_verifyAadhaar extends AsyncTask<Request, Void, String> {
+        SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
+        String username=pref.getString("Username","No name defined");
+        String password=pref.getString("Password","No name defined");
+        Utils utils = new Utils();
+        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
 
+
+
+        @Override
+        protected String doInBackground(Request... requests) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("beneficiary_aadhaarno",beneficiary_aadhaar);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String jsonString = jsonObject.toString();
+            MediaType JSON = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(JSON, jsonString);
+            Request request = new Request.Builder()
+                    .url("https://aepsapi.gramtarang.org:8008/mint/loans/aadharverify")
+                    //.addHeader("Accept", "/")
+                    .post(body)
+                    .build();
+            httpClient.newCall(request).enqueue(new Callback() {
+                @Override
+
+                //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
+                public void onFailure(Call call, IOException e) {
+                    // Toast.makeText(activity_Login.this,"Agent not registered.\nPlease Contact Administrator"+androidId,Toast.LENGTH_SHORT).show();
+
+                }
+
+                //if API call got success then it will go for this onResponse also where we are collection
+                //the response as well
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    assert response.body() != null;
+                    response_String = response.body().string();
+                    if (response_String != null) {
+
+                        Log.d("AADHAAR","VERIFIED AADHAAR RESPONSE"+response_String);
+
+
+                    }
+                    if(response_String.equals(true)){
+                        checkAadhaar=false;
+                    }
+                    else{
+                        checkAadhaar=true;
+                    }
+                    System.out.println("RESPONSE STRING IS"+response_String);
+
+                }
+
+            });
+
+
+            return null;
+        }
+
+    }
     class apiCall_getloanbanks extends AsyncTask<Request, Void, String> {
         SharedPreferences pref = getSharedPreferences(preference, Context.MODE_PRIVATE);
         String username=pref.getString("Username","No name defined");

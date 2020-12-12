@@ -272,7 +272,13 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                     if (response_String != null) {
                         JSONObject jsonResponse = null;
                         JSONObject jsonResponse1=null;
-
+try{
+    jsonResponse = new JSONObject(response_String);
+    jsonResponse1=jsonResponse.getJSONObject("llist1");
+    outletid=jsonResponse1.getString("aepism");
+} catch (JSONException e) {
+    e.printStackTrace();
+}
                         try {
                             jsonResponse = new JSONObject(response_String);
                             jsonResponse1=jsonResponse.getJSONObject("llist1");
@@ -284,7 +290,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                             areamanager_id=jsonResponse1.getString("area_manager_id");
                             areamanager_name=jsonResponse1.getString("area_manager");
                             agentAadhaar =jsonResponse1.getString("aadhaar_number");
-                            outletid=jsonResponse1.getString("aepism");
+
                             role=jsonResponse1.getInt("role");
 
                             aeps=jsonResponse1.getInt("aeps");
@@ -298,7 +304,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
 
                                     //Snackbar.make(coordinatorLayout, "success", Snackbar.LENGTH_LONG).setAction("action",null).show();
 
-                                    method(outletid,agentAadhaar,areamanager_name,agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
+                                    method(agentAadhaar,areamanager_name,agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
                                 }
                             });
 
@@ -331,7 +337,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         }
 
     }
-    public void method(String outletid,String aadhaar,String areamanager_name,String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
+    public void method(String aadhaar,String areamanager_name,String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
         // utils.getprogressDialog(activity_Login.this, "Logging in", "Please Wait");
         verification_type = "OTP";
 //            btn_login.setEnabled(false);
