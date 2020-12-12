@@ -280,7 +280,7 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
                 pin = et_respin.getText().toString().trim();
                 resaddress=et_resaddress.getText().toString().trim();
                 lineactivity=sp_lineactivity.getSelectedItem().toString().trim();
-new apiCall_verifyAadhaar().execute();
+
                 selected_index = utils.AutoCompleteTV_ApgvbBranch(LoanActivity_PrimaryScreen.this,bank_autofill,apgvbBranch_arr,"LoanActivity_Primary");
                 Log.d("TAG", "Selected Index:" + selected_index);
                 selected_apgvb_branch = apgvbBranch_arr.get(selected_index);
@@ -314,8 +314,10 @@ new apiCall_verifyAadhaar().execute();
                 String flagid=utils.getOTPString();
                 beneficiary_uniqueId="apgvb"+"/"+"mudra"+"/"+trim_branch.toLowerCase()+"/"+flagid;
                 beneficiaryId2="APGVB"+"/"+branchcode+"/"+flagid;
-
+                new apiCall_verifyAadhaar().execute();
+                Log.d("TAG","CHECK"+checkAadhaar);
                 Log.d("TAG","ID is"+beneficiary_uniqueId);
+
                 if(!gender.equals("Gender") &&isValidDOB &&pro_name!=null && beneficiary_name!=null && selected_apgvb_branch!=null && beneficiary_phone.length()==10 &&isValidPhone && isValidAadhaar && accountno.length()==11 &&
                         !unitname.equals("Unit Name") && unitaddress!=null && resaddress!=null && vpo!=null && distt!=null && pin!=null && !lineactivity.equals("Line of Activity")) {
                    // SQLQueries BenfDetailsforOTP=new SQLQueries();
@@ -323,8 +325,12 @@ new apiCall_verifyAadhaar().execute();
                   //  BenfDetailsforOTP.insertbeneficiaryforotp(i,beneficiary_name,beneficiary_phone,generated_otp);
                     MobileSMSAPI sms = new MobileSMSAPI();
                     sms.sendloanverification(beneficiary_name,beneficiary_phone,generated_otp);
+
                   //  sms.sendSms1(generated_otp, beneficiary_phone, beneficiary_name);
                     timer();
+                }
+                if(response_String.equals("true")){
+                    et_aadhaar.setError("Duplicate");
                 }
                 if (beneficiary_phone == null){
                     et_phn.setError("Enter Phone Number");
@@ -431,43 +437,49 @@ if(beneficiary_phone.length()!=0){
         verify_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               entered_otp=et_enteredotp.getText().toString().trim();
-               if(entered_otp.equals(generated_otp)){
-                   preferences = getSharedPreferences(mypreference,
-                           Context.MODE_PRIVATE);
-                   SharedPreferences.Editor editor =preferences.edit();
-                   editor.putString("BeneficiaryUniqueId",beneficiary_uniqueId.toLowerCase());
-                   editor.putString("BeneficiaryUniqueId2",beneficiaryId2);
-                   editor.putString("BeneficiaryDOB",beneficiarydob);
-                   editor.putString("BeneficiaryProName",pro_name);
-                   editor.putString("BeneficiaryName", beneficiary_name);
-                   editor.putString("BeneficiaryAccNumber",accountno);
-                   editor.putString("BeneficiaryPhone", beneficiary_phone);
-                   editor.putString("BeneficiaryAadhaar", beneficiary_aadhaar);
-                   editor.putString("BeneficiaryPan",beneficiary_pan);
-                   editor.putString("BeneficiaryBank", selected_apgvb_branch);
-                   editor.putString("BeneficiaryGender", gender);
-                   editor.putString("LoanType",loan_type);
-                   editor.putString("UnitName",unitname);
-                   editor.putString("UnitAddress",unitaddress);
-                   editor.putString("ResidentialAddress",resaddress+" "+ vpo+" "+distt+" "+pin);
-                   editor.putString("LineOfActivity",lineactivity);
+               if(response_String.equals("false")){
+                   entered_otp=et_enteredotp.getText().toString().trim();
+                   if(entered_otp.equals(generated_otp)){
+                       preferences = getSharedPreferences(mypreference,
+                               Context.MODE_PRIVATE);
+                       SharedPreferences.Editor editor =preferences.edit();
+                       editor.putString("BeneficiaryUniqueId",beneficiary_uniqueId.toLowerCase());
+                       editor.putString("BeneficiaryUniqueId2",beneficiaryId2);
+                       editor.putString("BeneficiaryDOB",beneficiarydob);
+                       editor.putString("BeneficiaryProName",pro_name);
+                       editor.putString("BeneficiaryName", beneficiary_name);
+                       editor.putString("BeneficiaryAccNumber",accountno);
+                       editor.putString("BeneficiaryPhone", beneficiary_phone);
+                       editor.putString("BeneficiaryAadhaar", beneficiary_aadhaar);
+                       editor.putString("BeneficiaryPan",beneficiary_pan);
+                       editor.putString("BeneficiaryBank", selected_apgvb_branch);
+                       editor.putString("BeneficiaryGender", gender);
+                       editor.putString("LoanType",loan_type);
+                       editor.putString("UnitName",unitname);
+                       editor.putString("UnitAddress",unitaddress);
+                       editor.putString("ResidentialAddress",resaddress+" "+ vpo+" "+distt+" "+pin);
+                       editor.putString("LineOfActivity",lineactivity);
 
-                   editor.commit();
-                   Intent intent=new Intent(LoanActivity_PrimaryScreen.this,LoanActivity_SecondaryScreen.class);
-                   startActivity(intent);
+                       editor.commit();
+                       Intent intent=new Intent(LoanActivity_PrimaryScreen.this,LoanActivity_SecondaryScreen.class);
+                       startActivity(intent);
+                   }
+                   else{
+                       et_enteredotp.setError("Invalid OTP");
+                   }
+
+                   if (entered_otp.length() < 6){
+                       et_enteredotp.setError("Invalid OTP");
+                   }
+
+                   if (isSelectSendOTP == 0){
+                       et_enteredotp.setError("Please click on Send OTP");
+                   }
                }
                else{
-                   et_enteredotp.setError("Invalid OTP");
+                   Toast.makeText(LoanActivity_PrimaryScreen.this,"Duplicate Aadhaar",Toast.LENGTH_SHORT).show();
                }
 
-               if (entered_otp.length() < 6){
-                   et_enteredotp.setError("Invalid OTP");
-               }
-
-               if (isSelectSendOTP == 0){
-                   et_enteredotp.setError("Please click on Send OTP");
-               }
             }
         });
 
@@ -494,14 +506,18 @@ if(beneficiary_phone.length()!=0){
             resaddress=et_resaddress.getText().toString().trim();
 
             if(beneficiary_name!=null &&beneficiarydob!=null &&pro_name!=null  &&beneficiary_name!=null  && beneficiary_phone.length() == 10 &&
-                    entered_otp.length() == 6 && accountno.length() == 11 && unitaddress != null && resaddress != null && !checkAadhaar){
+                    entered_otp.length() == 6 && accountno.length() == 11 && unitaddress != null && resaddress != null){
 
-                verify_otp.setEnabled(true);
-                verify_otp.setBackground(getDrawable(R.drawable.button));
+                    verify_otp.setEnabled(true);
+                    verify_otp.setBackground(getDrawable(R.drawable.button));
+
+
+
 
 
 
             }
+
 
         }
 
@@ -516,7 +532,8 @@ if(beneficiary_phone.length()!=0){
         String username=pref.getString("Username","No name defined");
         String password=pref.getString("Password","No name defined");
         Utils utils = new Utils();
-        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+       // OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+        OkHttpClient httpClient = utils.createAuthenticatedClient("1010","Test@123");
 
 
 
@@ -557,7 +574,7 @@ if(beneficiary_phone.length()!=0){
 
 
                     }
-                    if(response_String.equals(true)){
+                    if(response_String.equals("true")){
                         checkAadhaar=false;
                     }
                     else{
@@ -579,8 +596,8 @@ if(beneficiary_phone.length()!=0){
         String username=pref.getString("Username","No name defined");
         String password=pref.getString("Password","No name defined");
         Utils utils = new Utils();
-        OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
-
+        //OkHttpClient httpClient = utils.createAuthenticatedClient(username, password);
+        OkHttpClient httpClient = utils.createAuthenticatedClient("1010","Test@123");
         @Override
         protected String doInBackground(Request... requests) {
             client=new OkHttpClient();
