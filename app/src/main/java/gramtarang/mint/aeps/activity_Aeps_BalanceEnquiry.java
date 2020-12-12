@@ -152,7 +152,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     public String Piddata;
     public String pCount;
     public String pType;
-    public String pidData_json;
+    public String pidData_json,outletid;
     OkHttpClient client;
     OkHttpClient httpClient;
     ArrayList<String> arryList_bankName = new ArrayList<String>();
@@ -250,6 +250,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
         agentId=preferences.getString("AgentId","No name defined");
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
+        outletid=preferences.getString("OutletId","No name defined");
         androidId= Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         new apiCall_getBanks().execute();
         backbtn.setOnClickListener(new View.OnClickListener() {
@@ -711,7 +712,7 @@ Log.d("TAG","Message is"+username+password);
                     .addHeader("imeiNumber", androidId)
                     .addHeader("latitude", latitude)
                     .addHeader("longitude", longitude)
-                    .addHeader("outletid","82923")
+                    .addHeader("outletid",outletid)
                     .addHeader("Accept", "*/*")
                    /* .addHeader("AdhaarNumber", "123456781190")
                      .addHeader("Bankid", "1234")

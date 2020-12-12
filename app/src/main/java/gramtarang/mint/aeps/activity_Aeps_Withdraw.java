@@ -125,7 +125,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     String transaction_type;
     String merchant_transid;
     String timestamp;
-    String amount;
+    String amount,outletid;
     String transaction_status;
     String fpTransId;
     //bellow variable re for rd Service of fingerPrint device
@@ -251,6 +251,8 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         longitude=preferences.getString("Longitude","No name defined");
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
+        outletid=preferences.getString("OutletId","No name defined");
+
         //androidId=preferences.getString("AndroidId","No name defined");
         //latitude="11.111";
         //longitude="121.11";
@@ -613,7 +615,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                     .addHeader("imeiNumber",androidId)
                     .addHeader("latitude", latitude)
                     .addHeader("longitude", longitude)
-                    .addHeader("outletid","82923")
+                    .addHeader("outletid",outletid)
                   //  .addHeader("outletid","82923")
                     /*.addHeader("AdhaarNumber","7896541230")
                     .addHeader("Bankid","1022")

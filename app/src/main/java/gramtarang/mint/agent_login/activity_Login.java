@@ -106,7 +106,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
     String latitude;
     String longitude;
 
-    String username;
+    String username,outletid;
 
     String androidId;
     String appversion;
@@ -284,6 +284,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                             areamanager_id=jsonResponse1.getString("area_manager_id");
                             areamanager_name=jsonResponse1.getString("area_manager");
                             agentAadhaar =jsonResponse1.getString("aadhaar_number");
+                            outletid=jsonResponse1.getString("aepism");
                             role=jsonResponse1.getInt("role");
 
                             aeps=jsonResponse1.getInt("aeps");
@@ -291,15 +292,13 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
                             bbps=jsonResponse1.getInt("bbps");
                             card=jsonResponse1.getInt("card");
                             loan=jsonResponse1.getInt("loan");
-                           /**/
-                            Log.d("EMAIL","AFter PARSING"+agentemail);
                            activity_Login.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
 
                                     //Snackbar.make(coordinatorLayout, "success", Snackbar.LENGTH_LONG).setAction("action",null).show();
 
-                                    method(agentAadhaar,areamanager_name,agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
+                                    method(outletid,agentAadhaar,areamanager_name,agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
                                 }
                             });
 
@@ -332,7 +331,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         }
 
     }
-    public void method(String aadhaar,String areamanager_name,String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
+    public void method(String outletid,String aadhaar,String areamanager_name,String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
         // utils.getprogressDialog(activity_Login.this, "Logging in", "Please Wait");
         verification_type = "OTP";
 //            btn_login.setEnabled(false);
@@ -361,6 +360,7 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         editor.putString("VerificationMethod", verification_type);
         editor.putString("LoginOTP", generated_pin);
         editor.putString("AreaManagerId", areamanagerid);
+        editor.putString("OutletId",outletid);
         editor.putInt("Role", role);
         editor.putInt("aeps",aeps);
         editor.putInt("pan",pan);

@@ -210,7 +210,7 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     public static String Piddata;
     public static String pCount;
     public static String pType;
-    String bank_RRN;
+    String bank_RRN,outletid;
     ///////////////////////////////////////////////////////
     public static String pidData_json;
     OkHttpClient client,httpClient;
@@ -287,6 +287,8 @@ String response_String;
         agentId=preferences.getString("AgentId","No name defined");
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
+        outletid=preferences.getString("OutletId","No name defined");
+
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
         new apiCall_getBanks().execute();
@@ -659,7 +661,7 @@ String response_String;
                     .addHeader("imeiNumber",androidId)//androidId
                     .addHeader("latitude", String.valueOf(latitude))
                     .addHeader("longitude", String.valueOf(longitude))
-                  //  .addHeader("outletid","82923")
+                   .addHeader("outletid",outletid)
                     .post(body)
                     .build();
             Log.d(TAG,"Done Headerss");
