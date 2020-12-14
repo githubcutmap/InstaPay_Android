@@ -60,7 +60,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import gramtarang.mint.R;
@@ -540,5 +544,6 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
             }
         }, 2000);
     }
+
 }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +19,15 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import gramtarang.mint.R;
@@ -166,9 +175,10 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
         status=intent.getStringExtra("status");
         status_code=intent.getStringExtra("status_code");
         transaction_type=intent.getStringExtra("transaction_type");
-        MobileSMSAPI sendmsg=new MobileSMSAPI();
+       /* MobileSMSAPI sendmsg=new MobileSMSAPI();
         sendmsg.sendtransmsg(agent_phone_number,agent_name,message,transtype);
-
+*/
+        new SendTransDetailsSMS().execute();
         tv_bankname.setText(bankName);
         if(rrn_no==null){
             tv_rrnno.setText("Not Applicable");
@@ -208,5 +218,59 @@ public class activity_Aeps_BalanceEnq_Receipt extends AppCompatActivity implemen
                 startActivity(intent);
             }
         });
+    }
+    public String gethour(){
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String greeting;
+        if(hour<12){
+            greeting="Good Morning";
+        }
+        else if(hour<17){
+            greeting="Good Afternoon";
+        }
+        else{
+            greeting="Good Evening";
+        }
+        return greeting;
+    }
+    public  class SendTransDetailsSMS extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            HttpURLConnection urlConnection = null;
+            String greet=gethour();
+            String flagurl= null;
+            try {
+                String message= URLEncoder.encode(greet+","+" "+agent_name+"\n"+"Thank you for banking with us"+"\n"+"Your transaction details are:"+"\n"+"Transaction Type:"+"\n"+transtype+"Message:"+status+"\n"+"\n"+"With Regards,"+"\n"+"GTIDS IT Team", "UTF-8");
+                flagurl =  "http://smslogin.mobi/spanelv2/api.php?username=gramtarang&password=Ind123456&to="+agent_phone_number+"&from=GTIDSP&message="+message;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            try {
+                URL url = new URL(
+                        flagurl);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                int code = urlConnection.getResponseCode();
+                if (code !=  200) {
+                    throw new IOException("Invalid response from server: " + code);
+                }
+                BufferedReader rd = new BufferedReader(new InputStreamReader(
+                        urlConnection.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    Log.i("data", line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+            return null;
+        }
     }
 }

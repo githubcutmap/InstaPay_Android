@@ -9,4 +9,8 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">mintserver.gramtarang.org</domain>
     </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">smslogin.mobi</domain>
+    </domain-config>
+
 </network-security-config>

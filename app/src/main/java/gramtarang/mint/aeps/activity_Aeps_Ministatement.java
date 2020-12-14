@@ -82,9 +82,15 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -109,6 +115,7 @@ import okhttp3.Response;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -664,7 +671,7 @@ String response_String;
                    .addHeader("outletid",outletid)
                     .post(body)
                     .build();
-            Log.d(TAG,"Done Headerss");
+
             httpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -727,6 +734,7 @@ String response_String;
 
                             e.printStackTrace();
                         }
+                        new SendTransDetailsSMS().execute();
                         Intent intent = new Intent(activity_Aeps_Ministatement.this, activity_Aeps_Ministatement_Report.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("data", (Serializable) list);
@@ -747,6 +755,60 @@ String response_String;
                 }
             });
             return responseString;
+        }
+    }
+    public String gethour(){
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String greeting;
+        if(hour<12){
+            greeting="Good Morning";
+        }
+        else if(hour<17){
+            greeting="Good Afternoon";
+        }
+        else{
+            greeting="Good Evening";
+        }
+        return greeting;
+    }
+    public  class SendTransDetailsSMS extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            HttpURLConnection urlConnection = null;
+            String greet=gethour();
+            String flagurl= null;
+            try {
+                String message= URLEncoder.encode(greet+","+" "+agent_name+"\n"+"Thank you for banking with us"+"\n"+"Your transaction details are:"+"\n"+"Transaction Type:"+"\n"+transtype+"Message:"+status+"\n"+"\n"+"With Regards,"+"\n"+"GTIDS IT Team", "UTF-8");
+                flagurl =  "http://smslogin.mobi/spanelv2/api.php?username=gramtarang&password=Ind123456&to="+agent_phone_number+"&from=GTIDSP&message="+message;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            try {
+                URL url = new URL(
+                        flagurl);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                int code = urlConnection.getResponseCode();
+                if (code !=  200) {
+                    throw new IOException("Invalid response from server: " + code);
+                }
+                BufferedReader rd = new BufferedReader(new InputStreamReader(
+                        urlConnection.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    Log.i("data", line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+            return null;
         }
     }
 

@@ -24,8 +24,13 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import gramtarang.mint.R;
@@ -45,7 +50,7 @@ public class LoginVerification extends AppCompatActivity {
     EditText edit_otp;
     TextView timer,otp_type;
     Button submit,resend_btn;
-    String username,password,bankmitra_id,jsonString,entered_otp,androidId,login_status,latitude,longitude,agentId,timestamp,agentphn,agentemail,agentname,generated_pin;
+    public String username,password,bankmitra_id,jsonString,entered_otp,androidId,login_status,latitude,longitude,agentId,timestamp,agentphn,agentemail,agentname,generated_pin;
     SharedPreferences preferences;boolean isValidOtp;String verification_type;
     public static final String mypreference = "mypref";
     String TAG = "LoginVerification";
@@ -120,9 +125,11 @@ Log.d("TAG","Authentication Testing:"+username+password);
                    // SQLQueries update_otp=new SQLQueries();
                    // update_otp.updateOTP(generated_pin,androidId);
                   //  Log.d(TAG,"Agent email is:"+agentemail);
-                    MobileSMSAPI sms=new MobileSMSAPI();
+                   /* MobileSMSAPI sms=new MobileSMSAPI();
                     Log.d(TAG,"Agent Phn is:"+agentphn);
-                    sms.sendOTP(generated_pin,agentphn,agentname);
+                    sms.sendOTP(generated_pin,agentphn,agentname);*/
+                    Log.d(TAG,"CALLING API");
+                    new SendOTP().execute();
                     timer();
                 }
                 else{
@@ -266,4 +273,54 @@ else{
         }
 
     }
+    public String gethour(){
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String greeting;
+        if(hour<12){
+            greeting="Good Morning";
+        }
+        else if(hour<17){
+            greeting="Good Afternoon";
+        }
+        else{
+            greeting="Good Evening";
+        }
+        return greeting;
+    }
+    public  class SendOTP extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            HttpURLConnection urlConnection = null;
+            String greet=gethour();
+           String flagurl="http://smslogin.mobi/spanelv2/api.php?username=gramtarang&password=Ind123456&to="+agentphn+"&from=GTIDSP&message="+greet+", "+agentname+"Your OTP for login is:"+generated_pin+"\n"+"\n"+"With Regards,"+"\n"+"GTIDS IT Team";
+           Log.d("OTP","Params are"+agentname+agentphn+generated_pin+"URL IS"+flagurl);
+            try {
+                URL url = new URL(
+                        flagurl);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                int code = urlConnection.getResponseCode();
+                if (code !=  200) {
+                    throw new IOException("Invalid response from server: " + code);
+                }
+                BufferedReader rd = new BufferedReader(new InputStreamReader(
+                        urlConnection.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    Log.i("data", line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+            return null;
+        }
+    }
+
 }

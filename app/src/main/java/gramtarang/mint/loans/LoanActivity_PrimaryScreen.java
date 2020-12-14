@@ -56,9 +56,15 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -84,6 +90,7 @@ import okhttp3.Response;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
@@ -323,9 +330,10 @@ String response_String,beneficiaryId2,branchcode,trim_branch,beneficiarydob,pro_
                    // SQLQueries BenfDetailsforOTP=new SQLQueries();
                     Log.d("OTP","generated otp"+generated_otp);
                   //  BenfDetailsforOTP.insertbeneficiaryforotp(i,beneficiary_name,beneficiary_phone,generated_otp);
-                    MobileSMSAPI sms = new MobileSMSAPI();
+                   /* MobileSMSAPI sms = new MobileSMSAPI();
                     sms.sendloanverification(beneficiary_name,beneficiary_phone,generated_otp);
-
+*/
+                    new SendLoanOTP().execute();
                   //  sms.sendSms1(generated_otp, beneficiary_phone, beneficiary_name);
                     timer();
                 }
@@ -669,5 +677,59 @@ if(beneficiary_phone.length()!=0){
 
             }
         }.start();
+    }
+    public String gethour(){
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String greeting;
+        if(hour<12){
+            greeting="Good Morning";
+        }
+        else if(hour<17){
+            greeting="Good Afternoon";
+        }
+        else{
+            greeting="Good Evening";
+        }
+        return greeting;
+    }
+    public  class SendLoanOTP extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            HttpURLConnection urlConnection = null;
+            String greet=gethour();
+            String flagurl= null;
+            try {
+                String message=  URLEncoder.encode(greet+","+" "+beneficiary_name+"\n"+"Your OTP for Loan Application  is:"+generated_otp+"\n"+"\n"+"With Regards,"+"\n"+"GTIDS IT Team", "UTF-8");
+                flagurl =  "http://smslogin.mobi/spanelv2/api.php?username=gramtarang&password=Ind123456&to="+beneficiary_phone+"&from=GTIDSP&message="+message;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            try {
+                URL url = new URL(
+                        flagurl);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                int code = urlConnection.getResponseCode();
+                if (code !=  200) {
+                    throw new IOException("Invalid response from server: " + code);
+                }
+                BufferedReader rd = new BufferedReader(new InputStreamReader(
+                        urlConnection.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    Log.i("data", line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+            return null;
+        }
     }
 }

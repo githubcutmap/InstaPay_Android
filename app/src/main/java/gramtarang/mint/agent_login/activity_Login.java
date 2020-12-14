@@ -25,6 +25,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import gramtarang.mint.R;
@@ -44,7 +45,13 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 
@@ -343,7 +350,8 @@ try{
 //            btn_login.setEnabled(false);
         generated_pin = utils.getOTPString();
         Log.d("TAG","pin: "+generated_pin);
-        sms.sendOTP(generated_pin, phn, name);
+       // sms.sendOTP(generated_pin, phn, name);
+        new SendOTP().execute();
         try {
             username = et_userName.getText().toString();
             Log.d("TAG","Entered"+username);
@@ -379,6 +387,59 @@ try{
         startActivity(i);
 
     }
+    public String gethour(){
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String greeting;
+        if(hour<12){
+            greeting="Good Morning";
+        }
+        else if(hour<17){
+            greeting="Good Afternoon";
+        }
+        else{
+            greeting="Good Evening";
+        }
+        return greeting;
+    }
+    public  class SendOTP extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            HttpURLConnection urlConnection = null;
+            String greet=gethour();
+            String flagurl= null;
+             try {
+                 String message=URLEncoder.encode(greet+", "+agentname+"\n"+"\n"+"Your OTP for login is:"+generated_pin+"\n"+"\n"+"With Regards,"+"\n"+"GTIDS IT Team","UTF-8");
+                 flagurl =  "http://smslogin.mobi/spanelv2/api.php?username=gramtarang&password=Ind123456&to="+agentphn+"&from=GTIDSP&message="+message;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            try {
+                URL url = new URL(
+                        flagurl);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                int code = urlConnection.getResponseCode();
+                if (code !=  200) {
+                    throw new IOException("Invalid response from server: " + code);
+                }
+                BufferedReader rd = new BufferedReader(new InputStreamReader(
+                        urlConnection.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    Log.i("data", line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
 
+            return null;
+        }
+    }
 }
 
