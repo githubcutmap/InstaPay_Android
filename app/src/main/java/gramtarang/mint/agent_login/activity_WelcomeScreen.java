@@ -184,7 +184,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         checkLocation();
         Utils util=new Utils();
         isRooted=util.isDeviceRooted();
-        if(!isRooted){
+        if(isRooted){
             DialogActivity.DialogCaller.showDialog(activity_WelcomeScreen.this,"Alert","App can't run on rooted devices.",new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -489,7 +489,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
                         //else{
                             isLatestVersion=true;
                             //
-                            if(isRooted&&isConnected() &&isLatestVersion&& !latitude.equals("0.0") && !longitude.equals("0.0") ){
+                            if(!isRooted&&isConnected() &&isLatestVersion&& !latitude.equals("0.0") && !longitude.equals("0.0") ){
                                 activity_WelcomeScreen.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {

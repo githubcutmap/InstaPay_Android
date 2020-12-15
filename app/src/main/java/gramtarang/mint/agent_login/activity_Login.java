@@ -299,7 +299,7 @@ try{
                             agentAadhaar =jsonResponse1.getString("aadhaar_number");
 
                             role=jsonResponse1.getInt("role");
-
+                            outletid=jsonResponse1.getString("aepsim");
                             aeps=jsonResponse1.getInt("aeps");
                             pan=jsonResponse1.getInt("pan");
                             bbps=jsonResponse1.getInt("bbps");
@@ -311,7 +311,7 @@ try{
 
                                     //Snackbar.make(coordinatorLayout, "success", Snackbar.LENGTH_LONG).setAction("action",null).show();
 
-                                    method(agentAadhaar,areamanager_name,agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
+                                    method(outletid,agentAadhaar,areamanager_name,agentemail,agentname,agentphn,bankmitraid,areamanager_id,aeps,pan,bbps,loan,card,isphnregistered,isemailregistered);
                                 }
                             });
 
@@ -344,7 +344,7 @@ try{
         }
 
     }
-    public void method(String aadhaar,String areamanager_name,String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
+    public void method(String outletid1,String aadhaar,String areamanager_name,String email,String name,String phn,String bankmitraid,String areamanagerid,int aeps,int pan,int bbps,int loan,int card,boolean isphnregistered,boolean isemailregistered){
         // utils.getprogressDialog(activity_Login.this, "Logging in", "Please Wait");
         verification_type = "OTP";
 //            btn_login.setEnabled(false);
@@ -374,7 +374,7 @@ try{
         editor.putString("VerificationMethod", verification_type);
         editor.putString("LoginOTP", generated_pin);
         editor.putString("AreaManagerId", areamanagerid);
-        editor.putString("OutletId",outletid);
+        editor.putString("OutletId",outletid1);
         editor.putInt("Role", role);
         editor.putInt("aeps",aeps);
         editor.putInt("pan",pan);
