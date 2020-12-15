@@ -222,9 +222,6 @@ public class activity_Login extends AppCompatActivity implements LogOutTimer.Log
         }, 2000);
     }
 
-
-
-
     class apiCall_getagentdetails extends AsyncTask<Request, Void, String> {
 
         @Override

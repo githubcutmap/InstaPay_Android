@@ -1,8 +1,10 @@
 package gramtarang.mint.agent_login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,8 +16,21 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
+import gramtarang.mint.utils.Utils;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class activity_AgentsProfile extends AppCompatActivity {
@@ -24,8 +39,8 @@ public class activity_AgentsProfile extends AppCompatActivity {
 
     private static final String TAG = "AgentProfile";
     ImageView backbtn;
-    TextView agent_id,agent_name,agent_aadhar,agent_phone,agent_mail,agent_areamgr,agent_areamgr_id;
-    String ag_details[],androidId,agentName,agentEmail,agentPhone,agentId,areamanager,areamanagerId, agentAadhaar;
+    TextView agent_id,agent_name,agent_aadhar,agent_phone,agent_mail,agent_aepsim,agent_wallet;
+    String ag_details[],androidId,agentName,agentEmail,agentPhone,agentId,aepsim,walletamount, agentAadhaar,username,password,jsonString,responseString;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,31 +52,35 @@ public class activity_AgentsProfile extends AppCompatActivity {
         agent_aadhar = findViewById(R.id.agent_aadhar);
         agent_phone = findViewById(R.id.agent_phone);
         agent_mail = findViewById(R.id.agent_mail);
-        agent_areamgr=findViewById(R.id.agent_areamgr);
-        agent_areamgr_id=findViewById(R.id.agent_areamgr_id);
+        agent_aepsim=findViewById(R.id.tv_aepsim);
+        agent_wallet=findViewById(R.id.tv_wallet);
 
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         androidId=preferences.getString("AndroidId","No name defined");
-
+        aepsim=preferences.getString("OutletId","No name defined");
         agentName=preferences.getString("AgentName","No name defined");
         agentEmail=preferences.getString("AgentEmail","No name defined");
         agentPhone=preferences.getString("AgentPhone","No name defined");
         agentId=preferences.getString("Username","No name defined");
-        areamanager=preferences.getString("AreaManagerName","No name defined");
-        areamanagerId=preferences.getString("AreaManagerId","No name defined");
+        password=preferences.getString("Password","No name defined");
+
+        //areamanager=preferences.getString("AreaManagerName","No name defined");
+       // areamanagerId=preferences.getString("AreaManagerId","No name defined");
+
         agentAadhaar=preferences.getString("AgentAadhaar","No name defined");
+        new apiCall_totalWithdrawal().execute();
 try{
     agent_id.setText(agentId);
     agent_name.setText(agentName);
     agent_mail.setText(agentEmail);
     agent_phone.setText(agentPhone);
     agent_aadhar.setText(agentAadhaar);
-    agent_areamgr_id.setText(areamanagerId);
-    agent_areamgr.setText(areamanager);
+    //agent_areamgr_id.setText(areamanagerId);
+    agent_aepsim.setText(aepsim);
 }catch (Exception e){
     e.printStackTrace();
 }
-Log.d("TAG","Responses are:"+androidId+agentPhone+agentEmail+agentName+agentId+areamanager+areamanagerId);
+//Log.d("TAG","Responses are:"+androidId+agentPhone+agentEmail+agentName+agentId+aepsim);
         //back button
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,5 +112,81 @@ Log.d("TAG","Responses are:"+androidId+agentPhone+agentEmail+agentName+agentId+a
                 startActivity(intent);
             }
         }, 2000);
+    }
+
+    class apiCall_totalWithdrawal extends AsyncTask<Request, Void, String> {
+        @SuppressLint("HardwareIds")
+        @Override
+        protected String doInBackground(Request... requests) {
+            OkHttpClient httpClient;
+            Utils utils = new Utils();
+            JSONObject jsonObject = new JSONObject();
+            httpClient = utils.createAuthenticatedClient(username, password);
+            try {
+                jsonObject.put("accountno",agentPhone);
+                jsonObject.put("status", "SUCCESS");
+                jsonString = jsonObject.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            MediaType JSON = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(JSON, jsonString);
+            Request request = new Request.Builder()
+                    .url("https://aepsapi.gramtarang.org:8008/mint/aeps/SumTotWithdrawalByAccountNoandStatus")
+                    .addHeader("Accept", "*/*")
+                    .post(body)
+                    .build();
+            httpClient.newCall(request).enqueue(new Callback() {
+                @Override
+
+                //of the api calling got failed then it will go for onFailure,inside this we have added one alertDialog
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    assert response.body() != null;
+                    responseString = response.body().string();
+                    JSONObject jsonResponse = null;
+                    try {
+                        jsonResponse = new JSONObject(responseString);
+                        walletamount=jsonResponse.getString("sum");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                   activity_AgentsProfile.this.runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           setAgent_walletAmount(walletamount);
+                       }
+                   });
+                }
+
+            });
+
+
+            return null;
+        }
+
+
+    }
+    public void setAgent_walletAmount(String walletamount){
+        activity_AgentsProfile.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    agent_wallet.setText(walletamount);
+                }
+                catch (NullPointerException e)
+                {
+
+                }
+            }
+        });
+
     }
 }
