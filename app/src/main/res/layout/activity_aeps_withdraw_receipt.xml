@@ -161,7 +161,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/rrn_no"
+                        android:id="@+id/agentid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
             android:textColor="@color/grayblack"

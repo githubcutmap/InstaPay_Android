@@ -660,10 +660,10 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             balance=jsonData.getString("balanceAmount");
                             bank_RRN=jsonData.getString("bankRRN");
                             transaction_type=jsonData.getString("transactionType");
-                            merchant_transid=jsonData.getString("wallet_txn_id");
+                            merchant_transid=jsonData.getString("ipay_uuid");
                             timestamp=jsonData.getString("requestTransactionTime");
                             message=jsonData.getString("message");
-                            fpTransId=jsonData.getString("fpTransactionId");
+                            fpTransId=jsonData.getString("orderid");
 
                         } catch (JSONException | NullPointerException e) {
 /*                            DialogActivity.DialogCaller.showDialog(activity_Aeps_Withdraw.this,"Transaction Failed",message+"."+"This transaction cannot be completed.Please try after sometime\"",new DialogInterface.OnClickListener() {

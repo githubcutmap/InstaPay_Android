@@ -146,8 +146,8 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
         tv_bankname=findViewById(R.id.bank_name);
         tv_timestamp=findViewById(R.id.timestamp);
         tv_transid=findViewById(R.id.merchant_transid);
-        //tv_agentid=findViewById(R.id.agent_id);
-        tv_rrnno=findViewById(R.id.rrn_no);
+        tv_agentid=findViewById(R.id.agentid);
+       // tv_rrnno=findViewById(R.id.rrn_no);
         tv_transamount=findViewById(R.id.trans_amount);
         tex_message=findViewById(R.id.tex_message);
         customer_name=findViewById(R.id.customer_name);
@@ -159,7 +159,7 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
         androidId=preferences.getString("AndroidId","No name defined");
         agent_phone_number=preferences.getString("AgentPhn","No name defined");
         agent_name=preferences.getString("AgentName","No name defined");
-        //   agentid=preferences.getString("AgentId","No name defined");
+        agentid=preferences.getString("Username","No name defined");
         Intent intent = getIntent();
 
 
@@ -182,11 +182,11 @@ public class activity_Aeps_Withdrawal_Receipt extends AppCompatActivity implemen
 new SendTransDetailsSMS().execute();
 
         tv_bankname.setText(bankName);
-        if(rrn_no==null){
-            tv_rrnno.setText("Not Applicable");
+        if(agentid==null){
+            tv_agentid.setText("Not Applicable");
         }
         else{
-            tv_rrnno.setText(rrn_no);
+            tv_agentid.setText(agentid);
         }
         if(trans_id==null){
             tv_transid.setText("Not Applicable");
