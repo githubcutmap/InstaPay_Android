@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import gramtarang.mint.R;
 import gramtarang.mint.agent_login.AgentInfo;
 import gramtarang.mint.agent_login.BankInfo;
+import gramtarang.mint.agent_login.Payout;
 import gramtarang.mint.agent_login.WalletFragment;
 import gramtarang.mint.loans.areamgr.CompletedFragment;
 import gramtarang.mint.loans.areamgr.PendingFragment;
@@ -43,6 +44,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return new AgentInfo();
             case 2:
                 return new BankInfo();
+            case 3:
+                return new Payout();
         }
 
 
@@ -58,6 +61,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 3;
+        return 4;
     }
 }
