@@ -296,11 +296,13 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
 
                     //  isValidAmount=utils.isValidAmount(en_am);
                  //   isValidBankName= query.isValidBankName(selected_bank_name);
+
                     if (isValidAadhar  && isValidName ) {
                         try {
                             Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
                             //Rd service api calling method called
                             Matra_capture(pidOptions);
+                            //parseData();
                             //fingerprintDataConvertedtoJSON();                       } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
                             btn_submit.setEnabled(true);
@@ -635,8 +637,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                 public void onResponse(Call call, Response response) throws IOException {
                     assert response.body() != null;
                     responseString = response.body().string();
-//responseString=" {\"statuscode\":\"ERR\",\"status\":\"Invalid Aadhaar UID or VID\",\"data\":\"\",\"timestamp\":\"2020-11-02 19:29:25\",\"ipay_uuid\":\"BF08D9C6ED45A3B15CE9\",\"orderid\":\"\",\"environment\":\"PRODUCTION\"}\n";
-                    if(responseString!= null)
+                  if(responseString!= null)
                     {
                         JSONObject jsonResponse = null;
                         try {
@@ -647,10 +648,23 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             merchant_transid=jsonResponse.getString("ipay_uuid");
                             fpTransId=jsonResponse.getString("orderid");
                             //bank_RRN = jsonResponse.getString("ipay_uuid");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        try {
+                            JSONObject data=jsonResponse.getJSONObject("data");
+                            //  JSONObject jsonData=new JSONObject(data);
+                            balance=data.getDouble("balance");
+                            amount=data.getString("transactionAmount");
+                            transaction_status=data.getString("transactionStatus");
+                            balance=data.getDouble("balance");
+                            bank_RRN=data.getString("bankRRN");
+                            transaction_type=data.getString("transactionType");
+                            timestamp=data.getString("requestTransactionTime");
+                            message=data.getString("message");
+                          /*  jsonResponse = new JSONObject(responseString);
+                            // message = jsonResponse.getString("message");
+                            status = jsonResponse.getString("status");
+                            status_code = jsonResponse.getString("statuscode");
+                            merchant_transid=jsonResponse.getString("ipay_uuid");
+                            fpTransId=jsonResponse.getString("orderid");
+                            //bank_RRN = jsonResponse.getString("ipay_uuid");
                             String data=jsonResponse.getString("data");
                             JSONObject jsonData=new JSONObject(data);
                             //status=jsonData.getString("status");
@@ -661,17 +675,12 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             transaction_type=jsonData.getString("transactionType");
 
                             timestamp=jsonData.getString("requestTransactionTime");
-                            message=jsonData.getString("message");
+                            message=jsonData.getString("message");*/
 
-                        } catch (JSONException | NullPointerException e) {
-/*                            DialogActivity.DialogCaller.showDialog(activity_Aeps_Withdraw.this,"Transaction Failed",message+"."+"This transaction cannot be completed.Please try after sometime\"",new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            });*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        Intent intent=new Intent(activity_Aeps_Withdraw.this, activity_Aeps_Withdrawal_Receipt.class);
+                     Intent intent=new Intent(activity_Aeps_Withdraw.this, activity_Aeps_Withdrawal_Receipt.class);
                         intent.putExtra("trans_amount",en_am);
                         intent.putExtra("balance",balance);
                         intent.putExtra("merchant_transid",merchant_transid);
@@ -695,6 +704,45 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
             });
             return responseString ;
         }
+    }
+    public void parseData(){
+        Log.d("TAG","IN PARSER");
+       response_String="{\"statuscode\":\"TXN\"," +
+               "\"status\":\"Transaction Successful\"," +
+               "\"data\":{\"opening_bal\":\"554.39\"," +
+               "\"ipay_id\":\"CIJ012035113112983\",\"amount\":\"2.00\"," +
+               "\"amount_txn\":\"2.00\",\"account_no\":\"9160884610\"," +
+               "\"txn_mode\":\"CR\",\"status\":\"SUCCESS\",\"opr_id\":\"035113772513\"," +
+               "\"balance\":\"105398.53\",\"wallet_txn_id\":\"1201216131131DDGYX\"}," +
+               "\"timestamp\":\"2020-12-16 13:11:31\",\"ipay_uuid\":\"C939E0F3E3AB8B47DD1A\"," +
+               "\"orderid\":\"CIJ012035113112983\",\"environment\":\"PRODUCTION\"}";
+      JSONObject jsonResponse = null;
+        try {
+            jsonResponse = new JSONObject(response_String);
+            // message = jsonResponse.getString("message");
+            status = jsonResponse.getString("status");
+            status_code = jsonResponse.getString("statuscode");
+            merchant_transid=jsonResponse.getString("ipay_uuid");
+            fpTransId=jsonResponse.getString("orderid");
+            //bank_RRN = jsonResponse.getString("ipay_uuid");
+            JSONObject data=jsonResponse.getJSONObject("data");
+          //  JSONObject jsonData=new JSONObject(data);
+            balance=data.getDouble("balance");
+            amount=data.getString("transactionAmount");
+            transaction_status=data.getString("transactionStatus");
+            balance=data.getDouble("balance");
+            bank_RRN=data.getString("bankRRN");
+            transaction_type=data.getString("transactionType");
+            timestamp=data.getString("requestTransactionTime");
+            message=data.getString("message");
+            //status=jsonData.getString("status");
+           /* */
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("TAG","Parsed Data is"+status+status_code+merchant_transid+fpTransId
+                +amount+transaction_status+balance+bank_RRN+timestamp+message);
     }
 }
 
