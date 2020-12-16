@@ -118,7 +118,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     SharedPreferences preferences;
     public static final String mypreference = "mypref";
     private static final String TAG = "AepsBalanceEnquiry";
-    EditText aadhaar, name, phonenumber;
+    EditText aadhaar, name;
     Button submit;
     ImageView backbtn;
     AlertDialog alertDialog;
@@ -126,8 +126,8 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
     boolean isValidAadhar, isValidBankName;
     String[] deviceList = new String[]{"Mantra", "StarTeck"};
     AutoCompleteTextView bank_autofill;
-    boolean isValidName, isValidPhone;
-    String username,password,selected_bank_id, selected_bank_name, en_aadhaar, en_name, en_phn, latitude, longitude, response_String, androidId, banks, selected_bank, banks_no, pidDataXML, message, status, status_code, pidOptions, data, transaction_status, balance, bank_RRN, transaction_type, merchant_transid, timestamp, fpTransId, agentId;
+    boolean isValidName;
+    String agentphn,username,password,selected_bank_id, selected_bank_name, en_aadhaar, en_name,  latitude, longitude, response_String, androidId, banks, selected_bank, banks_no, pidDataXML, message, status, status_code, pidOptions, data, transaction_status, balance, bank_RRN, transaction_type, merchant_transid, timestamp, fpTransId, agentId;
 
     //bellow parameters are coming from RD service of fingerPrint device
     public String ci;
@@ -241,13 +241,14 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                 "otp=\"\" wadh=\"\" posh=\"UNKNOWN\"></Opts><Demo></Demo><CustOpts><Param name=\"\" value=\'\'/></CustOpts></PidOptions>";
         aadhaar = findViewById(R.id.aadhar_no);
         name = findViewById(R.id.name);
-        phonenumber = findViewById(R.id.phonenumber);
+       // phonenumber = findViewById(R.id.phonenumber);
         submit = findViewById(R.id.submit);
         backbtn = findViewById(R.id.backimg);
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         latitude = preferences.getString("Latitude", "No name defined");
         longitude = preferences.getString("Longitude", "No name defined");
         agentId=preferences.getString("AgentId","No name defined");
+        agentphn=preferences.getString("AgentPhone","No name defined");
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
         outletid=preferences.getString("OutletId","No name defined");
@@ -274,18 +275,19 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     Log.d(TAG,"Selected if bank: "+selected_bank_name+" "+selected_bank_id);
                     en_aadhaar = aadhaar.getText().toString().trim();
                     en_name = name.getText().toString().trim();
-                    en_phn = phonenumber.getText().toString().trim();
+                    //en_phn = phonenumber.getText().toString().trim();
                     isValidAadhar = util.isValidAadhaar(en_aadhaar);
                     isValidName = util.isValidName(en_name);
-                    isValidPhone = util.isValidPhone(en_phn);
+                   // isValidPhone = util.isValidPhone(en_phn);
                     //isValidBankName = bankvalidation.isValidBankName(selected_bank_name);
-                    Log.d(TAG, "Validations are:" + isValidPhone + isValidBankName + isValidAadhar + isValidName);
-                    if (isValidAadhar && isValidPhone && isValidName) {
+                   // Log.d(TAG, "Validations are:" + isValidPhone + isValidBankName + isValidAadhar + isValidName);
+                    if (isValidAadhar && isValidName) {
                         try {
                             //   new  ().execute();
-                            Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
-                           capture(pidOptions);
-                           //  fingerprintDataConvertingToJson();
+                            //Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
+                            Matra_capture(pidOptions);
+                          // capture(pidOptions);
+                           // fingerprintDataConvertingToJson();
                       // new apiCall_BalanceEnquiry().execute();
                         } catch (Exception e) {
                             // Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
@@ -297,9 +299,7 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     if (!isValidName) {
                         name.setError("Enter Valid Name");
                     }
-                    if (!isValidPhone) {
-                        phonenumber.setError("Enter Valid Phone Number");
-                    }
+
                 } else {
                     Toast.makeText(activity_Aeps_BalanceEnquiry.this, "No Internet Connection", Toast.LENGTH_LONG).show();
 
@@ -392,57 +392,30 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
      }
 
     //RD service api calling of mantra Fingerprint device
-    public String capture(String pidOptions) {
-        Log.d(TAG, "capture: this is a log For capture :-" + pidOptions);
+    public String Matra_capture(String pidOptions) {
         Intent intentCapture = new Intent("in.gov.uidai.rdservice.fp.CAPTURE");
-        //in.gov.uidai.rdservice.fp.CAPTURE
         intentCapture.putExtra("PID_OPTIONS", pidOptions);
         startActivityForResult(intentCapture, 1);
-        // intentCapture.getExtra("PID_OPTIONS");
         return pidDataXML;
     }
-
-    //StartTek_capture method is RD service api call of StartTech fingerprint device
-    public String StartTek_capture(String pidOptions) {
-        Intent intentCapture = new Intent("in.gov.uidai.rdservice.fp.CAPTURE");
-        PackageManager packageManager = getPackageManager();
-        List<ResolveInfo> activities = packageManager.queryIntentActivities(intentCapture, PackageManager.MATCH_DEFAULT_ONLY);
-        boolean isIntentSafe = activities.size() > 0;
-        intentCapture.putExtra("PID_OPTIONS", pidOptions);
-        startActivityForResult(intentCapture, 2);
-        if (!isIntentSafe) {
-        }
-        return pidDataXML;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             assert data != null;
+            //data we are getting from rd service api
             pidDataXML = data.getStringExtra("PID_DATA");
-
-            //if fingerPrint data doesn't captured then it will go for this condition
-            // where we are showing an alert dialog
-            if (pidDataXML == null) {
+            if(pidDataXML==null){
                 DialogActivity.DialogCaller.showDialog(activity_Aeps_BalanceEnquiry.this, "Alert", "Fingerprint data not captured.\nPlease try again.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                     }
                 });
+                submit.setEnabled(true);
             }
             if (pidDataXML != null) {
-
-                try {
-                    this.sendDatatoServer(pidDataXML);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                //XML data parsing starts from here
-
                 XmlPullParserFactory pullParserFactory;
                 try {
                     pullParserFactory = XmlPullParserFactory.newInstance();
@@ -451,154 +424,95 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
                     parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
                     parser.setInput(is, null);
                     processParsing(parser);
+
                 } catch (XmlPullParserException | IOException e) {
                     e.printStackTrace();
                 }
-            } else {
-                Toast.makeText(activity_Aeps_BalanceEnquiry.this, "Please connect Fingerprint device", Toast.LENGTH_SHORT).show();
-
-
             }
-        }
-    }
+        }}
 
-    //processParsing method, inside this method the xml data coming from rd service going for parsing purpose
+    //data we are getting from rd service api in XML fromat so in
+    //processParsing method i leads for parsing , we are trying to separate the whole xml data
     public void processParsing(XmlPullParser parser) throws IOException, XmlPullParserException {
-
         int eventType = parser.getEventType();
-        CaptureResponse currentPlayer = null;
-
-        while (eventType != XmlPullParser.END_DOCUMENT) {
+        CaptureResponse captureResponse = null;
+        while(eventType!= XmlPullParser.END_DOCUMENT){
             String eltName = null;
-
-            switch (eventType) {
+            switch (eventType){
                 case XmlPullParser.START_TAG:
                     eltName = parser.getName();
-                    Log.d(TAG, "processParsing: eltName " + eltName);
+                    if ("PidData".equals(eltName)){
+                        captureResponse = new CaptureResponse();
+                    }else if (captureResponse != null){
+                        if ("DeviceInfo".equals(eltName)){
+                            captureResponse.dpID = parser.getAttributeValue(null,"dpId");
+                            captureResponse.rdsID = parser.getAttributeValue(null,"rdsId");
+                            captureResponse.rdsVer = parser.getAttributeValue(null,"rdsVer");
+                            captureResponse.dc = parser.getAttributeValue(null,"dc");
+                            captureResponse.mi=parser.getAttributeValue(null,"mi");
+                            captureResponse.mc = parser.getAttributeValue(null,"mc");
 
-                    if ("PidData".equals(eltName)) {
-                        //currentPlayer = new com.jaitejapp.mintnewapplication.CaptureResponse();
-                        currentPlayer = new CaptureResponse();
-                        //captureResponses.add(currentPlayer);
-                        Log.d(TAG, "processParsing: currentPlayer" + currentPlayer);
-
-                    } else if (currentPlayer != null) {
-                        if ("DeviceInfo".equals(eltName)) {
-                            currentPlayer.dpID = parser.getAttributeValue(null, "dpId");
-                            currentPlayer.rdsID = parser.getAttributeValue(null, "rdsId");
-                            currentPlayer.rdsVer = parser.getAttributeValue(null, "rdsVer");
-                            currentPlayer.dc = parser.getAttributeValue(null, "dc");
-                            currentPlayer.mi = parser.getAttributeValue(null, "mi");
-                            currentPlayer.mc = parser.getAttributeValue(null, "mc");
-
-                            dpId = currentPlayer.dpID;
-                            rdsID = currentPlayer.rdsID;
-                            rdsVer = currentPlayer.rdsVer;
-                            dc = currentPlayer.dc;
-                            mi = currentPlayer.mi;
-                            mc = currentPlayer.mc;
-                            //captureResponses.add(dpId,rdsID);
-
-                            //captureResponses.add(dpId);
-
-
-                            //Log.d(TAG, "processParsing dpId is:"+ dpId +""+"rdsId: "+rdsID+""+"rdsVer:"+rdsVer+""+"dc:"+dc+""+"Mi:"+mi+""+"mc:"+mc);
-
+                            dpId = captureResponse.dpID;
+                            rdsID = captureResponse.rdsID;
+                            rdsVer = captureResponse.rdsVer;
+                            dc = captureResponse.dc;
+                            mi = captureResponse.mi;
+                            mc = captureResponse.mc;
                         } else if ("Resp".equals(eltName)) {
-                            currentPlayer.errCode = parser.getAttributeValue(null, "errCode");
-                            currentPlayer.errInfo = parser.getAttributeValue(null, "errInfo");
-                            currentPlayer.fType = parser.getAttributeValue(null, "fType");
-                            currentPlayer.fCount = parser.getAttributeValue(null, "fCount");
-                            currentPlayer.iCount = parser.getAttributeValue(null, "iCount");
-                            currentPlayer.iType = parser.getAttributeValue(null, "iType");
-                            currentPlayer.format = parser.getAttributeValue(null, "format");
-                            currentPlayer.nmPoints = parser.getAttributeValue(null, "nmPoints");
-                            currentPlayer.qScore = parser.getAttributeValue(null, "qScore");
-                            currentPlayer.pCount = parser.getAttributeValue(null, "qScore");
-                            currentPlayer.pType = parser.getAttributeValue(null, "qScore");
+                            captureResponse.errCode = parser.getAttributeValue(null,"errCode");
+                            captureResponse.errInfo = parser.getAttributeValue(null,"errInfo");
+                            captureResponse.fType = parser.getAttributeValue(null,"fType");
+                            captureResponse.fCount = parser.getAttributeValue(null,"fCount");
+                            captureResponse.iCount = parser.getAttributeValue(null,"iCount");
+                            captureResponse.iType = parser.getAttributeValue(null,"iType");
+                            captureResponse.format = parser.getAttributeValue(null,"format");
+                            captureResponse.nmPoints = parser.getAttributeValue(null,"nmPoints");
+                            captureResponse.qScore = parser.getAttributeValue(null,"qScore");
+                            captureResponse.pCount = parser.getAttributeValue(null,"qScore");
+                            captureResponse.pType = parser.getAttributeValue(null,"qScore");
 
-                            errcode = currentPlayer.errCode;
-                            errInfo = currentPlayer.errInfo;
-                            fType = currentPlayer.fType;
-                            fCount = currentPlayer.fCount;
-                            format = currentPlayer.format;
-                            nmPoints = currentPlayer.nmPoints;
-                            qScore = currentPlayer.qScore;
-                            iCount = currentPlayer.iCount;
-                            iType = currentPlayer.iType;
-                            pCount = currentPlayer.pCount;
-                            pType = currentPlayer.pType;
-
-
-                            // Log.d(TAG, "processParsing: errorCode:"+errcode+""+"errorInfo"+errInfo+""+"fType:"
-                            //    +fType+""+"fCount:"+fCount+""+"format:"+format+""+"nmPoints:"+nmPoints+""+"qScore:"+qScore);
-
+                            errcode = captureResponse.errCode;
+                            errInfo = captureResponse.errInfo;
+                            fType = captureResponse.fType;
+                            fCount = captureResponse.fCount;
+                            format = captureResponse.format;
+                            nmPoints = captureResponse.nmPoints;
+                            qScore = captureResponse.qScore;
+                            iCount = captureResponse.iCount;
+                            iType = captureResponse.iType;
+                            pCount = captureResponse.pCount;
+                            pType = captureResponse.pType;
                         } else if ("Skey".equals(eltName)) {
 
-                            currentPlayer.ci = parser.getAttributeValue(null, "ci");
-                            currentPlayer.sessionKey = parser.nextText();
+                            captureResponse.ci = parser.getAttributeValue(null, "ci");
+                            captureResponse.sessionKey = parser.nextText();
 
-                            ci = currentPlayer.ci;
-                            SessionKey = currentPlayer.sessionKey;
-                            // Log.d(TAG, "processParsing: Skey :" + SessionKey + "/n" + "ci:" + ci);
-
+                            ci = captureResponse.ci;
+                            SessionKey = captureResponse.sessionKey;
                         } else if ("Hmac".equals(eltName)) {
-                            currentPlayer.hmac = parser.nextText();
-
-                            hmac = currentPlayer.hmac;
-                            // Log.d(TAG, "processParsing: Hmac is:" + hmac);
-
+                            captureResponse.hmac = parser.nextText();
+                            hmac = captureResponse.hmac;
                         } else if ("Data".equals(eltName)) {
-                            currentPlayer.PidDatatype = parser.getAttributeValue(null, "type");
-                            currentPlayer.Piddata = parser.nextText();
-
-                            PidDatatype = currentPlayer.PidDatatype;
-                            Piddata = currentPlayer.Piddata;
-
-                            Log.d(TAG, "processParsing: piddata and pidDatatype is ::::::::::::::::::::" + PidDatatype + Piddata);
-
-                            // Log.d(TAG, "processParsing: PidData and Data Type is :" + pidDataType + "\n" + "pidData:" + pidData);
+                            captureResponse.PidDatatype = parser.getAttributeValue(null, "type");
+                            captureResponse.Piddata = parser.nextText();
+                            PidDatatype = captureResponse.PidDatatype;
+                            Piddata = captureResponse.Piddata;
                         }
                     }
                     break;
             }
             eventType = parser.next();
         }
-
-        fingerprintDataConvertingToJson();
-        //  new apiCall_BalanceEnquiry().execute();
-
+        fingerprintDataConvertedtoJSON();
     }
-
-    private void fingerprintDataConvertingToJson() {
+    //The data we are collecting after parsing the whole xml data which is coming from rd service api call(from fingerprint
+    // ), then we are putting into json format as per bankAPi requirement
+    private void fingerprintDataConvertedtoJSON() {
         String msgStr = "";
-
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("errcode", errcode);
-            jsonObject.put("errInfo", errInfo);
-            jsonObject.put("fCount", fCount);
-            jsonObject.put("fType", fType);
-            jsonObject.put("iCount", iCount);
-            jsonObject.put("iType", iType);
-            jsonObject.put("pCount", pCount);
-            jsonObject.put("pType", pType);
-            jsonObject.put("nmPoints", nmPoints);
-            jsonObject.put("qScore", qScore);
-            jsonObject.put("dpID", dpId);
-            jsonObject.put("rdsID", rdsID);
-            jsonObject.put("rdsVer", rdsVer);
-            jsonObject.put("dc", dc);
-            jsonObject.put("mi", mi);
-            jsonObject.put("mc", mc);
-            jsonObject.put("ci", ci);
-            jsonObject.put("sessionKey", SessionKey);
-            jsonObject.put("hmac", hmac);
-            jsonObject.put("PidDatatype", PidDatatype);
-            jsonObject.put("Piddata", Piddata);
-/*
-       jsonObject.put("errcode", "errcode1");
+            /*jsonObject.put("errcode", "errcode1");
             jsonObject.put("errInfo", "errInfo1");
             jsonObject.put("fCount", "fCount1");
             jsonObject.put("fType", "fType1");
@@ -619,6 +533,28 @@ public class activity_Aeps_BalanceEnquiry extends AppCompatActivity implements L
             jsonObject.put("hmac", "hma1c");
             jsonObject.put("PidDatatype", "PidDatat1ype");
             jsonObject.put("Piddata", "Pidda1ta");*/
+            jsonObject.put("errcode",errcode);
+            jsonObject.put("errInfo",errInfo);
+            jsonObject.put("fCount",fCount);
+            jsonObject.put("fType",fType);
+            jsonObject.put("iCount",iCount);
+            jsonObject.put("iType",iType);
+            jsonObject.put("pCount",pCount);
+            jsonObject.put("pType",pType);
+            jsonObject.put("nmPoints",nmPoints);
+            jsonObject.put("qScore",qScore);
+            jsonObject.put("dpID",dpId);
+            jsonObject.put("rdsID",rdsID);
+            jsonObject.put("rdsVer",rdsVer);
+            jsonObject.put("dc",dc);
+            jsonObject.put("mi",mi);
+            jsonObject.put("mc",mc);
+            jsonObject.put("ci",ci);
+            jsonObject.put("sessionKey",SessionKey);
+            jsonObject.put("hmac",hmac);
+            jsonObject.put("PidDatatype",PidDatatype);
+            jsonObject.put("Piddata",Piddata);
+
             pidData_json = jsonObject.toString();
             new apiCall_BalanceEnquiry().execute();
         } catch (JSONException e) {
@@ -705,9 +641,9 @@ Log.d("TAG","Message is"+username+password);
             RequestBody body = RequestBody.create(JSON, pidData_json);
             Request request = new Request.Builder()
                     .url("https://aepsapi.gramtarang.org:8008/mint/aeps/ipbalanceenquiry")
-                    .addHeader("AdhaarNumber", en_aadhaar)
+                   .addHeader("AdhaarNumber", en_aadhaar)
                     .addHeader("Bankid", selected_bank_id)
-                    .addHeader("phnumber", en_phn)
+                    .addHeader("phnumber", agentphn)
                     .addHeader("name", en_name)
                     .addHeader("imeiNumber", androidId)
                     .addHeader("latitude", latitude)
@@ -717,10 +653,12 @@ Log.d("TAG","Message is"+username+password);
                    /* .addHeader("AdhaarNumber", "123456781190")
                      .addHeader("Bankid", "1234")
                      .addHeader("phnumber", "7896541230")
-                     .addHeader("name", "megapower")
+                     .addHeader("name", "Testinggg")
                      .addHeader("imeiNumber", "1234567890")
-                     .addHeader("latitude", "123.1")
-                     .addHeader("longitude", "145.2")*/
+                     .addHeader("latitude", "17.7509436")
+                     .addHeader("longitude", "83.2457357")
+                     .addHeader("outletid","12345")*/
+
 
                     .post(body)
                     .build();
@@ -812,12 +750,7 @@ Log.d("TAG","Message is"+username+password);
         Response response = httpClient.newCall(request).execute();
 
     }
-    public void responseCallback()
 
-    {
-
-
-    }
 }
 
 

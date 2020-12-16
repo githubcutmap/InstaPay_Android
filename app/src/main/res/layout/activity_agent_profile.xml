@@ -249,7 +249,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_aepsim"
+                android:id="@+id/aepsim_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bentham"
@@ -280,7 +280,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_wallet"
+                android:id="@+id/wallet_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bentham"

@@ -92,13 +92,11 @@
         <activity
             android:name=".aeps.activity_Aeps_Ministatement"
             android:parentActivityName=".aeps.activity_Aeps_HomeScreen" />
-
         <receiver android:name=".utils.OTPReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-
         <activity android:name=".agent_login.activity_WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -217,14 +217,14 @@ public class activity_Aeps_Ministatement extends AppCompatActivity implements Lo
     public static String Piddata;
     public static String pCount;
     public static String pType;
-    String bank_RRN,outletid;
+    String bank_RRN,outletid,agentphn;
     ///////////////////////////////////////////////////////
     public static String pidData_json;
     OkHttpClient client,httpClient;
     ImageView backbtn;
-    EditText et_AdhaarNumber, et_NameOFTheCustomer, et_PhoneNumber;
+    EditText et_AdhaarNumber, et_NameOFTheCustomer;
     Button btn_submit;
-    boolean isValidAadhar,isValidBankName,isValidName,isValidPhone;
+    boolean isValidAadhar,isValidBankName,isValidName;
     AutoCompleteTextView bank_autofill;
 String response_String;
     ArrayList<String> arrList_BankName = new ArrayList<String>();
@@ -282,7 +282,7 @@ String response_String;
 
         et_AdhaarNumber = findViewById(R.id.aadhaar_no);
         et_NameOFTheCustomer = findViewById(R.id.entered_name);
-        et_PhoneNumber = findViewById(R.id.enteredphone);
+
         btn_submit = findViewById(R.id.submitbtn);
         btn_submit.setEnabled(true);
         backbtn = findViewById(R.id.backimg);
@@ -295,6 +295,7 @@ String response_String;
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
         outletid=preferences.getString("OutletId","No name defined");
+        agentphn=preferences.getString("AgentPhone","No name defined");
 
         bank_autofill = findViewById(R.id.bank_auto);
         Utils utils=new Utils();
@@ -317,15 +318,15 @@ String response_String;
                     //Collecting the user inputted data
                     en_aadhaar = et_AdhaarNumber.getText().toString().trim();
                     en_name = et_NameOFTheCustomer.getText().toString().trim();
-                    en_phn = et_PhoneNumber.getText().toString().trim();
+                  //  en_phn = et_PhoneNumber.getText().toString().trim();
                     //validating the user inputted Data
                     isValidAadhar=utils.isValidAadhaar(en_aadhaar);
                    // selected_bank_id= utils.AutoCompleteTV_BankId(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
                     //selected_bank_name=utils.AutoCompleteTV_BankName(activity_Aeps_Ministatement.this, bank_autofill, arrList_BankName, arrayList_bankIIN,TAG);
                     isValidName=utils.isValidName(en_name);
-                    isValidPhone=utils.isValidPhone(en_phn);
+                   // isValidPhone=utils.isValidPhone(en_phn);
                     //isValidBankName= query.isValidBankName(selected_bank_name);
-                    if (isValidAadhar && isValidPhone && isValidName) {
+                    if (isValidAadhar  && isValidName) {
                         try {
                             //Rd service api calling method called
                             Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
@@ -352,10 +353,10 @@ String response_String;
                         bank_autofill.setError("Enter Valid Bank Name");
                         btn_submit.setEnabled(true);
                     }*/
-                    if(!isValidPhone){
+                  /*  if(!isValidPhone){
                         et_PhoneNumber.setError("Enter Valid Phone Number");
                         btn_submit.setEnabled(true);
-                    }
+                    }*/
 
 
                 } else {
@@ -664,11 +665,11 @@ String response_String;
                     .url("https://aepsapi.gramtarang.org:8008/mint/aeps/ipministatement")
                     .addHeader("AdhaarNumber", en_aadhaar)
                     .addHeader("bankId", selected_bank_id)
-                    .addHeader("MobileNumber", en_phn)
+                    .addHeader("phnumber", agentphn)
                     .addHeader("imeiNumber",androidId)//androidId
                     .addHeader("latitude", String.valueOf(latitude))
                     .addHeader("longitude", String.valueOf(longitude))
-                   .addHeader("outletid",outletid)
+                     .addHeader("outletid",outletid)
                     .post(body)
                     .build();
 

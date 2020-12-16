@@ -38,6 +38,7 @@ public class activity_AgentsProfile extends AppCompatActivity {
     public static final String mypreference = "mypref";
 
     private static final String TAG = "AgentProfile";
+    Utils utils = new Utils();
     ImageView backbtn;
     TextView agent_id,agent_name,agent_aadhar,agent_phone,agent_mail,agent_aepsim,agent_wallet;
     String ag_details[],androidId,agentName,agentEmail,agentPhone,agentId,aepsim,walletamount, agentAadhaar,username,password,jsonString,responseString;
@@ -52,9 +53,8 @@ public class activity_AgentsProfile extends AppCompatActivity {
         agent_aadhar = findViewById(R.id.agent_aadhar);
         agent_phone = findViewById(R.id.agent_phone);
         agent_mail = findViewById(R.id.agent_mail);
-        agent_aepsim=findViewById(R.id.tv_aepsim);
-        agent_wallet=findViewById(R.id.tv_wallet);
-
+        agent_aepsim=findViewById(R.id.aepsim);
+        agent_wallet=findViewById(R.id.walletamount);
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         androidId=preferences.getString("AndroidId","No name defined");
         aepsim=preferences.getString("OutletId","No name defined");
@@ -115,13 +115,15 @@ try{
     }
 
     class apiCall_totalWithdrawal extends AsyncTask<Request, Void, String> {
+        Utils utils = new Utils();
         @SuppressLint("HardwareIds")
         @Override
         protected String doInBackground(Request... requests) {
             OkHttpClient httpClient;
-            Utils utils = new Utils();
+
             JSONObject jsonObject = new JSONObject();
-            httpClient = utils.createAuthenticatedClient(username, password);
+            httpClient = utils.createAuthenticatedClient(agentId, password);
+            Log.d("TAG","API Message 1:"+agentPhone+agentId+password);
             try {
                 jsonObject.put("accountno",agentPhone);
                 jsonObject.put("status", "SUCCESS");
@@ -149,6 +151,7 @@ try{
                 public void onResponse(Call call, Response response) throws IOException {
                     assert response.body() != null;
                     responseString = response.body().string();
+                    Log.d("TAG","API Message 2:"+responseString);
                     JSONObject jsonResponse = null;
                     try {
                         jsonResponse = new JSONObject(responseString);
@@ -157,7 +160,7 @@ try{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
+                    Log.d("TAG","API Message 3:"+walletamount);
                    activity_AgentsProfile.this.runOnUiThread(new Runnable() {
                        @Override
                        public void run() {

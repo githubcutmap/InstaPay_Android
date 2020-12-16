@@ -167,7 +167,7 @@
                 android:textSize="16sp"
                 android:layout_column="2"/>-->
 
-            <com.google.android.material.textfield.TextInputLayout
+         <!--   <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_field2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                 android:background="@drawable/editbox"
                 android:layout_column="3"/>
             </com.google.android.material.textfield.TextInputLayout>
-
+-->
             <!--
                             <TextView
                                 android:id="@+id/aad1"

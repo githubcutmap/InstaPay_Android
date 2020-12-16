@@ -108,10 +108,10 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     String selected_bank_name;
     String selected_bank_id;
     String latitude;
-    String longitude;
+    String longitude,agentphn;
     String en_aad;
     String en_name;
-    String en_phn;
+
     String en_am;
     String message;
     String status;
@@ -119,7 +119,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     String pidDataXML;
     String pidOptions;
     String agentId;
-    String balance;
+   double balance;
     String androidId;
     String bank_RRN;
     String transaction_type;
@@ -159,7 +159,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
     Button btn_submit;
     EditText et_adhaarNumber;
     EditText et_amount;
-    EditText et_PhoneNumber;
+
     EditText et_CustomerName;
 
     AutoCompleteTextView bank_autofill;
@@ -243,7 +243,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         et_adhaarNumber = findViewById(R.id.aadhaar);
         et_amount = findViewById(R.id.totamount);
         et_CustomerName = findViewById(R.id.entered_name);
-        et_PhoneNumber = findViewById(R.id.enteredphone);
+
         backbtn = findViewById(R.id.backimg);
         //Getting the required data from sharedPreferences
         preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
@@ -252,7 +252,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
         username=preferences.getString("Username","No name defined");
         password=preferences.getString("Password","No name defined");
         outletid=preferences.getString("OutletId","No name defined");
-
+        agentphn=preferences.getString("AgentPhone","No name defined");
         //androidId=preferences.getString("AndroidId","No name defined");
         //latitude="11.111";
         //longitude="121.11";
@@ -288,15 +288,15 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                     ////Collecting the user inputted data
                     en_aad = et_adhaarNumber.getText().toString().trim();
                     en_name = et_CustomerName.getText().toString().trim();
-                    en_phn = et_PhoneNumber.getText().toString().trim();
+
                     en_am = et_amount.getText().toString().trim();
                     //validations of user inputted data
                     isValidAadhar=utils.isValidAadhaar(en_aad);
                     isValidName=utils.isValidName(en_name);
-                    isValidPhone=utils.isValidPhone(en_phn);
+
                     //  isValidAmount=utils.isValidAmount(en_am);
                  //   isValidBankName= query.isValidBankName(selected_bank_name);
-                    if (isValidAadhar && isValidPhone && isValidName ) {
+                    if (isValidAadhar  && isValidName ) {
                         try {
                             Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
                             //Rd service api calling method called
@@ -317,10 +317,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                         et_CustomerName.setError("Enter Valid Name");
                         btn_submit.setEnabled(true);
                     }
-                    if(!isValidPhone){
-                        et_PhoneNumber.setError("Enter Valid Phone Number");
-                        btn_submit.setEnabled(true);
-                    }
+
                   /*  if(!isValidAmount){
                         et_amount.setError("Amount should be in range between INR100 to INR10000");
                         btn_submit.setEnabled(true);
@@ -609,7 +606,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                     .url("https://aepsapi.gramtarang.org:8008/mint/aeps/ipwithdrawal")
                     .addHeader("AdhaarNumber",en_aad)
                     .addHeader("Bankid",selected_bank_id)
-                    .addHeader("phnumber",en_phn)
+                    .addHeader("phnumber",agentphn)
                     .addHeader("name",en_name)
                     .addHeader("amount",en_am)
                     .addHeader("imeiNumber",androidId)
@@ -647,6 +644,8 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             // message = jsonResponse.getString("message");
                             status = jsonResponse.getString("status");
                             status_code = jsonResponse.getString("statuscode");
+                            merchant_transid=jsonResponse.getString("ipay_uuid");
+                            fpTransId=jsonResponse.getString("orderid");
                             //bank_RRN = jsonResponse.getString("ipay_uuid");
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -657,13 +656,12 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             //status=jsonData.getString("status");
                             amount=jsonData.getString("transactionAmount");
                             transaction_status=jsonData.getString("transactionStatus");
-                            balance=jsonData.getString("balanceAmount");
+                            balance=jsonData.getDouble("balance");
                             bank_RRN=jsonData.getString("bankRRN");
                             transaction_type=jsonData.getString("transactionType");
-                            merchant_transid=jsonData.getString("ipay_uuid");
+
                             timestamp=jsonData.getString("requestTransactionTime");
                             message=jsonData.getString("message");
-                            fpTransId=jsonData.getString("orderid");
 
                         } catch (JSONException | NullPointerException e) {
 /*                            DialogActivity.DialogCaller.showDialog(activity_Aeps_Withdraw.this,"Transaction Failed",message+"."+"This transaction cannot be completed.Please try after sometime\"",new DialogInterface.OnClickListener() {
