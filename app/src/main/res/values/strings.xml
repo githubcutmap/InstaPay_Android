@@ -13,7 +13,7 @@
     <string name="tab_text_agentprofile_1">Wallet</string>
     <string name="tab_text_agentprofile_2">Agent Profile</string>
     <string name="tab_text_agentprofile_3">Bank Info</string>
-    <string name="tab_text_agentprofile_4">Info</string>
+    <string name="tab_text_agentprofile_4">Payout</string>
 
     <string name="title_activity_main">MainActivity</string>
     <string name="app_version">Version:Beta V 0.4</string>

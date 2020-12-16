@@ -98,7 +98,7 @@
                 android:id="@+id/agent_bankname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/bentham"
                 android:singleLine="true"
                 android:textColor="@color/grayblack"
                 android:textColorHint="#70050505"

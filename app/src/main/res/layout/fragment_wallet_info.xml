@@ -4,12 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
+    android:orientation="vertical"
     android:id="@+id/ll"
     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/success_green"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wallet Amount: "
+            android:fontFamily="@font/bentham"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:id="@+id/tv_walletamount"
+            android:fontFamily="@font/helveticaneubold"
+            android:textSize="22sp"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
 
     <TableLayout
         android:layout_width="match_parent"
@@ -33,7 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Withdraw \nTransaction: "
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
                 <TextView
@@ -57,7 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total BalanceEnquiry \nTransaction: "
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -87,7 +118,8 @@
                 android:layout_height="wrap_content"
                 android:text="MiniStatement \nTransaction: "
 
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -112,7 +144,8 @@
                 android:layout_height="wrap_content"
                 android:text="Transaction \nAmount till date:"
 
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -141,7 +174,8 @@
                 android:layout_height="wrap_content"
                 android:text="Transaction \nAmount Current date: "
 
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -164,7 +198,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Transaction Amount last 7days: "
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -194,7 +229,8 @@
                 android:layout_height="wrap_content"
                 android:text="Commission Amount till\ndate: "
 
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -218,7 +254,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Commission Amount current \ndate: "
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -247,7 +284,8 @@
                 android:layout_height="wrap_content"
                 android:text="Commission Amount last 7days: "
 
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -272,7 +310,8 @@
                 android:layout_height="wrap_content"
                 android:text="Amount Transferred till date: "
 
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -300,7 +339,8 @@
                 android:layout_height="wrap_content"
                 android:text="Amount Transferred Current Date: "
 
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
@@ -324,7 +364,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Amount Transferred Last 7Days Date: "
-                android:fontFamily="@font/helveticaneuemedium"
+                  android:fontFamily="@font/bentham"
+                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView

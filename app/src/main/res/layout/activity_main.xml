@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loans.areamgr.MainActivity"
-    android:background="@drawable/bg1">
+    tools:context=".loans.areamgr.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -55,6 +54,5 @@
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="30dp"
         android:background="@drawable/button1"
-
         app:srcCompat="@drawable/backarrow" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

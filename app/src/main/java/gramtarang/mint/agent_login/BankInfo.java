@@ -137,11 +137,7 @@ public class BankInfo extends Fragment {
                 response_String = response.body().string();
 
                 if (response_String != null) {
-                    Snackbar.make(v, response_String, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-
                     Log.d("TAG","Response is+"+response_String.toString());
-
                     JSONObject jsonResponse = null;
                     try {
                         jsonResponse = new JSONObject(response_String);
@@ -160,7 +156,7 @@ public class BankInfo extends Fragment {
                     }
                         mHandler.post(new Runnable() {
                             public void run() {
-                                //setspinner(ManagerAgents,v);
+
                                 setvalues(agentId,
                                 ipAccountNo ,
                                 bankName ,
@@ -192,9 +188,6 @@ public class BankInfo extends Fragment {
         tv_branch.setText(aBranch);
         tv_status.setText(aStatus);
         tv_updatedon.setText(aUpdatedon);
-
     }
-
-
 
 }

@@ -24,7 +24,7 @@ import gramtarang.mint.loans.areamgr.SearchbyidFragment;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_agentprofile_1,R.string.tab_text_agentprofile_2,R.string.tab_text_agentprofile_3};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_agentprofile_1,R.string.tab_text_agentprofile_2,R.string.tab_text_agentprofile_3,R.string.tab_text_agentprofile_4};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
