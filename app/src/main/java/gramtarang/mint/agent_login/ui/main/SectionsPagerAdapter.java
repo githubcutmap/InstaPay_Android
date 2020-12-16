@@ -1,4 +1,4 @@
-package gramtarang.mint.loans.areamgr.ui.main;
+package gramtarang.mint.agent_login.ui.main;
 
 import android.content.Context;
 
@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import gramtarang.mint.R;
+import gramtarang.mint.agent_login.AgentInfo;
+import gramtarang.mint.agent_login.BankInfo;
+import gramtarang.mint.agent_login.WalletFragment;
 import gramtarang.mint.loans.areamgr.CompletedFragment;
 import gramtarang.mint.loans.areamgr.PendingFragment;
 import gramtarang.mint.loans.areamgr.SearchbyidFragment;
@@ -20,7 +23,7 @@ import gramtarang.mint.loans.areamgr.SearchbyidFragment;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_agentprofile_1,R.string.tab_text_agentprofile_2,R.string.tab_text_agentprofile_3};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -35,12 +38,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
 
             case 0:
-                return new PendingFragment();
-
+                return new WalletFragment();
             case 1:
-                return new CompletedFragment();
+                return new AgentInfo();
             case 2:
-                return new SearchbyidFragment();
+                return new BankInfo();
         }
 
 
@@ -55,7 +57,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
+        // Show 2 total pages.
         return 3;
     }
 }

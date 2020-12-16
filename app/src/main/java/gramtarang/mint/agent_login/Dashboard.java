@@ -199,7 +199,7 @@ tv_agentname.setText(agentname);
         improfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, activity_AgentsProfile.class);
+                Intent intent = new Intent(Dashboard.this, activity_AgentProfile.class);
                 startActivity(intent);
             }
         });
