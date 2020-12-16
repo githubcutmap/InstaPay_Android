@@ -48,7 +48,7 @@
         <activity android:name=".loans.LoanActivity_DocumentsUpload" />
         <activity android:name=".aeps.activity_Aeps_Ministatement_Report" />
         <activity android:name=".agent_login.activity_Login" />
-        <activity android:name=".agent_login.activity_WelcomeScreen" />
+        <activity android:name=".agent_login.Dashboard" />
         <activity android:name=".loans.areamgr.loan_viewapp" />
         <activity
             android:name=".aeps.activity_Aeps_HomeScreen"
@@ -99,7 +99,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".agent_login.Dashboard">
+        <activity android:name=".agent_login.activity_WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
