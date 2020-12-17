@@ -1,8 +1,6 @@
 package gramtarang.mint.loans;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
+import kandroid.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,12 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import gramtarang.mint.R;
-import gramtarang.mint.aeps.activity_Aeps_BalanceEnq_Receipt;
-import gramtarang.mint.aeps.activity_Aeps_HomeScreen;
 import gramtarang.mint.agent_login.activity_Login;
 import gramtarang.mint.utils.LogOutTimer;
 

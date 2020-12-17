@@ -1,7 +1,5 @@
 package gramtarang.mint.loans;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.Dash;
+import androidx.appcompat.app.AppCompatActivity;
 
 import gramtarang.mint.R;
 import gramtarang.mint.agent_login.Dashboard;

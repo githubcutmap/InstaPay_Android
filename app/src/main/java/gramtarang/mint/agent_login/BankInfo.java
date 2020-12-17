@@ -170,7 +170,7 @@ public class BankInfo extends Fragment {
 
 
                 } else {
-                    Snackbar.make(v, "You are not getting any Response From Bank !! ", Snackbar.LENGTH_LONG)
+                    Snackbar.make(v, "You are not getting any Response From Server !! ", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
