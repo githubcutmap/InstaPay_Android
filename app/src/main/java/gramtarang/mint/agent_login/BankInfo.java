@@ -186,7 +186,13 @@ public class BankInfo extends Fragment {
         tv_bankAccountNo.setText(aBankAccountNo);
         tv_ifsccode.setText(aIfscCode);
         tv_branch.setText(aBranch);
-        tv_status.setText(aStatus);
+        if(status.equals("1")){
+            tv_status.setText("ACTIVE");
+        }
+        else{
+            tv_status.setText("INACTIVE");
+        }
+
         tv_updatedon.setText(aUpdatedon);
     }
 

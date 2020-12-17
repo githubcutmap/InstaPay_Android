@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="--"
+            android:text="NA"
             android:id="@+id/tv_walletamount"
             android:fontFamily="@font/helveticaneubold"
             android:textSize="22sp"/>
@@ -70,7 +70,7 @@
                     android:id="@+id/id_totalwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20 "
+                    android:text="NA "
                     android:fontFamily="@font/helveticaneubold"
                     android:textSize="20sp"/>
         </LinearLayout>
@@ -96,7 +96,7 @@
                 android:id="@+id/id_totalbe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -128,7 +128,7 @@
                 android:id="@+id/id_totalms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -152,9 +152,10 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/id_totaltransamountT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -175,16 +176,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Transaction \nAmount Current date: "
+                android:text="Total Withdrawal \nTransactions Current date: "
 
                   android:fontFamily="@font/bentham"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/id_totalwdtransCurrent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -200,15 +202,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Transaction Amount last 7days: "
-                  android:fontFamily="@font/bentham"
+                android:text="Total Withdrawal \nTransactions last 7 days: "
+                android:fontFamily="@font/bentham"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -237,9 +239,10 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/id_comAmountTillDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -262,9 +265,10 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/commAmountCurrentDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -294,7 +298,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -318,9 +322,10 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/id_amountTransferTillDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -347,9 +352,10 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/id_amountTransferCurrentDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -374,7 +380,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 "
+                android:text="NA "
                 android:fontFamily="@font/helveticaneubold"
                 android:textSize="20sp"/>
         </LinearLayout>
