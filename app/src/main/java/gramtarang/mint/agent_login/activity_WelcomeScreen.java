@@ -65,7 +65,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import gramtarang.mint.R;
 import gramtarang.mint.aeps.activity_Aeps_BalanceEnq_Receipt;
@@ -125,6 +129,15 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         img_mintLogo.startAnimation(myanim);
         app_name.startAnimation(myanim);
         client = new OkHttpClient();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+        String currentDateandTime = sdf.format(new Date());
+        Date cdate= null;
+        try {
+            cdate = sdf.parse(currentDateandTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.N){
             Log.d("VERSION","Android Version is:Nougat");
@@ -169,7 +182,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         }
 
         else{
-            System.out.println("IAM HERE ERROR");
+
             requestLocationPermission();
 
            ///check whether location service is enable or not in your  phone

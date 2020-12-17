@@ -180,6 +180,7 @@ public class BankInfo extends Fragment {
     private void setvalues(String aId,String aPhoneNo, String aBankName,
                            String aBankAccountNo, String aIfscCode,
                            String aBranch, String aStatus, String aUpdatedon) {
+       try{
         tv_agentId.setText(aId);
         tv_ipAccountNo.setText(aPhoneNo);
         tv_bankName.setText(aBankName);
@@ -193,7 +194,7 @@ public class BankInfo extends Fragment {
             tv_status.setText("INACTIVE");
         }
 
-        tv_updatedon.setText(aUpdatedon);
+        tv_updatedon.setText(aUpdatedon);}catch (Exception e){e.printStackTrace();}
     }
 
 }

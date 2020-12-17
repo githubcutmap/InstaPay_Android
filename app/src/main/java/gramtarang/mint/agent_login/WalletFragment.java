@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,10 +39,9 @@ public class WalletFragment extends Fragment {
     OkHttpClient httpClient;
     Utils utils;
     TextView tv_amountTransferTillDate,tv_amountTransferCurrentDate,tv_commissionAmountCurrentDate, tv_commissionAmountTillDate, tv_totalwd, tv_totalms, tv_walletamount, tv_totalbe, tv_totaltransAmountT, tv_totalWDtransCurrentDate;
-    Context con;
     SharedPreferences preferences;
     public static final String mypreference = "mypref";
-    String amountTransferTillDate,amountTransferCurrentDate,commissionAmountCurrentDate, commissionAmountTillDate, currentDate, totalWDtransCurrentDate, totaltransAmountT, totalWithdrawCount, totalMinistatementCount, agentPhn, agentId, password, totalBECount, walletAmount;
+    String pastweekDate,amountTransferTillDate,amountTransferCurrentDate,commissionAmountCurrentDate, commissionAmountTillDate, currentDate, totalWDtransCurrentDate, totaltransAmountT, totalWithdrawCount, totalMinistatementCount, agentPhn, agentId, password, totalBECount, walletAmount;
 
     public WalletFragment() {
         // Required empty public constructor
@@ -64,6 +64,25 @@ public class WalletFragment extends Fragment {
         tv_commissionAmountCurrentDate = v.findViewById(R.id.commAmountCurrentDate);
         tv_amountTransferCurrentDate=v.findViewById(R.id.id_amountTransferCurrentDate);
         tv_amountTransferTillDate=v.findViewById(R.id.id_amountTransferTillDate);
+        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+        String currentDateandTime = sdf.format(new Date());
+        Date cdate= null;
+        try {
+            cdate = sdf.parse(currentDateandTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar now2= Calendar.getInstance();
+        now2.add(Calendar.DATE, -7);
+       pastweekDate=now2.get(Calendar.YEAR)+"-"+(now2.get(Calendar.MONTH) + 1)+"-"+now2.get(Calendar.DATE);
+        Date BeforeDate1= null;
+        try {
+            BeforeDate1 = sdf.parse(pastweekDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        cdate.compareTo(BeforeDate1);
+        Log.d("TAG","Before Date"+pastweekDate);
         preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         agentPhn = preferences.getString("AgentPhone", "No name defined");
         agentId = preferences.getString("Username", "No name defined");
@@ -107,9 +126,9 @@ public class WalletFragment extends Fragment {
             //  Log.d("TAG","EN_FLAG"+en_flag);
             //1.TOTAL WITHDRAW COUNT
             try {
-
-                jsonObject.put("status", "SUCCESS");
                 jsonObject.put("accountno", agentPhn);
+                jsonObject.put("status", "SUCCESS");
+
                 jsonString = jsonObject.toString();
 
             } catch (Exception e) {

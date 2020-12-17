@@ -302,7 +302,7 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             Log.d(TAG,"Selected try bank: "+selected_bank_name+" "+selected_bank_id);
                             //Rd service api calling method called
                             Matra_capture(pidOptions);
-                            //parseData();
+                           // parseData();
                             //fingerprintDataConvertedtoJSON();                       } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Fingerprint Device not connected.", Toast.LENGTH_LONG).show();
                             btn_submit.setEnabled(true);
@@ -636,12 +636,12 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     assert response.body() != null;
-                    responseString = response.body().string();
-                  if(responseString!= null)
+                    response_String = response.body().string();
+                  if(response_String!= null)
                     {
                         JSONObject jsonResponse = null;
                         try {
-                            jsonResponse = new JSONObject(responseString);
+                            jsonResponse = new JSONObject(response_String);
                             // message = jsonResponse.getString("message");
                             status = jsonResponse.getString("status");
                             status_code = jsonResponse.getString("statuscode");
@@ -658,24 +658,8 @@ public class activity_Aeps_Withdraw extends AppCompatActivity implements LogOutT
                             transaction_type=data.getString("transactionType");
                             timestamp=data.getString("requestTransactionTime");
                             message=data.getString("message");
-                          /*  jsonResponse = new JSONObject(responseString);
-                            // message = jsonResponse.getString("message");
-                            status = jsonResponse.getString("status");
-                            status_code = jsonResponse.getString("statuscode");
-                            merchant_transid=jsonResponse.getString("ipay_uuid");
-                            fpTransId=jsonResponse.getString("orderid");
-                            //bank_RRN = jsonResponse.getString("ipay_uuid");
-                            String data=jsonResponse.getString("data");
-                            JSONObject jsonData=new JSONObject(data);
                             //status=jsonData.getString("status");
-                            amount=jsonData.getString("transactionAmount");
-                            transaction_status=jsonData.getString("transactionStatus");
-                            balance=jsonData.getDouble("balance");
-                            bank_RRN=jsonData.getString("bankRRN");
-                            transaction_type=jsonData.getString("transactionType");
-
-                            timestamp=jsonData.getString("requestTransactionTime");
-                            message=jsonData.getString("message");*/
+                            /* */
 
                         } catch (JSONException e) {
                             e.printStackTrace();

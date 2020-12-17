@@ -48,13 +48,13 @@ public class AgentInfo extends Fragment {
         agentPhone=preferences.getString("AgentPhone","No name defined");
         agentId=preferences.getString("Username","No name defined");
         agentAadhar=preferences.getString("AgentAadhaar","No name defined");
-
+try{
         agent_id.setText(agentId);
         agent_name.setText(agentName);
         agent_aadhar.setText(agentAadhar);
         agent_phone.setText(agentPhone);
         agent_mail.setText(agentEmail);
-        agent_aepsim.setText(aepsim);
+        agent_aepsim.setText(aepsim);}catch (Exception e){e.printStackTrace();}
         return v;
     }
 }
