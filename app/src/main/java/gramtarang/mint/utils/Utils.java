@@ -1,14 +1,18 @@
 package gramtarang.mint.utils;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -53,6 +57,7 @@ public class Utils extends AppCompatActivity {
     String pidDataXML,agentid;
     List<String> al = new ArrayList<String>();
     String[] arr=new String[100];
+
     public static OkHttpClient createAuthenticatedClient(final String api_username,
                                                          final String api_password) {
         // build client with authentication information.

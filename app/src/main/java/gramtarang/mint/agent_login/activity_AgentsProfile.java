@@ -46,7 +46,6 @@ public class activity_AgentsProfile extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agent_profile);
-
         backbtn = findViewById(R.id.backimg);
         agent_id = findViewById(R.id.agent_id);
         agent_name = findViewById(R.id.agent_name);

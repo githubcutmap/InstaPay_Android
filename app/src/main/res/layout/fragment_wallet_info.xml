@@ -67,6 +67,7 @@
                 android:textSize="18sp"/>
 
                 <TextView
+                    android:id="@+id/id_totalwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 "
@@ -92,6 +93,7 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/id_totalbe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 "
@@ -123,6 +125,7 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/id_totalms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 "
