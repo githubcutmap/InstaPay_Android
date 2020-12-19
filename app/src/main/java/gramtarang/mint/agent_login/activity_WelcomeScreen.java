@@ -132,12 +132,7 @@ public class activity_WelcomeScreen extends AppCompatActivity implements GoogleA
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
         String currentDateandTime = sdf.format(new Date());
-        Date cdate= null;
-        try {
-            cdate = sdf.parse(currentDateandTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
 
         if (android.os.Build.VERSION.SDK_INT ==Build.VERSION_CODES.N){
             Log.d("VERSION","Android Version is:Nougat");
